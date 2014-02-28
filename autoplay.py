@@ -1,14 +1,15 @@
-import subprocess, time, threading, Queue, re
+import subprocess, time, threading, Queue, re, sys
 
+enginePath = sys.argv[1]
 
 class Uci:
     engine = subprocess.Popen(
-        'stockfish.exe',
+        enginePath,
         universal_newlines=True,
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
     )
-    
+
     def send(self, command):
         print(command)
         self.engine.stdin.write(command+'\n')
@@ -16,7 +17,6 @@ class Uci:
     def nextMove():
         return 0
 
-        
 
 uci = Uci()
 gameString = ""
