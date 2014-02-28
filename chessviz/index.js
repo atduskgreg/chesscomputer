@@ -55,6 +55,9 @@ $( document ).ready(function() {
 		to = pos[move.charAt(2)]+"_"+(8-parseInt(move.charAt(3)));
 		console.log(from + " " + to);
 		
+		if ($("#"+to).html()!='') 
+			eatenPieces.push([currMove, $("#"+to).html()]);
+		
 		piece = $("#"+from).html();
 		$("#"+from).html('').css("outline", "4px solid blue");
 		$("#"+to).html(piece).css("outline", "4px solid red");
@@ -65,9 +68,13 @@ $( document ).ready(function() {
 		from = pos[move.charAt(0)]+"_"+(8-parseInt(move.charAt(1)));
 		to = pos[move.charAt(2)]+"_"+(8-parseInt(move.charAt(3)));
 		console.log(to + " " + from);
+
 		
 		piece = $("#"+to).html();
-		$("#"+to).html('');
+		if (eatenPieces.length>0 && currMove == eatenPieces[eatenPieces.length-1][0])
+			$("#"+to).html(eatenPieces.pop()[1]);
+		else
+			$("#"+to).html('');
 		$("#"+from).html(piece);
 		
 		prevMove = moves[currMove-1];
