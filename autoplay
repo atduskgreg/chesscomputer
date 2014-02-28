@@ -1,0 +1,30 @@
+import subprocess, time, threading, Queue
+
+
+class Uci:
+    def initialize(engine_path):
+        engine = subprocess.Popen(
+            'stockfish.exe',
+            universal_newlines=True,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+        )
+    
+    def send(command):
+        print('\nyou:\n\t'+command)
+        engine.stdin.write(command+'\n')
+
+def get():
+    # using the 'isready' command (engine has to answer 'readyok')
+    # to indicate current last line of stdout
+    engine.stdin.write('isready\n')
+    print('\nengine:')
+    while True:
+        text = engine.stdout.readline().strip()
+        if text == 'readyok':
+            break
+        if text !='':
+            print('\t'+text)
+
+get()
+put('uci')

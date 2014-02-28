@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title>chessviz</title>
+				<script src="jquery-1.9.1.min.js"></script>
+				<script src="index.js"></script>
+				<link type="text/css" href="index.css" rel="stylesheet" />
+	</head>
+	<body>
+		<p id="turnDisplay"><span id="turn">WHITE</span>'s turn</p>
+		<p id="moveDisplay">
+			Moves: <text id="moves"></text><br>
+			Current Move: <text id="currMove"></text>
+		</p>
+		<div id="board">
+			<table>
+			</table>
+
+		</div>
+		<br style="clear;both"/>
+		<p><label>FEN input</label></p>
+		<textarea id="f"></textarea>
+		<p><button id="display">display</button></p>
+
+		<p><label>Game input</label></p>
+		<textarea id="g"></textarea>
+		<p><button id="start">start</button><button id="prev">prev</button><button id="next">next</button></p
+		
+		<form id="highlight">
+			<p>
+			<select id="colSelect"></select>
+			<select id="rowSelect"></select>
+			<input type="submit" value="highlight">
+			<a href="#" style="display:none" id="clear-highlight">[x]</a>
+			</p>
+		</form>
+
+		<p id="log"></p>
+	</body>
+</html>

@@ -1,0 +1,51 @@
+#board table td {
+	width: 65px;
+	height:65px;
+}
+
+table, th, td {
+	border-collapse:collapse;
+	border: 1px solid black;
+}
+.black {
+	background-color: #000;
+}
+
+#board img {
+	width: 60px;
+	height: 60px;
+}
+
+#board {
+	float: left;
+	margin-right: 20px;
+
+}
+
+#log {
+	float: left;
+	font-family: courier;
+	white-space: pre;
+}
+
+#f, #g {
+	width: 400px;
+	height: 50px;
+}
+
+.error {
+	color: red;
+}
+.logmsg {
+	clear:both;
+}
+#turn {
+	font-weight: bold;
+}
+#turnDisplay{
+	font-size:24px;
+}
+
+body {
+	min-width: 1000px;
+}
