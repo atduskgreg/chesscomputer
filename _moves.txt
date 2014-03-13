@@ -1,0 +1,8 @@
+[Event: ]
+[Site: ]
+[Date: ]
+[Round: ]
+[White: ]
+[Black: ]
+[Result: ]
+1. e2e4 e7e5 2. b1c3 b8c6 3. g1f3 g8f6 
