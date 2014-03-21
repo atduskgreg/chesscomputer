@@ -1,0 +1,8 @@
+move,cp,player
+a6b5,-88,w
+c4f7,89,b
+g8h8,-89,w
+a1a8,89,b
+d8a8,-89,w
+b3c2,83,b
+g4h5,-83,w

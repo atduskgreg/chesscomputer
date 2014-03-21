@@ -4,6 +4,13 @@ from fysom import Fysom
 path = 'C:/Users/Shannon/Documents/School/UROP/Playful Systems/Chesscomputer/'
 enginePath = path + sys.argv[1]
 
+gameStatus = {"gameString" : "",
+              "centipawns" : 0,
+              "whiteCP" : [],
+              "blackCP" : [],
+              "currentMove" : 1,
+              "white" : True}
+
 class Uci:
     engine = subprocess.Popen(
         enginePath,
@@ -18,28 +25,35 @@ class Uci:
 
     def nextMove():
         return 0
-
-        
-
-uci = Uci()
-gameStatus = {"gameString" : "",
-              "centipawns" : 0,
-              "whiteCP" : [],
-              "blackCP" : [],
-              "currentMove" : 1,
-              "white" : True}
-
-q = Queue.Queue()
+    
 class Listener(threading.Thread):
+    def __init__(self, uci, queue):
+        threading.Thread.__init__(self)
+        self.uci = uci
+        self.queue=queue
     def run(self):
         while True:
-            out = uci.engine.stdout.readline().strip()
+            out = self.uci.engine.stdout.readline().strip()
             if out != '':
-                q.put(out)
+                self.queue.put(out)
             time.sleep(0.25)
-            
-t = Listener()
-t.start()
+
+class StockfishManager:
+    def __init__(self):
+        self.uci = Uci()
+        self.q = Queue.Queue()
+        self.t = Listener(self.uci, self.q)
+        self.t.start()
+
+    def send(self, command):
+        self.uci.send(command)
+    
+    def get(self):
+        return self.q.get()
+
+manager = StockfishManager()
+
+
 
 def scoreString(scores):
     string = ""
@@ -47,17 +61,16 @@ def scoreString(scores):
         string += ' ' + str(scores[i])
     return string
 
-def onuci(e):
-    print 'Prep'
-    uci.send("uci")
+def onuciok(e):
+    manager.send("uci")
 
-def onisready(e):
-    uci.send("isready")
+def onreadyok(e):
+    manager.send("isready")
     
 def onucinewgame(e):
-    uci.send("ucinewgame")
-    uci.send("position startpos")
-    uci.send("go infinite")
+    manager.send("ucinewgame")
+    manager.send("position startpos")
+    manager.send("go infinite")
     open('_info.txt', 'w').close()
     with open("_moves.txt", 'w') as f:
         f.write("[Event: " + "" + "]\r\n" +
@@ -75,14 +88,14 @@ def onsearch(e, gameStatus):
         info = re.search('depth (?P<depth>\d+) seldepth \d+ score cp (?P<cp>-?\w+)', e)
         if int(info.group('depth')) > 5: # depth 5
             gameStatus["centipawns"] = int(info.group('cp'))
-            uci.send("stop")
+            manager.send("stop")
     if re.search('depth (?P<depth>\d+) seldepth \d+ score mate (?P<mate>-?\w+)', e):
         info = re.search('depth (?P<depth>\d+) seldepth \d+ score mate (?P<mate>-?\w+)', e)
         if int(info.group('depth')) > 5: # depth 5
             gameStatus["centipawns"] = int(info.group('mate'))
-            uci.send("quit")
+            manager.send("quit")
 
-def onmove(e):
+def onbestmove(e):
     gameStatus = e.args[1]
 
     if gameStatus["white"]:
@@ -97,34 +110,33 @@ def onmove(e):
     gameStatus["white"] = not gameStatus["white"]
    
     gameStatus["gameString"] += " " + (e.args[0])
-    uci.send("position startpos moves" + gameStatus["gameString"])
-    uci.send("go infinte")
+    manager.send("position startpos moves" + gameStatus["gameString"])
+    manager.send("go infinte")
 
-def onmate(e):
+def onend(e):
     print game.current
 
 game = Fysom({'initial': 'init',
-             'events': [{'name': 'uci','src':'init','dst':'ready'},
-                        {'name': 'isready','src':'ready','dst':'newgame'},
-                        {'name': 'ucinewgame','src':'newgame','dst':'goinfinite'},
+             'events': [{'name': 'uci','src':'init','dst':'uciok'},
+                        {'name': 'isready','src':'uciok','dst':'readyok'},
+                        {'name': 'ucinewgame','src':'readyok','dst':'goinfinite'},
                         {'name': 'infinite','src':'goinfinite','dst':'goinfinite'},
                         {'name': 'move','src':'goinfinite','dst':'bestmove'},
                         {'name': 'infinite','src':'bestmove','dst':'goinfinite'},
                         {'name': 'mate','src':'bestmove','dst':'end'}],
               'callbacks': {
-                  'onuci': onuci,
-                  'onisready': onisready,
+                  'onuciok': onuciok,
+                  'onreadyok': onreadyok,
                   'onucinewgame': onucinewgame,
-                  'onmove': onmove,
-                  'onmate': onmate } })
+                  'onbestmove': onbestmove,
+                  'onend': onend } })
 
 print game.current
 
 while True:
-    res = q.get()
+    res = manager.get()
     print('     '+res)
     if re.search('^Stockfish', res):
-        print('got sf')
         game.uci()
     if re.search('^uciok', res):
         game.isready()
@@ -136,57 +148,3 @@ while True:
     if re.search('^bestmove (?P<move>\w+) ', res):
         bestmove = re.search('^bestmove (?P<move>\w+) ', res)
         game.move(bestmove.group('move'), gameStatus)
-
-##while True:
-##    res = q.get()
-##    print('     '+res)
-##    if len(gameString) > 10*2: # 2 moves
-##        print('\nMoves: ' + gameString)
-##        print('White: ' + scoreString(whiteCP))
-##        print('Black: ' + scoreString(blackCP))
-##        os.kill(uci.engine.pid, signal.SIGTERM)
-##        uci.engine.kill()
-##        break
-##    if re.search('^Stockfish', res):
-##        uci.send("uci")
-##    if re.search('^uciok', res):
-##        uci.send("isready")
-##    if re.search('^readyok', res):
-##        uci.send("ucinewgame")
-##        uci.send("position startpos")
-##        uci.send("go infinite")
-##        open('_info.txt', 'w').close()
-##        with open("_moves.txt", 'w') as f:
-##            f.write("[Event: " + "" + "]\n" +
-##                    "[Site: " + "" + "]\n" +
-##                    "[Date: " + "" + "]\n" +
-##                    "[Round: " + "" + "]\n" +
-##                    "[White: " + "" + "]\n" +
-##                    "[Black: " + "" + "]\n" +
-##                    "[Result: " + "" + "]\n")
-##        
-##    if re.search('^info', res):
-##        with open("_info.txt", 'a') as f:
-##            f.write(res + '\n')
-##        if re.search('depth (?P<depth>\d+) seldepth \d+ score cp (?P<cp>-?\w+)', res):
-##            info = re.search('depth (?P<depth>\d+) seldepth \d+ score cp (?P<cp>-?\w+)', res)
-##            if int(info.group('depth')) > 5: # depth 5
-##                centipawns = int(info.group('cp'))
-##                uci.send("stop")
-##    if re.search('^bestmove (?P<move>\w+) ', res):
-##        bestmove = re.search('^bestmove (?P<move>\w+) ', res)
-##        move = bestmove.group('move')
-##        if white:
-##            whiteCP.append(centipawns)
-##            with open("_moves.txt", 'a') as f:
-##                f.write(str(currentMove) + ". " + move[2:])
-##            currentMove+=1
-##        else:
-##            blackCP.append(centipawns)
-##            with open("_moves.txt", 'a') as f:
-##                f.write(" " + move[2:] + " ")
-##        white = not white
-##       
-##        gameString += " " + (move)
-##        uci.send("position startpos moves" + gameString)
-##        uci.send("go infinte")

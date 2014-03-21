@@ -1,0 +1,122 @@
+uci
+isready
+ucinewgame
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves
+go depth 1
+go depth 2
+go depth 3
+go depth 4
+go depth 5
+go depth 6
+go depth 7
+ucinewgame
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves b3f7
+go depth 10
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves b3f7 g8f7
+go depth 10
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves b3f7 g8f7 e2f1
+go depth 10
+uci
+isready
+ucinewgame
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves
+go depth 1
+go depth 2
+go depth 3
+go depth 4
+go depth 5
+go depth 6
+go depth 7
+go depth 8
+ucinewgame
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4
+go depth 10
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 d8d3
+go depth 10
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 d8d3 c4d3
+go depth 10
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 d8d3 c4d3 e4d3
+go depth 10
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 d8d3 c4d3 e4d3 b5c6
+go depth 10
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 d8d3 c4d3 e4d3 b5c6 g4f5
+go depth 10
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 d8d3 c4d3 e4d3 b5c6 g4f5 f2f3
+go depth 10
+ucinewgame
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves b3f7
+go depth 10
+uci
+isready
+ucinewgame
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves
+go depth 1
+go depth 2
+go depth 3
+go depth 4
+go depth 5
+go depth 6
+go depth 7
+go depth 8
+ucinewgame
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 a6b5
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 a6b5 c4f7
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 a6b5 c4f7 g8h8
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 a6b5 c4f7 g8h8 a1a8
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 a6b5 c4f7 g8h8 a1a8 d8a8
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 a6b5 c4f7 g8h8 a1a8 d8a8 b3c2
+go depth 15
+ucinewgame
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves b3f7
+go depth 15
+uci
+isready
+ucinewgame
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves
+go depth 1
+go depth 2
+go depth 3
+go depth 4
+go depth 5
+go depth 6
+go depth 7
+go depth 8
+ucinewgame
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 a6b5
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 a6b5 c4f7
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 a6b5 c4f7 g8h8
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 a6b5 c4f7 g8h8 a1a8
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 a6b5 c4f7 g8h8 a1a8 d8a8
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves e2c4 a6b5 c4f7 g8h8 a1a8 d8a8 b3c2
+go depth 15
+ucinewgame
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves b3f7
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves b3f7 g8f7
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves b3f7 g8f7 e2f1
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves b3f7 g8f7 e2f1 a6b5
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves b3f7 g8f7 e2f1 a6b5 a1a8
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves b3f7 g8f7 e2f1 a6b5 a1a8 d8a8
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves b3f7 g8f7 e2f1 a6b5 a1a8 d8a8 f1b5
+go depth 15
+position fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves b3f7 g8f7 e2f1 a6b5 a1a8 d8a8 f1b5 g4d7
+go depth 15
