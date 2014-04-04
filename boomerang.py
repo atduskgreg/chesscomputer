@@ -202,14 +202,18 @@ def onbestmove(e):
     fen = gameStatus["fen"]
     moves = gameStatus["moves"]
 
-    if gameStatus["player"] == 'w':
+    if gameStatus["player"] == gameStatus["startPlayer"]:
         gameStatus["currentMove"]+=1
+                
+    if gameStatus["player"] == 'w':
         gameStatus["player"] = 'b'
+        gameStatus["centipawns"] *= -1
     else:
         gameStatus["player"] = 'w'
         
+        
     with open("options/"+name+"_"+currentMove+"_moves.csv", 'a') as f:
-            f.write(e.args[0]+","+str(gameStatus["centipawns"])+","+gameStatus["player"]+"\r\n")
+            f.write(e.args[0]+","+ str(gameStatus["centipawns"]) +","+gameStatus["player"]+"\r\n")
     gameStatus["moves"].append(e.args[0])
 
     if (gameStatus["currentMove"]<totalMoves):
