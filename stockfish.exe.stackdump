@@ -1,0 +1,7 @@
+Exception: STATUS_ACCESS_VIOLATION at eip=00485625
+eax=0028A3A0 ebx=00000000 ecx=00101121 edx=000000C0 esi=00000000 edi=00000000
+ebp=00000000 esp=0028A06C program=C:\Users\Shannon\Documents\School\UROP\Playful Systems\Chesscomputer\stockfish.exe, pid 9072, thread main
+cs=0023 ds=002B es=002B fs=0053 gs=002B ss=002B
+Stack trace:
+Frame     Function  Args
+End of stack trace

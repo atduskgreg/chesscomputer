@@ -4,13 +4,24 @@ from fysom import Fysom
 path = 'C:/Users/Shannon/Documents/School/UROP/Playful Systems/Chesscomputer/'
 enginePath = path + sys.argv[1]
 
-gameStatus = {"gameName" : "test",
-              "gameString" : "",
+# REMEMBER TO CHANGE: gameName, startpos, startPlayer
+gameStatus = {"gameName" : "180",
+              "startpos" : "2r3k1/1q1r1pbp/p4np1/Bp1bp3/8/P1N2P1P/1PP2QP1/3RRBK1 b - - 0 1",
+              "moves" : [],
+              "fen" : True,
               "centipawns" : 0,
-              "whiteCP" : [],
-              "blackCP" : [],
               "currentMove" : 1,
-              "white" : True}
+              "startPlayer" : 'w',
+              "player" : 'w'}
+
+movesList = []
+movesListCP = []
+cp = 0
+totalMoves = 5
+searchingDepth = 8          # total depth for 'searching' state
+exploreDepth = "depth 15"   # depth for 'exploring state. "infinite" or "depth #"
+
+
 
 class Uci:
     engine = subprocess.Popen(
@@ -30,138 +41,67 @@ class Uci:
 class Listener(threading.Thread):
     def __init__(self, uci, queue):
         threading.Thread.__init__(self)
-        self.uci = uci
-        self.queue=queue
+        self._uci = uci
+        self._queue=queue
     def run(self):
         while True:
-            out = self.uci.engine.stdout.readline().strip()
+            out = self._uci.engine.stdout.readline().strip()
             if out != '':
-                self.queue.put(out)
-            time.sleep(0.25)
+                self._queue.put(out)
+            #time.sleep(0.25)
 
 class StockfishManager:
     def __init__(self):
-        self.uci = Uci()
-        self.q = Queue.Queue()
-        self.t = Listener(self.uci, self.q)
-        self.t.start()
+        self._uci = Uci()
+        self._q = Queue.Queue()
+        self._t = Listener(self._uci, self._q)
+        self._t.start()
 
     def send(self, command):
-        self.uci.send(command)
-        with open("options/commands.txt", 'a') as f:
-            f.write(command + "\r\n")
+        self._uci.send(command)
     
     def get(self):
-        line = self.q.get()
+        line = self._q.get()
         print('     '+line)
         return line
 
+    def position(self, startpos, isFen, moves):
+        fen = ""
+        if isFen:
+            fen = "fen " 
+        position = "position " + fen + startpos
+        
+        if len(moves)>0:
+            position += " moves"
+            for i in moves:
+                position += (" " + i)
+        self.send(position)
+
+    def go(self, depth):
+        self.send("go " + depth)
+    def uci(self):
+        self.send("uci")
+    def isready(self):
+        self.send("isready")
+    def ucinewgame(self):
+        self.send("ucinewgame")
+    def end(self):
+        self.send("quit")
+        
 manager = StockfishManager()
 
-
-
-def scoreString(scores):
-    string = ""
-    for i in range(0, len(scores)):
-        string += ' ' + str(scores[i])
-    return string
-
+"""
+INITIALIZE
+State machine for starting Stockfish
+"""
 def onstockfish(e):
     gameStatus = e.args[0]
-    
-    open(gameStatus["gameName"]+'_info.txt', 'w').close()
-    with open(gameStatus["gameName"]+"_moves.txt", 'w') as f:
-        f.write("[Event: " + "" + "]\r\n" +
-                "[Site: " + "" + "]\r\n" +
-                "[Date: " + "" + "]\r\n" +
-                "[Round: " + "" + "]\r\n" +
-                "[White: " + "" + "]\r\n" +
-                "[Black: " + "" + "]\r\n" +
-                "[Result: " + "" + "]\r\n")
-        
-    manager.send("uci")
+    with open(gameStatus["gameName"]+"_info.txt", 'w') as f:
+        f.write("Event,Site,Date,Round,White,Black,Result\r\n")
+    manager.uci()
 
 def onuciok(e):
-    manager.send("isready")
-    
-def onucinewgame(e):
-    currentMove = e.args[2]
-    gameStatus = e.args[3]
-    name = gameStatus["gameName"]
-
-    currentPosition = e.args[1]
-    #moves = "startpos"
-    #if (e.args[1]):
-    #    moves = " moves " + e.args[1]
-        
-    manager.send("ucinewgame")
-    manager.send("position " + currentPosition)
-    manager.send("go " + e.args[0])
-    
-    with open("options/"+name+"_"+currentMove+"_info.txt", 'w') as f:
-        f.write("\r\n" + currentMove + ": ")
-    with open("options/"+name+"_"+currentMove+"_moves.txt", 'w') as f:
-        f.write("move,cp,player\r\n")
-    
-def onsearch(e, gameStatus, depth):
-    with open("options/"+gameStatus["gameName"]+"_info.txt", 'a') as f:
-        f.write(e + '\r\n')
-    if re.search('depth (?P<depth>\d+) seldepth \d+ score cp (?P<cp>-?\w+)', e):
-        info = re.search('depth (?P<depth>\d+) seldepth \d+ score cp (?P<cp>-?\w+)', e)
-        gameStatus["centipawns"] = int(info.group('cp'))
-        if int(info.group('depth')) > depth: # depth 5  
-            manager.send("stop")
-    if re.search('depth (?P<depth>\d+) seldepth \d+ score mate (?P<mate>-?\w+)', e):
-        info = re.search('depth (?P<depth>\d+) seldepth \d+ score mate (?P<mate>-?\w+)', e)
-        if int(info.group('depth')) > depth: # depth 5
-            gameStatus["centipawns"] = int(info.group('mate'))
-            manager.send("quit")
-
-def onbestmove(e):
-    gameStatus = e.args[1]
-    totaMoves = e.args[3]
-    name = gameStatus["gameName"]
-    currentMove = e.args[4]
-
-    if gameStatus["white"]:
-        gameStatus["whiteCP"].append(gameStatus["centipawns"])
-        gameStatus["currentMove"]+=1
-        turn = "w"
-    else:
-        gameStatus["blackCP"].append(gameStatus["centipawns"])
-        turn = "b"
-        
-    with open("options/"+name+"_"+currentMove+"_moves.txt", 'a') as f:
-            f.write(e.args[0]+","+str(gameStatus["centipawns"])+","+turn+"\r\n")
-    gameStatus["white"] = not gameStatus["white"]
-    gameStatus["gameString"] += " " + (e.args[0])
-
-    if (gameStatus["currentMove"]<totalMoves):
-        manager.send("position " + gameStatus["gameString"])
-        manager.send("go " + e.args[2])
-
-def onend(e):
-    print "Checkmate"
-
-
-def onnewgame(e):
-    currentPosition = e.args[0]
-    
-    manager.send("ucinewgame")
-    manager.send("position " + currentPosition)
-    manager.send("go depth 1")
-
-def onmove(e):
-    bestMove = e.args[0]
-    movesList = e.args[1]
-    currentDepth = e.args[2]
-    totalDepth = e.args[3]
-
-    if bestMove not in movesList:
-        movesList.append(bestMove)
-
-    if currentDepth <= totalDepth:
-        manager.send("go depth " + str(currentDepth))
+    manager.isready()
 
 initialize = Fysom({'initial': 'init',
              'events': [{'name': 'uci','src':'init','dst':'stockfish'},
@@ -169,6 +109,47 @@ initialize = Fysom({'initial': 'init',
               'callbacks': {
                   'onstockfish': onstockfish,
                   'onuciok': onuciok } })
+
+"""
+SEARCH
+State machine, takes in one position, searches at increasing depth for next move
+Returns list of possible moves
+"""
+def onnewgame(e):
+    gameStatus = e.args[0]
+
+    
+
+    startpos = gameStatus["startpos"]
+    gameStatus["startPlayer"] = gameStatus["startpos"].split(' ')[1]    #set starting player from fen string
+    fen = gameStatus["fen"]
+    moves = gameStatus["moves"]
+    
+    manager.ucinewgame()
+    manager.position(startpos, fen, moves)
+    manager.go("depth 1")
+
+def ongodepth(e, c):
+    global cp
+    if re.search('depth (?P<depth>\d+) seldepth \d+ score cp (?P<cp>-?\w+)', e):
+        info = re.search('depth (?P<depth>\d+) seldepth \d+ score cp (?P<cp>-?\w+)', e)
+        cp = int(info.group('cp'))
+
+def onmove(e):
+    global cp
+    bestMove = e.args[0]
+    movesList = e.args[1]
+    movesListCP = e.args[2]
+    currentDepth = e.args[3]
+    searchingDepth = e.args[4]
+    #cp = e.args[5]
+
+    if bestMove not in movesList:
+        movesList.append(bestMove)
+        movesListCP.append(cp)
+
+    if currentDepth <= searchingDepth:
+        manager.go("depth " + str(currentDepth))
 
 search = Fysom({'initial': 'init',
              'events': [{'name': 'newgame','src':'init','dst':'godepth'},
@@ -180,6 +161,61 @@ search = Fysom({'initial': 'init',
                   'onnewgame': onnewgame,
                   'onmove': onmove} })
 
+"""
+EXPLORE
+State machine, takes list of possible moves, plays out game
+"""
+def onucinewgame(e):
+    currentMove = e.args[2]
+    gameStatus = e.args[3]
+    player = gameStatus["player"]
+    name = gameStatus["gameName"]
+    moves = gameStatus["moves"]
+    fen = gameStatus["fen"]
+    moveCP = str(movesListCP.pop())
+
+    startpos = e.args[1]
+
+    manager.ucinewgame()
+    manager.position(startpos, fen, moves)
+    manager.go(e.args[0])
+    
+    with open("options/"+name+"_"+currentMove+"_info.txt", 'w') as f:
+        f.write(currentMove + ": "+"\r\n")
+    with open("options/"+name+"_"+currentMove+"_moves.csv", 'w') as f:
+        f.write("move,cp,player\r\n")
+        f.write(currentMove+","+moveCP+","+player+"\r\n")
+    
+def onsearch(e, gameStatus):
+    with open("options/"+gameStatus["gameName"]+"_info.txt", 'a') as f:
+        f.write(e + '\r\n')
+    if re.search('depth (?P<depth>\d+) seldepth \d+ score cp (?P<cp>-?\w+)', e):
+        info = re.search('depth (?P<depth>\d+) seldepth \d+ score cp (?P<cp>-?\w+)', e)
+        gameStatus["centipawns"] = int(info.group('cp'))
+
+def onbestmove(e):
+    gameStatus = e.args[1]
+    totalMoves = e.args[3]
+    name = gameStatus["gameName"]
+    currentMove = e.args[4]
+    startpos = gameStatus["startpos"]
+    fen = gameStatus["fen"]
+    moves = gameStatus["moves"]
+
+    if gameStatus["player"] == 'w':
+        gameStatus["currentMove"]+=1
+        gameStatus["player"] = 'b'
+    else:
+        gameStatus["player"] = 'w'
+        
+    with open("options/"+name+"_"+currentMove+"_moves.csv", 'a') as f:
+            f.write(e.args[0]+","+str(gameStatus["centipawns"])+","+gameStatus["player"]+"\r\n")
+    gameStatus["moves"].append(e.args[0])
+
+    if (gameStatus["currentMove"]<totalMoves):
+        manager.position(startpos, fen, moves)
+        manager.go(e.args[2])
+
 explore = Fysom({'initial': 'init',
              'events': [{'name': 'ucinewgame','src':'init','dst':'goinfinite'},
                         {'name': 'infinite','src':'goinfinite','dst':'goinfinite'},
@@ -189,55 +225,65 @@ explore = Fysom({'initial': 'init',
                         {'name': 'mate','src':'bestmove','dst':'end'}],
               'callbacks': {
                   'onucinewgame': onucinewgame,
-                  'onbestmove': onbestmove,
-                  'onend': onend } })
+                  'onbestmove': onbestmove } })
+
+
 def ongodeeper(e):
     movesList = e.args[0]
-    totaDepth = e.args[1]
-    currentPosition = e.args[2]
+    movesListCP = e.args[1]
+    totaDepth = e.args[2]
+    gameStatus = e.args[3]
+    cp = e.args[4]
     
     currentDepth = 1
-    search.newgame(currentPosition)
-    while currentDepth <= totalDepth:
+    search.newgame(gameStatus)
+    while currentDepth <= searchingDepth:
         currentDepth += 1
         while True:
             res = manager.get()
             if re.search('^info', res):
                 search.searching()
+                ongodepth(res, cp)
             if re.search('^bestmove (?P<move>\w+) ', res):
                 bestmove = re.search('^bestmove (?P<move>\w+) ', res)
-                search.makemove(bestmove.group('move'), movesList, currentDepth, totalDepth)
+                search.makemove(bestmove.group('move'), movesList, movesListCP, currentDepth, searchingDepth, cp)
                 break
             
 def onexplore(e):
-    currentPosition = e.args[0]
-    movesList = e.args[1]
+    gameStatus = e.args[4]
+    
+    movesList = e.args[0]
+    movesListCP = e.args[1]
     totalMoves = e.args[2]
-    depth = e.args[3]                   # depth to stop at while "go infinite"
-    searchDepth = e.args[4]
-    gameStatus = e.args[5]
+    exploreDepth = e.args[3]
+
+    startpos = gameStatus["startpos"]
 
     for i in range(len(movesList)):
         move = movesList.pop()
-        position = currentPosition + " " + move
-        gameStatus["gameString"] = position
+        gameStatus["moves"] = [move]
         gameStatus["currentMove"] = 1
+        gameStatus["player"] = gameStatus["startPlayer"]
 
-        explore.ucinewgame(searchDepth, position, move, gameStatus)
+        explore.ucinewgame(exploreDepth, startpos, move, gameStatus)
         while True:
             res = manager.get()
             if re.search('^info', res):
                 explore.infinite()
-                onsearch(res, gameStatus, depth)
+                onsearch(res, gameStatus)
             if re.search('^bestmove (?P<move>\w+) ', res):
                 bestmove = re.search('^bestmove (?P<move>\w+) ', res)
-                explore.move(bestmove.group('move'), gameStatus, searchDepth, totalMoves, move)
+                explore.move(bestmove.group('move'), gameStatus, exploreDepth, totalMoves, move)
 
             if (gameStatus["currentMove"]>=totalMoves):
                 break
 
     boomerang.noMoves()
-
+    
+def onanalyze(e):
+    manager.end()
+    
+    
 boomerang = Fysom({'initial': 'start',
              'events': [{'name': 'startsearch','src':'start','dst':'godeeper'},
                         {'name': 'exploremove','src':'godeeper','dst':'explore'},
@@ -248,13 +294,6 @@ boomerang = Fysom({'initial': 'start',
                   'onexplore': onexplore
                   } })
 
-movesList = []
-currentPosition = "fen r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2 moves"
-totalMoves = 5
-depth = 25                  # depth to stop at while "go infinite"
-searchDepth = "depth 15"    # "infinite" or "depth #"
-totalDepth = 8              # total depth for 'searching' state
-
 while True:                      
     if boomerang.isstate("start"):
         res = manager.get()
@@ -263,47 +302,7 @@ while True:
         if re.search('^uciok', res):
             initialize.isready()
         if re.search('^readyok', res):
-            boomerang.startsearch(movesList, totalDepth, currentPosition)
+            boomerang.startsearch(movesList, movesListCP, searchingDepth, gameStatus, cp)
     elif boomerang.isstate("godeeper"):
-        boomerang.exploremove(currentPosition, movesList, totalMoves, depth, searchDepth, gameStatus)
+        boomerang.exploremove(movesList, movesListCP, totalMoves, exploreDepth, gameStatus)
 
-
-# Old state machine (for autoplay)       
-while False:
-    res = manager.get()
-    depth = 5                   # depth to stop at while "go infinite"
-    searchDepth = "depth 4"     # "infinite" or "depth #"
-    totalMoves = 10
-    currentPosition = None
-    print('     '+res)
-    if re.search('^Stockfish', res):
-        initialize.uci()
-    if re.search('^uciok', res):
-        initialize.isready()
-    if re.search('^readyok', res):
-        explore.ucinewgame(searchDepth, currentPosition)
-    if re.search('^info', res):
-        explore.infinite()
-        onsearch(res, gameStatus, depth)
-    if re.search('^bestmove (?P<move>\w+) ', res):
-        bestmove = re.search('^bestmove (?P<move>\w+) ', res)
-        explore.move(bestmove.group('move'), gameStatus, searchDepth, totalMoves)
-
-
-
-
-
-##game = Fysom({'initial': 'init',
-##             'events': [{'name': 'uci','src':'init','dst':'stockfish'},
-##                        {'name': 'isready','src':'stockfish','dst':'uciok'},
-##                        {'name': 'ucinewgame','src':'uciok','dst':'goinfinite'},
-##                        {'name': 'infinite','src':'goinfinite','dst':'goinfinite'},
-##                        {'name': 'move','src':'goinfinite','dst':'bestmove'},
-##                        {'name': 'infinite','src':'bestmove','dst':'goinfinite'},
-##                        {'name': 'mate','src':'bestmove','dst':'end'}],
-##              'callbacks': {
-##                  'onstockfish': onstockfish,
-##                  'onuciok': onuciok,
-##                  'onucinewgame': onucinewgame,
-##                  'onbestmove': onbestmove,
-##                  'onend': onend } })
