@@ -18,14 +18,14 @@ class Uci:
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE
     )
-    
+
     def send(self, command):
         print(command)
         self.engine.stdin.write(command+'\n')
 
     def nextMove():
         return 0
-    
+
 class Listener(threading.Thread):
     def __init__(self, uci, queue):
         threading.Thread.__init__(self)
@@ -47,7 +47,7 @@ class StockfishManager:
 
     def send(self, command):
         self.uci.send(command)
-    
+
     def get(self):
         return self.q.get()
 
@@ -66,7 +66,7 @@ def onuciok(e):
 
 def onreadyok(e):
     manager.send("isready")
-    
+
 def onucinewgame(e):
     manager.send("ucinewgame")
     manager.send("position startpos")
@@ -80,7 +80,7 @@ def onucinewgame(e):
                 "[White: " + "" + "]\r\n" +
                 "[Black: " + "" + "]\r\n" +
                 "[Result: " + "" + "]\r\n")
-    
+
 def onsearch(e, gameStatus):
     with open("_info.txt", 'a') as f:
         f.write(e + '\r\n')
@@ -108,7 +108,7 @@ def onbestmove(e):
         with open("_moves.txt", 'a') as f:
             f.write(" " + e.args[0] + " ")
     gameStatus["white"] = not gameStatus["white"]
-   
+
     gameStatus["gameString"] += " " + (e.args[0])
     manager.send("position startpos moves" + gameStatus["gameString"])
     manager.send("go infinte")
