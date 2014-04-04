@@ -1,0 +1,64 @@
+uci
+uci
+isready
+ucinewgame
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1
+go depth 1
+go depth 2
+go depth 3
+go depth 4
+go depth 5
+go depth 6
+go depth 7
+go depth 8
+ucinewgame
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves h8h1
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves h8h1 g1h1
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves h8h1 g1h1 g3f2
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves h8h1 g1h1 g3f2 b5f5
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves h8h1 g1h1 g3f2 b5f5 g6f5
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves h8h1 g1h1 g3f2 b5f5 g6f5 g2g4
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves h8h1 g1h1 g3f2 b5f5 g6f5 g2g4 f5g4
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves h8h1 g1h1 g3f2 b5f5 g6f5 g2g4 f5g4 h1g2
+go depth 15
+ucinewgame
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves h8c8
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves h8c8 f2g3
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves h8c8 f2g3 c8c2
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves h8c8 f2g3 c8c2 b5a5
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves h8c8 f2g3 c8c2 b5a5 c2b2
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves h8c8 f2g3 c8c2 b5a5 c2b2 g1h2
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves h8c8 f2g3 c8c2 b5a5 c2b2 g1h2 b2c2
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves h8c8 f2g3 c8c2 b5a5 c2b2 g1h2 b2c2 a5a7
+go depth 15
+ucinewgame
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves g3f2
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves g3f2 g1f2
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves g3f2 g1f2 h8h1
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves g3f2 g1f2 h8h1 b5d5
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves g3f2 g1f2 h8h1 b5d5 h1b1
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves g3f2 g1f2 h8h1 b5d5 h1b1 d5d2
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves g3f2 g1f2 h8h1 b5d5 h1b1 d5d2 a7a5
+go depth 15
+position fen 7r/p7/6k1/1R6/8/1P4p1/PP3PP1/6K1 b - - 0 1 moves g3f2 g1f2 h8h1 b5d5 h1b1 d5d2 a7a5 f2f3
+go depth 15
