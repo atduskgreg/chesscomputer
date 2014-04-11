@@ -16,11 +16,17 @@ var pos = {
 	"g" : 6,
 	"h" : 7,
 }
+
+var pieces = {};
+
+
 //e2e4 d2d4 g8f6 g1f3 e7e6 e2e3 f8e7 b1c3 e8g8 f1e2 d7d5 e1g1 b8c6 c1d2 c8d7 f3e5 c6e5 d4e5 f6e4 c3e4 d5e4
+colLabels = ["a","b","c","d","e","f","g","h"];
+rowLabels = ["8", "7", "6", "5", "4", "3", "2", "1"];
 
 $( document ).ready(function() {
+	initPieces();
 	black = false;
-
 	for(var row = 0; row < 8; row++){
 		$("#board table").append("<tr></tr>");
 		for(var col = 0; col < 8; col++){
@@ -30,7 +36,7 @@ $( document ).ready(function() {
 			} else {
 				c = "white";
 			}
-			$("#board table tr:last").append("<td class='"+c+"' id='"+col+"_"+row+"'></td>");
+			$("#board table tr:last").append("<td class='"+c+"' id='"+colLabels[col]+rowLabels[row]+"'></td>");
 			black = !black;
 
 			if(col == 7){
@@ -40,7 +46,65 @@ $( document ).ready(function() {
 	}
 
 	displayPosition( startPos );
-	
+	initOnOffForm();
+
+	function initPieces(){
+		for(var row = 0; row < 8; row++){
+			for(var col = 0; col < 8; col++){
+				pieces[colLabels[col]+rowLabels[row]] = "0";
+			}
+		}
+	};
+
+	function initOnOffForm(){
+		var pieceTypes = {
+			"white" : [
+				{name: "King" ,selector:  "K"},
+				{name: "Queen",selector: "Q"},
+				{name: "Bishops",selector: "B"},
+				{name: "Rooks",selector: "R"},
+				{name: "Knights",selector: "N"},
+				{name: "Pawns",selector: "P"}
+				],
+			"black" : [
+				{name:"King" ,selector: "k"},
+				{name:"Queen" ,selector: "q"},
+				{name:"Bishops" ,selector: "b"},
+				{name:"Roosk" ,selector: "r"},
+				{name:"Knights" ,selector: "n"},
+				{name:"Pawns" ,selector: "p"}
+				]
+		}
+
+		for(var i = 0; i < pieceTypes["white"].length; i++){
+			$("#whiteOnOff").append("<p><input type='checkbox' checked value='"+pieceTypes["white"][i].selector+"'></input>"+pieceTypes["white"][i].name+"</p>")
+		}
+		for(var i = 0; i < pieceTypes["black"].length; i++){
+			$("#blackOnOff").append("<p><input type='checkbox' checked value='"+pieceTypes["black"][i].selector+"'></input>"+pieceTypes["black"][i].name+"</p>")
+		}
+
+		$("#onOff input").change(function(){
+			c = $(this);
+			pieceString = c.attr('value');
+
+
+			if(c.is(":checked")){
+				for(key in pieces){
+					if(pieces[key] == pieceString ){
+						$("#"+key + " img").show();
+					}
+				}
+			} else {
+					for(key in pieces){
+						if(pieces[key] == pieceString ){
+							$("#"+key + " img").hide();
+						}
+					}
+			}
+			event.preventDefault();
+		});
+	}
+
 	function switchPlayer() {
 		if (black) {
 			$('#turn').html("BLACK");
@@ -54,41 +118,41 @@ $( document ).ready(function() {
 		from = pos[move.charAt(0)]+"_"+(8-parseInt(move.charAt(1)));
 		to = pos[move.charAt(2)]+"_"+(8-parseInt(move.charAt(3)));
 		console.log(from + " " + to);
-		
-		if ($("#"+to).html()!='') 
+
+		if ($("#"+to).html()!='')
 			eatenPieces.push([currMove, $("#"+to).html()]);
-		
+
 		piece = $("#"+from).html();
 		$("#"+from).html('').css("outline", "4px solid blue");
 		$("#"+to).html(piece).css("outline", "4px solid red");
 	}
-	
+
 	function moveBack(move){
 		$("#board td").css("outline", "none");
 		from = pos[move.charAt(0)]+"_"+(8-parseInt(move.charAt(1)));
 		to = pos[move.charAt(2)]+"_"+(8-parseInt(move.charAt(3)));
 		console.log(to + " " + from);
 
-		
+
 		piece = $("#"+to).html();
 		if (eatenPieces.length>0 && currMove == eatenPieces[eatenPieces.length-1][0])
 			$("#"+to).html(eatenPieces.pop()[1]);
 		else
 			$("#"+to).html('');
 		$("#"+from).html(piece);
-		
+
 		prevMove = moves[currMove-1];
 		prevFrom = pos[prevMove.charAt(0)]+"_"+(8-parseInt(prevMove.charAt(1)));
 		prevTo = pos[prevMove.charAt(2)]+"_"+(8-parseInt(prevMove.charAt(3)));
 		$("#"+prevTo).css("outline", "4px solid red");
 		$("#"+prevFrom).css("outline", "4px solid blue");
 	}
-	
+
 	$("#display").click(function() {
 		var fenString = $('#f').val();
-		display.Position(fenString);
+		displayPosition(fenString);
 	});
-	
+
 	$("#start").click(function() {
 		displayPosition( startPos );
 		$('#turn').html("WHITE");
@@ -99,7 +163,7 @@ $( document ).ready(function() {
 		$('#currMove').html(moves[currMove]);
 		moveForward(moves[currMove]);
 	});
-	
+
 	$("#prev").click(function() {
 		if (currMove>0){
 			moveBack(moves[currMove]);
@@ -108,7 +172,7 @@ $( document ).ready(function() {
 			switchPlayer();
 		}
 	});
-	
+
 	$("#next").click(function() {
 		if (currMove<moves.length-1){
 			currMove += 1;
@@ -117,20 +181,20 @@ $( document ).ready(function() {
 			switchPlayer();
 		}
 	});
-	
-	letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+
+	// letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 	for(var i = 0; i < 8; i++){
-		$("#colSelect").append("<option value='"+letters[i]+"'>"+letters[i]+"</option>");
+		$("#colSelect").append("<option value='"+colLabels[i]+"'>"+colLabels[i]+"</option>");
 		$("#rowSelect").append("<option value='"+i+"'>"+(i+1)+"</option>");
 	}
-	
+
 	$("#highlight").submit(function(){
 		$("#board td").css("outline", "none");
 
-		col = letters.indexOf($("#colSelect").val());
-		row = $("#rowSelect").val();
-		console.log(col+"_"+row);
-		$("#"+col+"_"+row).css("outline", "4px solid red");
+		col = colLabels.indexOf($("#colSelect").val());
+		row = rowLabels[$("#rowSelect").val()];
+		//console.log(col+"_"+row);
+		$("#"+col+row).css("outline", "4px solid red");
 		$("#clear-highlight").show();
 		return false;
 	});
@@ -141,8 +205,6 @@ $( document ).ready(function() {
 		return false;
 	});
 });
-
-
 
 
 
@@ -170,8 +232,7 @@ function displayPosition( fen_position ){
 					numSkips = parseInt(chars[c]);
 					colNum += numSkips;
 				} else {
-					cellId = colNum + "_" + row;
-
+					cellId = colLabels[colNum] + rowLabels[row];
 					var pieceColor = "black";
 					if(chars[c] == chars[c].toUpperCase()){
 						pieceColor = "white";
@@ -179,13 +240,11 @@ function displayPosition( fen_position ){
 
 					imageURL = rootImageURL + "/" + pieceColor + "/" + chars[c] + ".png";
 					$("#" + cellId).html("<img class='pieceImg' src='" + imageURL + "'/>");
+
+					pieces[cellId] = chars[c];
 					colNum++;
 				}
 			}
 		}
 	}
-
-	//$("#fen-input textarea").val(fen_position);
-	//logMsg("board loaded from fen:\n" + fen_position);
-
 }

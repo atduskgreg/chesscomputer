@@ -3,7 +3,16 @@
 		<title>chessviz</title>
 				<script src="jquery-1.9.1.min.js"></script>
 				<script src="index.js"></script>
+				<script src="madden.js"></script>
 				<link type="text/css" href="index.css" rel="stylesheet" />
+				<style>
+				#onOff p{
+					margin: 0;
+				}
+				#onOff h4{
+					margin-bottom:0;
+				}
+				</style>
 	</head>
 	<body>
 		<p id="turnDisplay"><span id="turn">WHITE</span>'s turn</p>
@@ -17,6 +26,16 @@
 
 		</div>
 		<br style="clear;both"/>
+		<form id="onOff">
+			<div id="whiteOnOff">
+			<h4>White</h4>
+			</div>
+			<div id="blackOnOff">
+				<h4>Black</h4>
+			</div>
+<!-- 			<input type="submit" value="update" /> -->
+		</form>
+		<!--
 		<p><label>FEN input</label></p>
 		<textarea id="f"></textarea>
 		<p><button id="display">display</button></p>
@@ -24,7 +43,7 @@
 		<p><label>Game input</label></p>
 		<textarea id="g"></textarea>
 		<p><button id="start">start</button><button id="prev">prev</button><button id="next">next</button></p
-		
+
 		<form id="highlight">
 			<p>
 			<select id="colSelect"></select>
@@ -35,5 +54,6 @@
 		</form>
 
 		<p id="log"></p>
+	-->
 	</body>
 </html>
