@@ -3,7 +3,7 @@
 		<title>chessviz</title>
 				<script src="jquery-1.9.1.min.js"></script>
 				<script src="index.js"></script>
-				<script src="madden.js"></script>
+				<script src="control.js"></script>
 				<link type="text/css" href="index.css" rel="stylesheet" />
 				<style>
 				#onOff p{
@@ -11,6 +11,16 @@
 				}
 				#onOff h4{
 					margin-bottom:0;
+				}
+
+				.blackControl{
+					background: blue;
+				}
+				.whiteControl{
+					background:yellow;
+				}
+				.whiteControl.blackControl{
+					backround:green;
 				}
 				</style>
 	</head>
@@ -26,6 +36,12 @@
 
 		</div>
 		<br style="clear;both"/>
+		<form id="showControl">
+			<h4>Show controlled squares</h4>
+			<input type="checkbox" value="black">black</input>
+			<input type="checkbox" value="white">white</input>
+
+		</form>
 		<form id="onOff">
 			<div id="whiteOnOff">
 			<h4>White</h4>
@@ -33,6 +49,7 @@
 			<div id="blackOnOff">
 				<h4>Black</h4>
 			</div>
+
 <!-- 			<input type="submit" value="update" /> -->
 		</form>
 		<!--
