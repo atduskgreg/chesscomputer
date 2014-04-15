@@ -2,8 +2,61 @@
 	<head>
 		<title>chessviz</title>
 				<script src="jquery-1.9.1.min.js"></script>
+				<script src="p5.min.js"></script>
+
 				<script src="index.js"></script>
-				<script src="madden.js"></script>
+				<script src="control.js"></script>
+				<script>
+				p = []
+				lastMouse = false;
+				function setup(){
+					canvas = createCanvas($("#board").css('width'), $("#board").css('height'));
+					console.log("here:" + $("#board").position().left);
+					canvas.position($("#board").position().left,$("#board").position().top);
+					resetDrawing();
+
+				}
+
+				function draw(){
+					if(mouseIsPressed()){
+						p[p.length-1].push({x: mouseX, y: mouseY});
+						lastMouse = true;
+					} else {
+						if(lastMouse){
+							p.push([]);
+						}
+					}
+
+					stroke(255);
+					strokeWeight(2);
+
+					for(var i = 0; i < p.length; i++){
+						beginShape();
+						for(var j = 0; j < p[i].length; j++){
+							vertex(p[i][j].x, p[i][j].y);
+						}
+						endShape();
+					}
+				}
+
+				function resetDrawing(){
+					p = [];
+					p.push([]);
+					c = $("canvas")[0]
+					c.width = c.width;
+					background(0,125);
+				}
+
+				function keyPressed(){
+					if(key == 'R'){
+						resetDrawing();
+					}
+					if(key == 'H'){
+						$("canvas").hide();
+					}
+				}
+
+				</script>
 				<link type="text/css" href="index.css" rel="stylesheet" />
 				<style>
 				#onOff p{
@@ -11,6 +64,16 @@
 				}
 				#onOff h4{
 					margin-bottom:0;
+				}
+
+				.blackControl{
+					background: blue;
+				}
+				.whiteControl{
+					background:yellow;
+				}
+				.whiteControl.blackControl{
+					backround:green;
 				}
 				</style>
 	</head>
@@ -26,6 +89,12 @@
 
 		</div>
 		<br style="clear;both"/>
+		<form id="showControl">
+			<h4>Show controlled squares</h4>
+			<input type="checkbox" value="black">black</input>
+			<input type="checkbox" value="white">white</input>
+
+		</form>
 		<form id="onOff">
 			<div id="whiteOnOff">
 			<h4>White</h4>
@@ -33,6 +102,7 @@
 			<div id="blackOnOff">
 				<h4>Black</h4>
 			</div>
+
 <!-- 			<input type="submit" value="update" /> -->
 		</form>
 		<!--

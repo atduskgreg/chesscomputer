@@ -24,6 +24,14 @@ var pieces = {};
 colLabels = ["a","b","c","d","e","f","g","h"];
 rowLabels = ["8", "7", "6", "5", "4", "3", "2", "1"];
 
+function initPieces(){
+	for(var row = 0; row < 8; row++){
+		for(var col = 0; col < 8; col++){
+			pieces[colLabels[col]+rowLabels[row]] = "0";
+		}
+	}
+};
+
 $( document ).ready(function() {
 	initPieces();
 	black = false;
@@ -48,13 +56,7 @@ $( document ).ready(function() {
 	displayPosition( startPos );
 	initOnOffForm();
 
-	function initPieces(){
-		for(var row = 0; row < 8; row++){
-			for(var col = 0; col < 8; col++){
-				pieces[colLabels[col]+rowLabels[row]] = "0";
-			}
-		}
-	};
+
 
 	function initOnOffForm(){
 		var pieceTypes = {
@@ -70,7 +72,7 @@ $( document ).ready(function() {
 				{name:"King" ,selector: "k"},
 				{name:"Queen" ,selector: "q"},
 				{name:"Bishops" ,selector: "b"},
-				{name:"Roosk" ,selector: "r"},
+				{name:"Rooks" ,selector: "r"},
 				{name:"Knights" ,selector: "n"},
 				{name:"Pawns" ,selector: "p"}
 				]
@@ -83,10 +85,30 @@ $( document ).ready(function() {
 			$("#blackOnOff").append("<p><input type='checkbox' checked value='"+pieceTypes["black"][i].selector+"'></input>"+pieceTypes["black"][i].name+"</p>")
 		}
 
+		$("#showControl input").change(function(){
+				event.preventDefault();
+				var side = $(this).attr('value');
+				// becoming checked
+				if($(this).is(":checked")){
+					if(side == "white"){
+						highlightSquares(getControlledSquares(getWhitePieces()), "whiteControl")
+					} else {
+						highlightSquares(getControlledSquares(getBlackPieces()), "blackControl");
+					}
+					// $(".blackControl.whiteControl").css("background","green");
+
+				} else{ // becoming unchecked
+					if(side == "white"){
+						$("td").removeClass("whiteControl");
+					} else{
+						$("td").removeClass("blackControl");
+					}
+				}
+		});
+
 		$("#onOff input").change(function(){
 			c = $(this);
 			pieceString = c.attr('value');
-
 
 			if(c.is(":checked")){
 				for(key in pieces){
@@ -211,6 +233,7 @@ $( document ).ready(function() {
 
 function displayPosition( fen_position ){
 	console.log(fen_position);
+	initPieces();
 	$(".pieceImg").hide();
 	parts = fen_position.split(" ");
 	//updateTurn(parts[1]);
