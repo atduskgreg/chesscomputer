@@ -7,14 +7,14 @@ var currMove = 0;
 var eatenPieces = [];
 
 var pos = {
-	"a" : 0,
-	"b" : 1,
-	"c" : 2,
-	"d" : 3,
-	"e" : 4,
-	"f" : 5,
-	"g" : 6,
-	"h" : 7,
+	1 : 'a',
+	2 : 'b',
+	3 : 'c',
+	4 : 'd',
+	5 : 'e',
+	6 : 'f',
+	7 : 'g',
+	8 : 'h',
 }
 
 var pieces = {};
@@ -137,9 +137,8 @@ $( document ).ready(function() {
 	}
 	function moveForward(move){
 		$("#board td").css("outline", "none");
-		from = pos[move.charAt(0)]+"_"+(8-parseInt(move.charAt(1)));
-		to = pos[move.charAt(2)]+"_"+(8-parseInt(move.charAt(3)));
-		console.log(from + " " + to);
+		from = move.charAt(0)+move.charAt(1);		
+		to = move.charAt(2)+move.charAt(3);
 
 		if ($("#"+to).html()!='')
 			eatenPieces.push([currMove, $("#"+to).html()]);
@@ -151,9 +150,8 @@ $( document ).ready(function() {
 
 	function moveBack(move){
 		$("#board td").css("outline", "none");
-		from = pos[move.charAt(0)]+"_"+(8-parseInt(move.charAt(1)));
-		to = pos[move.charAt(2)]+"_"+(8-parseInt(move.charAt(3)));
-		console.log(to + " " + from);
+		from = move.charAt(0)+move.charAt(1);
+		to = move.charAt(2)+move.charAt(3);
 
 
 		piece = $("#"+to).html();
@@ -226,6 +224,33 @@ $( document ).ready(function() {
 		$(this).hide();
 		return false;
 	});
+	
+	
+	var from;
+	 $(".pieceImg").draggable({
+            revert: true,
+			revertDuration:0,
+            appendTo: 'body',
+            stack: '.pieceImg',
+            start: function ( event, ui ) {
+                from = ui.helper.parent().attr('id');
+				ui.helper.css({'z-index': 100});
+            },
+            stop: function ( event, ui ) {
+				var toRow = Math.round(ui.offset.top/65);
+				var toCol = Math.round(ui.offset.left/65);
+				var to = pos[toCol+1]+(10-toRow).toString();
+				//var to = ui.helper.parent().attr('id');
+				
+				move = from+to;
+				console.log(move);
+				
+				moveForward(move);
+				
+				ui.helper.css({'z-index': 10});
+            }
+     });
+		
 });
 
 
