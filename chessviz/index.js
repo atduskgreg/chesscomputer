@@ -146,6 +146,31 @@ $( document ).ready(function() {
 		piece = $("#"+from).html();
 		$("#"+from).html('').css("outline", "4px solid blue");
 		$("#"+to).html(piece).css("outline", "4px solid red");
+		
+		$(".pieceImg").draggable({
+		revert: true,
+		revertDuration:0,
+		appendTo: 'body',
+		stack: '.pieceImg',
+		start: function ( event, ui ) {
+			from = ui.helper.parent().attr('id');
+			ui.helper.css({'z-index': 100});
+		},
+		stop: function ( event, ui ) {
+			var toRow = Math.round(ui.offset.top/65);
+			var toCol = Math.round(ui.offset.left/65);
+			var to = pos[toCol+1]+(10-toRow).toString();
+			//var to = ui.helper.parent().attr('id');
+			
+			move = from+to;
+			console.log(move);
+			
+			moveForward(move);
+			
+			ui.helper.css({'z-index': 10});
+		}
+	});
+
 	}
 
 	function moveBack(move){
@@ -227,29 +252,29 @@ $( document ).ready(function() {
 	
 	
 	var from;
-	 $(".pieceImg").draggable({
-            revert: true,
-			revertDuration:0,
-            appendTo: 'body',
-            stack: '.pieceImg',
-            start: function ( event, ui ) {
-                from = ui.helper.parent().attr('id');
-				ui.helper.css({'z-index': 100});
-            },
-            stop: function ( event, ui ) {
-				var toRow = Math.round(ui.offset.top/65);
-				var toCol = Math.round(ui.offset.left/65);
-				var to = pos[toCol+1]+(10-toRow).toString();
-				//var to = ui.helper.parent().attr('id');
-				
-				move = from+to;
-				console.log(move);
-				
-				moveForward(move);
-				
-				ui.helper.css({'z-index': 10});
-            }
-     });
+	$(".pieceImg").draggable({
+		revert: true,
+		revertDuration:0,
+		appendTo: 'body',
+		stack: '.pieceImg',
+		start: function ( event, ui ) {
+			from = ui.helper.parent().attr('id');
+			ui.helper.css({'z-index': 100});
+		},
+		stop: function ( event, ui ) {
+			var toRow = Math.round(ui.offset.top/65);
+			var toCol = Math.round(ui.offset.left/65);
+			var to = pos[toCol+1]+(10-toRow).toString();
+			//var to = ui.helper.parent().attr('id');
+			
+			move = from+to;
+			console.log(move);
+			
+			moveForward(move);
+			
+			ui.helper.css({'z-index': 10});
+		}
+	});
 		
 });
 
