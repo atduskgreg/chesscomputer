@@ -153,13 +153,17 @@ $( document ).ready(function() {
 	});
 
 	$("#start").click(function() {
+		$("#moveDisplay").empty();
 		displayPosition( startPos );
 		$('#turn').html("WHITE");
 		moveString = $('#g').val();
 		moves = moveString.split(" ");
-		$('#moves').html(moveString);
+		for (var i=0; i<moves.length; i++) {
+			$('#moveDisplay').append("<tr><td>"+moves[i]+"</td></tr>");
+		}
 		currMove = 0;
-		$('#currMove').html(moves[currMove]);
+		highlightMove(currMove);
+		$("#currMove").html(moves[currMove]);
 		moveForward(moves[currMove]);
 	});
 
@@ -167,6 +171,7 @@ $( document ).ready(function() {
 		if (currMove>0){
 			moveBack(moves[currMove]);
 			currMove -= 1;
+			highlightMove(currMove);
 			$('#currMove').html(moves[currMove]);
 			switchPlayer();
 		}
@@ -175,6 +180,7 @@ $( document ).ready(function() {
 	$("#next").click(function() {
 		if (currMove<moves.length-1){
 			currMove += 1;
+			highlightMove(currMove);
 			$('#currMove').html(moves[currMove]);
 			moveForward(moves[currMove]);
 			switchPlayer();
@@ -215,6 +221,12 @@ $( document ).ready(function() {
 		
 });
 
+function highlightMove( move ) {
+	$("#moveDisplay").find('tr').css({'background':'none'});
+	var move = $("#moveDisplay").find('tr').eq( move );
+	move.css({'background':'yellow'});
+	console.log(  move  );
+}
 
 function dragStart( event, ui ) {
 			from = ui.helper.parent().attr('id');
@@ -238,7 +250,6 @@ function dragStop( event, ui ) {
 			$("#showControl input").each( function() {
 				if($( this ).is(":checked")){
 					var side = $( this ).attr('value');
-					console.log(side);
 					if(side == "white"){
 						$("td").removeClass("whiteControl");
 						highlightSquares(getControlledSquares(getWhitePieces()), "whiteControl")
@@ -293,7 +304,6 @@ function moveBack(move){
 	$("#"+from).html(piece);
 
 	var pcId = $("#"+to).children(0).attr('id');
-	console.log(pcId);
 	pieces[from] = "0";
 	pieces[to] = pcId;
 	

@@ -3,10 +3,11 @@
 	height:65px;
 }
 
-table, th, td {
+#cells, th {
 	border-collapse:collapse;
 	border: 1px solid black;
 }
+
 .black {
 	background-color: #000;
 }
@@ -34,10 +35,6 @@ table, th, td {
 	margin: 0px;
 	padding: 0px;
 }
-#viewMoves {
-	float: left;
-	display: inline-block;
-}
 
 .error {
 	color: red;
@@ -50,6 +47,12 @@ table, th, td {
 }
 #turnDisplay{
 	font-size:24px;
+}
+#moveDisplay{
+	display:block;
+}
+#moves{
+	vertical-align: top;
 }
 
 body {
