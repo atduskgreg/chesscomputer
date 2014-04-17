@@ -1,3 +1,22 @@
+body, html {
+	font-family: 'Rosario', sans-serif;
+}
+h4 {
+	margin: 0px;
+}
+button {
+	border: 1px solid #BBBBDE;
+	background: #F1F1F1;
+	cursor: pointer;
+	border-radius: 7px;
+	outline: none;
+	font-size: 1em;
+	font-family: inherit;
+}
+button:hover{
+	background: #DDDDEF;
+}
+
 #board table td {
 	width: 65px;
 	height:65px;
@@ -29,10 +48,13 @@
 	white-space: pre;
 }
 
+#start{
+	margin-left: 10px;
+}
 #f, #g {
 	width: 250px;
 	height: 50px;
-	margin: 0px;
+	margin-top: 5px;
 	padding: 0px;
 }
 
@@ -51,7 +73,7 @@
 #moveDisplay{
 	display:block;
 }
-#moves{
+#main td{
 	vertical-align: top;
 }
 

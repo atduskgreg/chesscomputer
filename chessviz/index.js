@@ -3,6 +3,7 @@ var startPos = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
 var moveString = "";
 var moves = [];
 var currMove = 0;
+var turn = 'w';
 
 var eatenPieces = [];
 var from;
@@ -44,6 +45,7 @@ function initPieces(){
 };
 
 $( document ).ready(function() {
+	$("#moves").hide();
 	initPieces();
 	black = false;
 	for(var row = 0; row < 8; row++){
@@ -139,12 +141,13 @@ $( document ).ready(function() {
 	}
 
 	function switchPlayer() {
-		if (black) {
+		if (turn == 'b') {
 			$('#turn').html("BLACK");
+			turn == 'w';
 		} else {
 			$('#turn').html("WHITE");
+			turn == 'b'
 		}
-		black = !black;
 	}
 
 	$("#display").click(function() {
@@ -153,18 +156,23 @@ $( document ).ready(function() {
 	});
 
 	$("#start").click(function() {
-		$("#moveDisplay").empty();
-		displayPosition( startPos );
-		$('#turn').html("WHITE");
-		moveString = $('#g').val();
-		moves = moveString.split(" ");
-		for (var i=0; i<moves.length; i++) {
-			$('#moveDisplay').append("<tr><td>"+moves[i]+"</td></tr>");
+		if ($('#g').val()) {
+			$("#moves").show();
+			$("#moveDisplay").empty();
+			displayPosition( startPos );
+			$('#turn').html("WHITE");
+			moveString = $('#g').val();
+			moves = moveString.split(" ");
+			for (var i=0; i<moves.length; i++) {
+				$('#moveDisplay').append("<tr><td>"+moves[i]+"</td></tr>");
+			}
+			currMove = 0;
+			highlightMove(currMove);
+			$("#currMove").html(moves[currMove]);
+			moveForward(moves[currMove]);
+		} else {
+			$("#moves").hide();
 		}
-		currMove = 0;
-		highlightMove(currMove);
-		$("#currMove").html(moves[currMove]);
-		moveForward(moves[currMove]);
 	});
 
 	$("#prev").click(function() {
@@ -186,7 +194,14 @@ $( document ).ready(function() {
 			switchPlayer();
 		}
 	});
-
+	
+	$("#boomerang").click(function() {
+		$.getJSON( "http://127.0.0.1:5000/boomerang?f=" + getFen(pieces) + "%20" + turn, function( data ) {
+			console.log( data );
+		});
+	});
+	
+	
 	// letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 	for(var i = 0; i < 8; i++){
 		$("#colSelect").append("<option value='"+colLabels[i]+"'>"+colLabels[i]+"</option>");
@@ -218,14 +233,13 @@ $( document ).ready(function() {
 		start: dragStart,
 		stop: dragStop
 	});
-		
+	
 });
 
 function highlightMove( move ) {
 	$("#moveDisplay").find('tr').css({'background':'none'});
 	var move = $("#moveDisplay").find('tr').eq( move );
 	move.css({'background':'yellow'});
-	console.log(  move  );
 }
 
 function dragStart( event, ui ) {
@@ -361,4 +375,30 @@ function displayPosition( fen_position ){
 			}
 		}
 	}
+}
+
+function getFen( boardArray ) {
+	var fen = "";
+	for(var j=1; j<9; j++){ // cols
+		var empty = 0;
+		for(var i=1; i<9; i++){ // rows
+			var cell = numToChar[i]+j.toString();
+			if(boardArray[cell]!="0"){
+				if (empty!=0) {
+					fen+=empty;
+					empty = 0;
+				}
+				fen+=boardArray[cell];
+			} else {
+				empty++;
+			}
+		}
+		if (empty!=0) {
+			fen+=empty;
+			empty = 0;
+		}
+		if (j<8)
+			fen += "/"
+	}
+	return fen;
 }
