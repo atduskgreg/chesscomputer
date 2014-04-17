@@ -1,6 +1,8 @@
 <html>
 	<head>
 		<title>chessviz</title>
+				<link href='http://fonts.googleapis.com/css?family=Rosario' rel='stylesheet' type='text/css'>
+				
 				<script src="jquery-1.9.1.min.js"></script>
 				<script src="p5.min.js"></script>
 				<script src="jquery-ui.custom.min.js"></script>
@@ -53,7 +55,7 @@
 						resetDrawing();
 					}
 					if(key == 'H'){
-						$("canvas").hide();
+						$("canvas").toggle();
 					}
 				}
 
@@ -81,9 +83,11 @@
 	<body>
 	
 		<text id="turnDisplay"><span id="turn">WHITE</span>'s turn</text><br>
-		Current Move: <text id="currMove"></text><br><br>
+		Current Move: <text id="currMove"></text><br>
+		<i><b>h</b> to toggle canvas, <b>r</b> to reset.
+		<br>
 		
-	<table>
+	<table id="main">
 	<tr><td>
 		<div id="board">
 			<table id="cells">
@@ -92,11 +96,14 @@
 		</div>
 		
 	</td><td>
-			
+		<p>
+		<button id="boomerang">Get Boomerang</button>
+		</p>
+		
 		<form id="showControl">
 			<h4>Show controlled squares</h4>
-			<input type="checkbox" value="black">black</input>
-			<input type="checkbox" value="white">white</input>
+			<input type="checkbox" value="black">Black</input>
+			<input type="checkbox" value="white">White</input>
 
 		</form>
 		<form id="onOff">
@@ -110,13 +117,15 @@
 <!-- 			<input type="submit" value="update" /> -->
 		</form>
 		
-		<div id="viewMoves"><b>View moves</b><br>
+		<div id="viewMoves"><b>View moves</b><button id="start">Set</button><br>
 		<textarea id="g"></textarea>
-		<br><button id="start">start</button><button id="prev">prev</button><button id="next">next</button></div>
+		</div>
 		
 	</td><td id="moves">
 		
-		<table id="moveDisplay"><b>Moves</b></table>
+		<table id="moveDisplay"><h4>Moves</h4>
+		<button id="prev">Prev</button><button id="next">Next</button>
+		</table>
 		
 	</td></tr></table>
 	
