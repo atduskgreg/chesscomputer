@@ -119,6 +119,17 @@ $( document ).ready(function() {
 				}
 		});
 
+		$("#maddenMode").submit(function(){
+			event.preventDefault();
+			resetDrawing();
+
+		});
+		$("#maddenMode input:checkbox").change(function(){
+			event.preventDefault();
+
+			$("canvas").toggle();
+		});
+
 		$("#onOff input").change(function(){
 			c = $(this);
 			pieceString = c.attr('value');
