@@ -5,16 +5,27 @@ var moves = [];
 var currMove = 0;
 
 var eatenPieces = [];
+var from;
 
-var pos = {
-	"a" : 0,
-	"b" : 1,
-	"c" : 2,
-	"d" : 3,
-	"e" : 4,
-	"f" : 5,
-	"g" : 6,
-	"h" : 7,
+var numToChar = {
+	1 : 'a',
+	2 : 'b',
+	3 : 'c',
+	4 : 'd',
+	5 : 'e',
+	6 : 'f',
+	7 : 'g',
+	8 : 'h'
+}
+var charToNum = {
+	'a' : 1,
+	'b' : 2,
+	'c' : 3,
+	'd' : 4,
+	'e' : 5,
+	'f' : 6,
+	'g' : 7,
+	'h' : 8
 }
 
 var pieces = {};
@@ -135,40 +146,6 @@ $( document ).ready(function() {
 		}
 		black = !black;
 	}
-	function moveForward(move){
-		$("#board td").css("outline", "none");
-		from = pos[move.charAt(0)]+"_"+(8-parseInt(move.charAt(1)));
-		to = pos[move.charAt(2)]+"_"+(8-parseInt(move.charAt(3)));
-		console.log(from + " " + to);
-
-		if ($("#"+to).html()!='')
-			eatenPieces.push([currMove, $("#"+to).html()]);
-
-		piece = $("#"+from).html();
-		$("#"+from).html('').css("outline", "4px solid blue");
-		$("#"+to).html(piece).css("outline", "4px solid red");
-	}
-
-	function moveBack(move){
-		$("#board td").css("outline", "none");
-		from = pos[move.charAt(0)]+"_"+(8-parseInt(move.charAt(1)));
-		to = pos[move.charAt(2)]+"_"+(8-parseInt(move.charAt(3)));
-		console.log(to + " " + from);
-
-
-		piece = $("#"+to).html();
-		if (eatenPieces.length>0 && currMove == eatenPieces[eatenPieces.length-1][0])
-			$("#"+to).html(eatenPieces.pop()[1]);
-		else
-			$("#"+to).html('');
-		$("#"+from).html(piece);
-
-		prevMove = moves[currMove-1];
-		prevFrom = pos[prevMove.charAt(0)]+"_"+(8-parseInt(prevMove.charAt(1)));
-		prevTo = pos[prevMove.charAt(2)]+"_"+(8-parseInt(prevMove.charAt(3)));
-		$("#"+prevTo).css("outline", "4px solid red");
-		$("#"+prevFrom).css("outline", "4px solid blue");
-	}
 
 	$("#display").click(function() {
 		var fenString = $('#f').val();
@@ -176,13 +153,17 @@ $( document ).ready(function() {
 	});
 
 	$("#start").click(function() {
+		$("#moveDisplay").empty();
 		displayPosition( startPos );
 		$('#turn').html("WHITE");
 		moveString = $('#g').val();
 		moves = moveString.split(" ");
-		$('#moves').html(moveString);
+		for (var i=0; i<moves.length; i++) {
+			$('#moveDisplay').append("<tr><td>"+moves[i]+"</td></tr>");
+		}
 		currMove = 0;
-		$('#currMove').html(moves[currMove]);
+		highlightMove(currMove);
+		$("#currMove").html(moves[currMove]);
 		moveForward(moves[currMove]);
 	});
 
@@ -190,6 +171,7 @@ $( document ).ready(function() {
 		if (currMove>0){
 			moveBack(moves[currMove]);
 			currMove -= 1;
+			highlightMove(currMove);
 			$('#currMove').html(moves[currMove]);
 			switchPlayer();
 		}
@@ -198,6 +180,7 @@ $( document ).ready(function() {
 	$("#next").click(function() {
 		if (currMove<moves.length-1){
 			currMove += 1;
+			highlightMove(currMove);
 			$('#currMove').html(moves[currMove]);
 			moveForward(moves[currMove]);
 			switchPlayer();
@@ -226,13 +209,121 @@ $( document ).ready(function() {
 		$(this).hide();
 		return false;
 	});
+	
+	$(".pieceImg").draggable({
+		revert: true,
+		revertDuration:0,
+		appendTo: 'body',
+		stack: '.pieceImg',
+		start: dragStart,
+		stop: dragStop
+	});
+		
 });
 
+function highlightMove( move ) {
+	$("#moveDisplay").find('tr').css({'background':'none'});
+	var move = $("#moveDisplay").find('tr').eq( move );
+	move.css({'background':'yellow'});
+	console.log(  move  );
+}
+
+function dragStart( event, ui ) {
+			from = ui.helper.parent().attr('id');
+			ui.helper.css({'z-index': 100});
+		}
+		
+function dragStop( event, ui ) {
+			var cInc = Math.round(ui.position.left/65);
+			var rInc = Math.round(ui.position.top/65);
+			var toCol = charToNum[from[0]] + cInc;
+			var toRow = parseInt(from[1]) - rInc;
+			
+			var to = numToChar[toCol]+toRow.toString();
+
+			move = from+to;
+			moveForward(move);
+			
+			$("#currMove").html(move);
+			
+			
+			$("#showControl input").each( function() {
+				if($( this ).is(":checked")){
+					var side = $( this ).attr('value');
+					if(side == "white"){
+						$("td").removeClass("whiteControl");
+						highlightSquares(getControlledSquares(getWhitePieces()), "whiteControl")
+					} else {
+						$("td").removeClass("blackControl");
+						highlightSquares(getControlledSquares(getBlackPieces()), "blackControl");
+					}
+				}
+			});
+			
+			ui.helper.css({'z-index': 10});
+		}
+		
+function moveForward(move){
+	$("#board td").css("outline", "none");
+	from = move.charAt(0)+move.charAt(1);		
+	to = move.charAt(2)+move.charAt(3);
+
+	if ($("#"+to).html()!='')
+		eatenPieces.push([currMove, $("#"+to).html()]);
+
+	piece = $("#"+from).html();
+	$("#"+from).html('').css("outline", "4px solid blue");
+	$("#"+to).html(piece).css("outline", "4px solid red");
+	
+	var pcId = $("#"+to).children(0).attr('id');
+	pieces[from] = "0";
+	pieces[to] = pcId;
+	
+	$(".pieceImg").draggable({
+		revert: true,
+		revertDuration:0,
+		appendTo: 'body',
+		stack: '.pieceImg',
+		start: dragStart,
+		stop: dragStop
+	});
+
+}
+
+function moveBack(move){
+	$("#board td").css("outline", "none");
+	from = move.charAt(0)+move.charAt(1);
+	to = move.charAt(2)+move.charAt(3);
 
 
+	piece = $("#"+to).html();
+	if (eatenPieces.length>0 && currMove == eatenPieces[eatenPieces.length-1][0])
+		$("#"+to).html(eatenPieces.pop()[1]);
+	else
+		$("#"+to).html('');
+	$("#"+from).html(piece);
 
+	var pcId = $("#"+to).children(0).attr('id');
+	pieces[from] = "0";
+	pieces[to] = pcId;
+	
+	prevMove = moves[currMove-1];
+	prevFrom = numToChar[prevMove.charAt(0)]+"_"+(8-parseInt(prevMove.charAt(1)));
+	prevTo = numToChar[prevMove.charAt(2)]+"_"+(8-parseInt(prevMove.charAt(3)));
+	$("#"+prevTo).css("outline", "4px solid red");
+	$("#"+prevFrom).css("outline", "4px solid blue");
+		
+	$(".pieceImg").draggable({
+		revert: true,
+		revertDuration:0,
+		appendTo: 'body',
+		stack: '.pieceImg',
+		start: dragStart,
+		stop: dragStop
+	});
+}
+		
 function displayPosition( fen_position ){
-	console.log(fen_position);
 	initPieces();
 	$(".pieceImg").hide();
 	parts = fen_position.split(" ");
@@ -262,7 +353,7 @@ function displayPosition( fen_position ){
 					}
 
 					imageURL = rootImageURL + "/" + pieceColor + "/" + chars[c] + ".png";
-					$("#" + cellId).html("<img class='pieceImg' src='" + imageURL + "'/>");
+					$("#" + cellId).html("<img id='"+chars[c]+"' class='pieceImg' src='" + imageURL + "'/>");
 
 					pieces[cellId] = chars[c];
 					colNum++;

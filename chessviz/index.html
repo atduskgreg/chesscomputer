@@ -3,7 +3,8 @@
 		<title>chessviz</title>
 				<script src="jquery-1.9.1.min.js"></script>
 				<script src="p5.min.js"></script>
-
+				<script src="jquery-ui.custom.min.js"></script>
+				
 				<script src="index.js"></script>
 				<script src="control.js"></script>
 				<script>
@@ -16,12 +17,14 @@
 				}
 
 				function draw(){
-					if(mouseIsPressed()){
-						p[p.length-1].push({x: mouseX, y: mouseY});
-						lastMouse = true;
-					} else {
-						if(lastMouse){
-							p.push([]);
+					if ($("canvas").is(":visible")) {
+						if(mouseIsPressed()){
+							p[p.length-1].push({x: mouseX, y: mouseY});
+							lastMouse = true;
+						} else {
+							if(lastMouse){
+								p.push([]);
+							}
 						}
 					}
 
@@ -76,17 +79,20 @@
 				</style>
 	</head>
 	<body>
-		<p id="turnDisplay"><span id="turn">WHITE</span>'s turn</p>
-		<p id="moveDisplay">
-			Moves: <text id="moves"></text><br>
-			Current Move: <text id="currMove"></text>
-		</p>
+	
+		<text id="turnDisplay"><span id="turn">WHITE</span>'s turn</text><br>
+		Current Move: <text id="currMove"></text><br><br>
+		
+	<table>
+	<tr><td>
 		<div id="board">
-			<table>
+			<table id="cells">
 			</table>
 
 		</div>
-		<br style="clear;both"/>
+		
+	</td><td>
+			
 		<form id="showControl">
 			<h4>Show controlled squares</h4>
 			<input type="checkbox" value="black">black</input>
@@ -103,16 +109,29 @@
 
 <!-- 			<input type="submit" value="update" /> -->
 		</form>
+		
+		<div id="viewMoves"><b>View moves</b><br>
+		<textarea id="g"></textarea>
+		<br><button id="start">start</button><button id="prev">prev</button><button id="next">next</button></div>
+		
+	</td><td id="moves">
+		
+		<table id="moveDisplay"><b>Moves</b></table>
+		
+	</td></tr></table>
+	
+	
 		<!--
+		
+		 
+		 
 		<p><label>FEN input</label></p>
 		<textarea id="f"></textarea>
-		<p><button id="display">display</button></p>
+		<p><button id="display">display</button></p> -->
 
-		<p><label>Game input</label></p>
-		<textarea id="g"></textarea>
-		<p><button id="start">start</button><button id="prev">prev</button><button id="next">next</button></p
 
-		<form id="highlight">
+
+		<!-- <form id="highlight">
 			<p>
 			<select id="colSelect"></select>
 			<select id="rowSelect"></select>

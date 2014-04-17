@@ -44,6 +44,7 @@ function getPiecePositions(piece){
   for(p in pieces){
     if(pieces[p] == piece){
       result.push(positionStringToVector(p));
+	  console.log(positionStringToVector(p));
     }
   }
   return result;

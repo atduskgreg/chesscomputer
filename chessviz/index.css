@@ -3,10 +3,11 @@
 	height:65px;
 }
 
-table, th, td {
+#cells, th {
 	border-collapse:collapse;
 	border: 1px solid black;
 }
+
 .black {
 	background-color: #000;
 }
@@ -29,8 +30,10 @@ table, th, td {
 }
 
 #f, #g {
-	width: 400px;
+	width: 250px;
 	height: 50px;
+	margin: 0px;
+	padding: 0px;
 }
 
 .error {
@@ -44,6 +47,12 @@ table, th, td {
 }
 #turnDisplay{
 	font-size:24px;
+}
+#moveDisplay{
+	display:block;
+}
+#moves{
+	vertical-align: top;
 }
 
 body {
