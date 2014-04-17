@@ -231,8 +231,11 @@ $( document ).ready(function() {
 		appendTo: 'body',
 		stack: '.pieceImg',
 		start: dragStart,
+		start: dragStart,
 		stop: dragStop
 	});
+	
+	//console.log(getFen(pieces));
 	
 });
 
@@ -379,7 +382,7 @@ function displayPosition( fen_position ){
 
 function getFen( boardArray ) {
 	var fen = "";
-	for(var j=1; j<9; j++){ // cols
+	for(var j=8; j>0; j--){ // cols
 		var empty = 0;
 		for(var i=1; i<9; i++){ // rows
 			var cell = numToChar[i]+j.toString();
@@ -397,7 +400,7 @@ function getFen( boardArray ) {
 			fen+=empty;
 			empty = 0;
 		}
-		if (j<8)
+		if (j>0)
 			fen += "/"
 	}
 	return fen;
