@@ -5,8 +5,9 @@ var moves = [];
 var currMove = 0;
 
 var eatenPieces = [];
+var from;
 
-var pos = {
+var numToChar = {
 	1 : 'a',
 	2 : 'b',
 	3 : 'c',
@@ -14,7 +15,17 @@ var pos = {
 	5 : 'e',
 	6 : 'f',
 	7 : 'g',
-	8 : 'h',
+	8 : 'h'
+}
+var charToNum = {
+	'a' : 1,
+	'b' : 2,
+	'c' : 3,
+	'd' : 4,
+	'e' : 5,
+	'f' : 6,
+	'g' : 7,
+	'h' : 8
 }
 
 var pieces = {};
@@ -135,63 +146,6 @@ $( document ).ready(function() {
 		}
 		black = !black;
 	}
-	function moveForward(move){
-		$("#board td").css("outline", "none");
-		from = move.charAt(0)+move.charAt(1);		
-		to = move.charAt(2)+move.charAt(3);
-
-		if ($("#"+to).html()!='')
-			eatenPieces.push([currMove, $("#"+to).html()]);
-
-		piece = $("#"+from).html();
-		$("#"+from).html('').css("outline", "4px solid blue");
-		$("#"+to).html(piece).css("outline", "4px solid red");
-		
-		$(".pieceImg").draggable({
-		revert: true,
-		revertDuration:0,
-		appendTo: 'body',
-		stack: '.pieceImg',
-		start: function ( event, ui ) {
-			from = ui.helper.parent().attr('id');
-			ui.helper.css({'z-index': 100});
-		},
-		stop: function ( event, ui ) {
-			var toRow = Math.round(ui.offset.top/65);
-			var toCol = Math.round(ui.offset.left/65);
-			var to = pos[toCol+1]+(10-toRow).toString();
-			//var to = ui.helper.parent().attr('id');
-			
-			move = from+to;
-			console.log(move);
-			
-			moveForward(move);
-			
-			ui.helper.css({'z-index': 10});
-		}
-	});
-
-	}
-
-	function moveBack(move){
-		$("#board td").css("outline", "none");
-		from = move.charAt(0)+move.charAt(1);
-		to = move.charAt(2)+move.charAt(3);
-
-
-		piece = $("#"+to).html();
-		if (eatenPieces.length>0 && currMove == eatenPieces[eatenPieces.length-1][0])
-			$("#"+to).html(eatenPieces.pop()[1]);
-		else
-			$("#"+to).html('');
-		$("#"+from).html(piece);
-
-		prevMove = moves[currMove-1];
-		prevFrom = pos[prevMove.charAt(0)]+"_"+(8-parseInt(prevMove.charAt(1)));
-		prevTo = pos[prevMove.charAt(2)]+"_"+(8-parseInt(prevMove.charAt(3)));
-		$("#"+prevTo).css("outline", "4px solid red");
-		$("#"+prevFrom).css("outline", "4px solid blue");
-	}
 
 	$("#display").click(function() {
 		var fenString = $('#f').val();
@@ -250,39 +204,99 @@ $( document ).ready(function() {
 		return false;
 	});
 	
-	
-	var from;
 	$(".pieceImg").draggable({
 		revert: true,
 		revertDuration:0,
 		appendTo: 'body',
 		stack: '.pieceImg',
-		start: function ( event, ui ) {
-			from = ui.helper.parent().attr('id');
-			ui.helper.css({'z-index': 100});
-		},
-		stop: function ( event, ui ) {
-			var toRow = Math.round(ui.offset.top/65);
-			var toCol = Math.round(ui.offset.left/65);
-			var to = pos[toCol+1]+(10-toRow).toString();
-			//var to = ui.helper.parent().attr('id');
-			
-			move = from+to;
-			console.log(move);
-			
-			moveForward(move);
-			
-			ui.helper.css({'z-index': 10});
-		}
+		start: dragStart,
+		stop: dragStop
 	});
 		
 });
 
 
+function dragStart( event, ui ) {
+			from = ui.helper.parent().attr('id');
+			ui.helper.css({'z-index': 100});
+		}
+		
+function dragStop( event, ui ) {
+			var cInc = Math.round(ui.position.left/65);
+			var rInc = Math.round(ui.position.top/65);
+			var toCol = charToNum[from[0]] + cInc;
+			var toRow = parseInt(from[1]) - rInc;
+			
+			var to = numToChar[toCol]+toRow.toString();
+
+			move = from+to;
+			moveForward(move);
+			
+			$("#currMove").html(move);
+			
+			ui.helper.css({'z-index': 10});
+		}
+		
+function moveForward(move){
+	$("#board td").css("outline", "none");
+	from = move.charAt(0)+move.charAt(1);		
+	to = move.charAt(2)+move.charAt(3);
+
+	if ($("#"+to).html()!='')
+		eatenPieces.push([currMove, $("#"+to).html()]);
+
+	piece = $("#"+from).html();
+	$("#"+from).html('').css("outline", "4px solid blue");
+	$("#"+to).html(piece).css("outline", "4px solid red");
+	
+	var pcId = $("#"+to).children(0).attr('id');
+	pieces[to] = pcId;
+	
+	$(".pieceImg").draggable({
+		revert: true,
+		revertDuration:0,
+		appendTo: 'body',
+		stack: '.pieceImg',
+		start: dragStart,
+		stop: dragStop
+	});
+
+}
+
+function moveBack(move){
+	$("#board td").css("outline", "none");
+	from = move.charAt(0)+move.charAt(1);
+	to = move.charAt(2)+move.charAt(3);
 
 
+	piece = $("#"+to).html();
+	if (eatenPieces.length>0 && currMove == eatenPieces[eatenPieces.length-1][0])
+		$("#"+to).html(eatenPieces.pop()[1]);
+	else
+		$("#"+to).html('');
+	$("#"+from).html(piece);
+
+	var pcId = $("#"+to).children(0).attr('id');
+	console.log(pcId);
+	pieces[to] = pcId;
+	
+	prevMove = moves[currMove-1];
+	prevFrom = numToChar[prevMove.charAt(0)]+"_"+(8-parseInt(prevMove.charAt(1)));
+	prevTo = numToChar[prevMove.charAt(2)]+"_"+(8-parseInt(prevMove.charAt(3)));
+	$("#"+prevTo).css("outline", "4px solid red");
+	$("#"+prevFrom).css("outline", "4px solid blue");
+		
+	$(".pieceImg").draggable({
+		revert: true,
+		revertDuration:0,
+		appendTo: 'body',
+		stack: '.pieceImg',
+		start: dragStart,
+		stop: dragStop
+	});
+}
+		
 function displayPosition( fen_position ){
-	console.log(fen_position);
 	initPieces();
 	$(".pieceImg").hide();
 	parts = fen_position.split(" ");
@@ -312,7 +326,7 @@ function displayPosition( fen_position ){
 					}
 
 					imageURL = rootImageURL + "/" + pieceColor + "/" + chars[c] + ".png";
-					$("#" + cellId).html("<img class='pieceImg' src='" + imageURL + "'/>");
+					$("#" + cellId).html("<img id='"+chars[c]+"' class='pieceImg' src='" + imageURL + "'/>");
 
 					pieces[cellId] = chars[c];
 					colNum++;
