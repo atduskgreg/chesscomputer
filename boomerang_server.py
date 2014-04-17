@@ -4,7 +4,7 @@ from fysom import Fysom
 
 class Uci:
 	path = 'C:/Users/Shannon/Documents/School/UROP/Playful Systems/Chesscomputer/'
-	enginePath = sys.argv[1]
+	enginePath = path+sys.argv[1]
 	engine = subprocess.Popen(
 		enginePath,
 		universal_newlines=True,
@@ -156,6 +156,9 @@ class Boomerang:
 
 			if currentDepth <= searchingDepth:
 				self.manager.go("depth " + str(currentDepth))
+			else:
+				moveDepths.append(currentDepth-1)
+				del moveDepths[0]
 		
 		"""
 		EXPLORE
@@ -319,7 +322,8 @@ class Boomerang:
 					 'events': [{'name': 'startsearch','src':'start','dst':'godeeper'},
 								{'name': 'exploremove','src':'godeeper','dst':'explore'},
 								{'name': 'exploremove','src':'explore','dst':'explore'},
-								{'name': 'noMoves','src':'explore','dst':'analyze'}],
+								{'name': 'noMoves','src':'explore','dst':'analyze'},
+								{'name': 'reset', 'src':'analyze','dst':'start'}],
 					  'callbacks': {
 						  'ongodeeper': ongodeeper,
 						  'onexplore': onexplore

@@ -44,6 +44,17 @@ function initPieces(){
 	}
 };
 
+function switchPlayer() {
+	if (turn == 'w') {
+		$('#turn').html("BLACK");
+		turn = 'b';
+	} else {
+		console.log("wturn");
+		$('#turn').html("WHITE");
+		turn = 'w'
+	}
+}
+
 $( document ).ready(function() {
 	$("#moves").hide();
 	initPieces();
@@ -151,16 +162,6 @@ $( document ).ready(function() {
 		});
 	}
 
-	function switchPlayer() {
-		if (turn == 'b') {
-			$('#turn').html("BLACK");
-			turn == 'w';
-		} else {
-			$('#turn').html("WHITE");
-			turn == 'b'
-		}
-	}
-
 	$("#display").click(function() {
 		var fenString = $('#f').val();
 		displayPosition(fenString);
@@ -207,9 +208,18 @@ $( document ).ready(function() {
 	});
 	
 	$("#boomerang").click(function() {
+		$("#moveDisplay").empty()
 		$.getJSON( "http://127.0.0.1:5000/boomerang?f=" + getFen(pieces) + "%20" + turn, function( data ) {
-			console.log( data );
+			$.each(data, function( index, element ) {
+				console.log(element.moves[0].move);
+				$('#moveDisplay').append("<tr><td>"+element.moves[0].move+"</td><td>"+element.searchingDepth+"</td></tr>");
+				$.each(element.moves, function( index, moves) {
+					console.log( moves.move );
+				});
+			});
+			//console.log( data.toString() );
 		});
+		$("#moves").show();
 	});
 	
 	
@@ -262,6 +272,15 @@ function dragStart( event, ui ) {
 		}
 		
 function dragStop( event, ui ) {
+			var piece = ui.helper.attr('id');
+			console.log(piece == piece.toUpperCase());
+			console.log(piece != piece.toUpperCase());
+			console.log(turn=='w');
+			if ((piece == piece.toUpperCase() && turn=='w')||(piece != piece.toUpperCase() && turn=='b')) {	
+				console.log("SWITCH");
+				switchPlayer();
+			}
+			
 			var cInc = Math.round(ui.position.left/65);
 			var rInc = Math.round(ui.position.top/65);
 			var toCol = charToNum[from[0]] + cInc;
