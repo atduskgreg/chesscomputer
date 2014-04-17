@@ -44,7 +44,6 @@ function getPiecePositions(piece){
   for(p in pieces){
     if(pieces[p] == piece){
       result.push(positionStringToVector(p));
-	  console.log(positionStringToVector(p));
     }
   }
   return result;
@@ -53,7 +52,7 @@ function getPiecePositions(piece){
 function getControlledSquares(piecesArray){
   var result = [];
   for(var p = 0; p < piecesArray.length; p++){
-    positions = getPiecePositions(piecesArray[p]);
+    var positions = getPiecePositions(piecesArray[p]);
     for(var i = 0; i < positions.length; i++){
 
       upLeft = {x:1, y:1};
@@ -64,17 +63,18 @@ function getControlledSquares(piecesArray){
       down = {x:0, y:-1};
       downLeft = {x:-1, y:-1};
       left = {x:-1, y:0};
-
       switch(piecesArray[p].toLowerCase()){
       case 'p':
         var move;
+        // console.log("here");
         //white and black move in opposite directions
         if(piecesArray[p] == "P"){
           move = up;
         } else {
           move = down;
         }
-        result.push.apply(getUnoccupied([getNeighbor(positions[i], move)]));
+        
+        result.push.apply(result, getUnoccupied([getNeighbor(positions[i], move)]));
         break;
       case 'n':
           result.push.apply(result,getUnoccupied(knightMoves(positions[i].x, positions[i].y)));
