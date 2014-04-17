@@ -20,6 +20,9 @@ button:hover{
 #board table td {
 	width: 65px;
 	height:65px;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
 }
 
 #cells, th {
@@ -56,6 +59,11 @@ button:hover{
 	height: 50px;
 	margin-top: 5px;
 	padding: 0px;
+}
+
+.line:hover {
+	background: #DDDDEF;
+	cursor: pointer;
 }
 
 .error {
