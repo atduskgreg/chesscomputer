@@ -196,9 +196,18 @@ $( document ).ready(function() {
 	});
 	
 	$("#boomerang").click(function() {
+		$("#moveDisplay").empty()
 		$.getJSON( "http://127.0.0.1:5000/boomerang?f=" + getFen(pieces) + "%20" + turn, function( data ) {
-			console.log( data );
+			$.each(data, function( index, element ) {
+				console.log(element.moves[0].move);
+				$('#moveDisplay').append("<tr><td>"+element.moves[0].move+"</td></tr>");
+				$.each(element.moves, function( index, moves) {
+					console.log( moves.move );
+				});
+			});
+			//console.log( data.toString() );
 		});
+		$("#moves").show();
 	});
 	
 	
