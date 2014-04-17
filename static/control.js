@@ -65,16 +65,21 @@ function getControlledSquares(piecesArray){
       left = {x:-1, y:0};
       switch(piecesArray[p].toLowerCase()){
       case 'p':
-        var move;
-        // console.log("here");
+        var moves = [];
         //white and black move in opposite directions
         if(piecesArray[p] == "P"){
-          move = up;
+          moves.push(up);
+          moves.push(upRight);
+          moves.push(upLeft);
         } else {
-          move = down;
+          moves.push(down);
+          moves.push(downRight);
+          moves.push(downLeft);
         }
-        
-        result.push.apply(result, getUnoccupied([getNeighbor(positions[i], move)]));
+
+
+
+        result.push.apply(result, getUnoccupied(getNeighbors(positions[i], moves)));
         break;
       case 'n':
           result.push.apply(result,getUnoccupied(knightMoves(positions[i].x, positions[i].y)));
