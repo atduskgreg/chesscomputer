@@ -49,7 +49,6 @@ function switchPlayer() {
 		$('#turn').html("BLACK");
 		turn = 'b';
 	} else {
-		console.log("wturn");
 		$('#turn').html("WHITE");
 		turn = 'w'
 	}
@@ -200,17 +199,15 @@ $( document ).ready(function() {
 		$("#moveDisplay").empty()
 		$.getJSON( "http://127.0.0.1:5000/boomerang?f=" + getFen(pieces) + "%20" + turn, function( data ) {
 			$.each(data, function( index, element ) {
-				console.log(element.moves[0].move);
 				$('#moveDisplay').append("<tr><td class='line'>"+element.moves[0].move+"</td><td>"+element.searchingDepth+"</td></tr>");
 				$.each(element.moves, function( index, moves) {
-					console.log( moves.move );
+					//console.log( moves.move );
 				});
 			});
-			//console.log( data.toString() );
-			
+
 			$(".line").click(function() {
 				var move = $(this).text();
-				moveForward(move);
+				//moveForward(move);
 				$("#board td").css("outline", "none");
 				$("#"+move.slice(0,2)).css("outline", "4px solid blue");
 				$("#"+move.slice(2,4)).css("outline", "4px solid red");
@@ -270,11 +267,7 @@ function dragStart( event, ui ) {
 		
 function dragStop( event, ui ) {
 			var piece = ui.helper.attr('id');
-			console.log(piece == piece.toUpperCase());
-			console.log(piece != piece.toUpperCase());
-			console.log(turn=='w');
 			if ((piece == piece.toUpperCase() && turn=='w')||(piece != piece.toUpperCase() && turn=='b')) {	
-				console.log("SWITCH");
 				switchPlayer();
 			}
 			
