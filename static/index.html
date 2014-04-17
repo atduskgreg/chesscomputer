@@ -14,10 +14,8 @@
 				lastMouse = false;
 				function setup(){
 					canvas = createCanvas($("#board").css('width'), $("#board").css('height'));
-					console.log("here:" + $("#board").position().left);
 					canvas.position($("#board").position().left,$("#board").position().top);
 					resetDrawing();
-
 				}
 
 				function draw(){
