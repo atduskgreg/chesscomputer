@@ -1,4 +1,4 @@
-var rootImageURL = "images";
+var rootImageURL = "/static/images";
 var startPos = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
 var moveString = "";
 var moves = [];
