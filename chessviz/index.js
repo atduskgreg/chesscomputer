@@ -234,6 +234,21 @@ function dragStop( event, ui ) {
 			
 			$("#currMove").html(move);
 			
+			
+			$("#showControl input").each( function() {
+				if($( this ).is(":checked")){
+					var side = $( this ).attr('value');
+					console.log(side);
+					if(side == "white"){
+						$("td").removeClass("whiteControl");
+						highlightSquares(getControlledSquares(getWhitePieces()), "whiteControl")
+					} else {
+						$("td").removeClass("blackControl");
+						highlightSquares(getControlledSquares(getBlackPieces()), "blackControl");
+					}
+				}
+			});
+			
 			ui.helper.css({'z-index': 10});
 		}
 		
@@ -250,6 +265,7 @@ function moveForward(move){
 	$("#"+to).html(piece).css("outline", "4px solid red");
 	
 	var pcId = $("#"+to).children(0).attr('id');
+	pieces[from] = "0";
 	pieces[to] = pcId;
 	
 	$(".pieceImg").draggable({
@@ -278,6 +294,7 @@ function moveBack(move){
 
 	var pcId = $("#"+to).children(0).attr('id');
 	console.log(pcId);
+	pieces[from] = "0";
 	pieces[to] = pcId;
 	
 	prevMove = moves[currMove-1];
