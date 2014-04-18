@@ -208,7 +208,7 @@ $( document ).ready(function() {
 	
 	$("#boomerang").click(function() {
 		$("#moveDisplay").empty()
-		$.getJSON( "http://127.0.0.1:5000/boomerang?f=" + getFen(pieces) + "%20" + turn, function( data ) {
+		$.getJSON( "/boomerang?f=" + getFen(pieces) + "%20" + turn, function( data ) {
 			$.each(data, function( index, element ) {
 				$('#moveDisplay').append("<tr><td class='line'>"+element.moves[0].move+"</td><td>"+element.searchingDepth+"</td></tr>");
 				$.each(element.moves, function( index, moves) {

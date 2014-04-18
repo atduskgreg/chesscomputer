@@ -1,0 +1,5 @@
+*.py[cod]
+webapp/venv/.Python
+webapp/*.txt
+webapp/*.csv
+webapp/*.pyc

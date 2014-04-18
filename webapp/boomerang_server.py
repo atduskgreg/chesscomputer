@@ -4,7 +4,7 @@ from fysom import Fysom
 
 class Uci:
 	path = 'C:/Users/Shannon/Documents/School/UROP/Playful Systems/Chesscomputer/'
-	enginePath = path+sys.argv[1]
+	enginePath = "stockfish"
 	engine = subprocess.Popen(
 		enginePath,
 		universal_newlines=True,
