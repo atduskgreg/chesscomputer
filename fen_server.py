@@ -1,13 +1,13 @@
 from flask import Flask, request
 from boomerang_server import Boomerang
 app = Flask(__name__)
+b = Boomerang("Game")
 
 @app.route("/boomerang")
 def boomerang():
 	if (request.args.get('f')):
 		fen_string = request.args.get('f')
 		print fen_string
-		b = Boomerang("Game")
 		out = b.findBoomerang(fen_string)
 	else:
 		out = "No fen string found."

@@ -45,6 +45,9 @@ class StockfishManager:
 		line = self._q.get()
 		print('     '+line)
 		return line
+		
+	def clear(self):
+		self._q.queue.clear()
 
 	def position(self, startpos, isFen, moves):
 		fen = ""
@@ -100,9 +103,6 @@ class Boomerang:
 	
 		self.manager = StockfishManager()
 
-	def findBoomerang(self, startpos):
-		self.gameStatus["startpos"] = startpos
-		
 		"""
 		INITIALIZE
 		State machine for starting Stockfish
@@ -257,7 +257,7 @@ class Boomerang:
 						bestmove = re.search('^bestmove (?P<move>\w+) ', res)
 						self.search.makemove(bestmove.group('move'), movesList, movesListCP, currentDepth, self.searchingDepth, cp, gameStatus)
 						break
-					
+				
 		def onexplore(e):
 			gameStatus = e.args[4]
 			
@@ -289,12 +289,16 @@ class Boomerang:
 
 			self.boomerang.noMoves()
 			
-		def onanalyze(e):
-			self.manager.end()
+		def onwait(e):
+			self.initialize.reset()
+			self.search.reset()
+			self.explore.reset()
+			
 
 		self.initialize = Fysom({'initial': 'init',
 				 'events': [{'name': 'uci','src':'init','dst':'stockfish'},
-							{'name': 'isready','src':'stockfish','dst':'uciok'}],
+							{'name': 'isready','src':'stockfish','dst':'uciok'},
+							{'name': 'reset','src':'uciok','dst':'init'}],
 				  'callbacks': {
 					  'onstockfish': onstockfish,
 					  'onuciok': onuciok } })
@@ -303,7 +307,8 @@ class Boomerang:
 								{'name': 'searching','src':'godepth','dst':'godepth'},
 								{'name': 'makemove','src':'godepth','dst':'move'},
 								{'name': 'searching','src':'move','dst':'godepth'},
-								{'name': 'newgame','src':'move','dst':'godepth'}],
+								{'name': 'newgame','src':'move','dst':'godepth'},
+								{'name': 'reset','src':'move','dst':'init'}],
 					  'callbacks': {
 						  'onnewgame': onnewgame,
 						  'onmove': onmove} })
@@ -314,32 +319,66 @@ class Boomerang:
 								{'name': 'move','src':'goinfinite','dst':'bestmove'},
 								{'name': 'infinite','src':'bestmove','dst':'goinfinite'},
 								{'name': 'ucinewgame','src':'bestmove','dst':'goinfinite'},
-								{'name': 'mate','src':'bestmove','dst':'end'}],
+								{'name': 'mate','src':'bestmove','dst':'end'},
+								{'name': 'reset','src':'bestmove','dst':'init'}],
 					  'callbacks': {
 						  'onucinewgame': onucinewgame,
 						  'onbestmove': onbestmove } })
 		self.boomerang = Fysom({'initial': 'start',
 					 'events': [{'name': 'startsearch','src':'start','dst':'godeeper'},
+								{'name': 'restart','src':'wait','dst':'start'},
 								{'name': 'exploremove','src':'godeeper','dst':'explore'},
 								{'name': 'exploremove','src':'explore','dst':'explore'},
 								{'name': 'noMoves','src':'explore','dst':'analyze'},
-								{'name': 'reset', 'src':'analyze','dst':'start'}],
+								{'name': 'pause', 'src':'analyze','dst':'wait'}],
 					  'callbacks': {
 						  'ongodeeper': ongodeeper,
-						  'onexplore': onexplore
+						  'onexplore': onexplore,
+						  'onwait': onwait
 						  } })
-		while True:                      
+	
+	def resetGame(self):
+		self.gameStatus["startpos"] = 'startpos'
+		self.gameStatus["moves"] = []
+		self.gameStatus["moveDepths"] = []
+		self.gameStatus["fen"] = True,
+		self.gameStatus["centipawns"] = 0
+		self.gameStatus["currentMove"] = 1
+		self.gameStatus["startPlayer"] = 'w'
+		self.gameStatus["player"] = 'w'
+		self.gameStatus["JSONlines"] = []
+		self.gameStatus["JSONcurrentLine"] = {}
+		self.gameStatus["JSONmoves"] = []
+		self.gameStatus["JSONcurrentMove"] = {}
+	
+	def findBoomerang(self, startpos):
+		print self.boomerang.current
+		print self.boomerang.isstate("wait")
+		self.resetGame()
+		self.gameStatus["startpos"] = startpos
+		while True:   
 			if self.boomerang.isstate("start"):
 				res = self.manager.get()
+				print res
 				if re.search('^Stockfish', res):
+					print "getting sf"
 					self.initialize.uci(self.gameStatus)
 				if re.search('^uciok', res):
 					self.initialize.isready()
 				if re.search('^readyok', res):
 					self.boomerang.startsearch(self.movesList, self.movesListCP, self.searchingDepth, self.gameStatus, self.cp)
+			elif self.boomerang.isstate("wait"):
+				print "sending uci"
+				print self.boomerang.current
+				self.initialize.uci(self.gameStatus)
+				print "uci sent"
+				self.manager.clear()
+				self.boomerang.restart()
 			elif self.boomerang.isstate("godeeper"):
 				self.boomerang.exploremove(self.movesList, self.movesListCP, self.totalMoves, self.exploreDepth, self.gameStatus)
 			elif self.boomerang.isstate("analyze"):
+				print "ANALYZE"
 				break
-		
+				
+		self.boomerang.pause()
 		return json.dumps(self.gameStatus["JSONlines"])
