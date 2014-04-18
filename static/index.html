@@ -10,7 +10,8 @@
 				<script src="/static/index.js"></script>
 				<script src="/static/control.js"></script>
 				<script>
-				p = []
+
+				var drawnLines = []
 				lastMouse = false;
 				function setup(){
 					canvas = createCanvas($("#board").css('width'), $("#board").css('height'));
@@ -21,11 +22,11 @@
 				function draw(){
 					if ($("canvas").is(":visible")) {
 						if(mouseIsPressed()){
-							p[p.length-1].push({x: mouseX, y: mouseY});
+							drawnLines[drawnLines.length-1].push({x: mouseX, y: mouseY});
 							lastMouse = true;
 						} else {
 							if(lastMouse){
-								p.push([]);
+								drawnLines.push([]);
 							}
 						}
 					}
@@ -33,18 +34,18 @@
 					stroke(255);
 					strokeWeight(2);
 
-					for(var i = 0; i < p.length; i++){
+					for(var i = 0; i < drawnLines.length; i++){
 						beginShape();
-						for(var j = 0; j < p[i].length; j++){
-							vertex(p[i][j].x, p[i][j].y);
+						for(var j = 0; j < drawnLines[i].length; j++){
+							vertex(drawnLines[i][j].x, drawnLines[i][j].y);
 						}
 						endShape();
 					}
 				}
 
 				function resetDrawing(){
-					p = [];
-					p.push([]);
+					drawnLines = [];
+					drawnLines.push([]);
 					c = $("canvas")[0]
 					c.width = c.width;
 					background(0,125);
@@ -82,10 +83,9 @@
 	</head>
 	<body>
 	
-		<text id="turnDisplay"><span id="turn">WHITE</span>'s turn</text><br>
-		Current Move: <text id="currMove"></text><br>
-		<i><b>h</b> to toggle canvas, <b>r</b> to reset.
-		<br>
+		<p id="turnDisplay"><span id="turn">WHITE</span>'s turn</p>
+		<p>Current Move: <text id="currMove"></text></p>
+		
 		
 	<table id="main">
 	<tr><td>
@@ -99,6 +99,11 @@
 		<p>
 		<button id="boomerang">Get Boomerang</button>
 		</p>
+		<form id="maddenMode">
+			<h4>Madden Mode</h4>
+			<input type="checkbox" value="on" checked>on</input> (<em>h</em>)
+			<input type="submit" value="clear" /> (<em>r</em>)
+		</form>
 		
 		<form id="showControl">
 			<h4>Show controlled squares</h4>
