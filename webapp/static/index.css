@@ -16,7 +16,9 @@ button {
 button:hover{
 	background: #DDDDEF;
 }
-
+canvas {
+	z-index: 100;
+}
 #board table td {
 	width: 65px;
 	height:65px;
@@ -71,6 +73,9 @@ button:hover{
 }
 .logmsg {
 	clear:both;
+}
+#loading{
+	text-align: center;
 }
 #turn {
 	font-weight: bold;

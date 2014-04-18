@@ -11,8 +11,8 @@
 				<script src="/static/control.js"></script>
 				<script>
 
-				var drawnLines = []
-				lastMouse = false;
+				var drawnLines = [];
+				var lastMouse = false;
 				function setup(){
 					canvas = createCanvas($("#board").css('width'), $("#board").css('height'));
 					canvas.position($("#board").position().left,$("#board").position().top);
@@ -27,6 +27,7 @@
 						} else {
 							if(lastMouse){
 								drawnLines.push([]);
+								lastMouse = false;
 							}
 						}
 					}
@@ -82,7 +83,7 @@
 				</style>
 	</head>
 	<body>
-		<p id="turnDisplay"><span id="turn">WHITE</span>'s turn</p>
+		<text id="turnDisplay"><span id="turn">WHITE</span>'s turn </text><button id="switchTurn">Switch Turn</button>
 		<p>Current Move: <text id="currMove"></text></p>
 		
 		
@@ -96,7 +97,7 @@
 		
 	</td><td>
 		<p>
-		<button id="boomerang">Get Boomerang</button>
+		<button id="boomerang">Ask Computer</button>
 		</p>
 		<form id="maddenMode">
 			<h4>Madden Mode</h4>
@@ -127,6 +128,7 @@
 		
 	</td><td id="moves">
 		<h4>Possible Moves</h4>
+		<div id="loading"><img src="/static/images/loading.gif"></div>
 		<table id="moveDisplay">
 		<!--<button id="prev">Prev</button><button id="next">Next</button>-->
 		</table>

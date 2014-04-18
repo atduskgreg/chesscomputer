@@ -4,7 +4,7 @@ from fysom import Fysom
 
 class Uci:
 	path = 'C:/Users/Shannon/Documents/School/UROP/Playful Systems/Chesscomputer/'
-	enginePath = "stockfish"
+	enginePath = path+"stockfish.exe"
 	engine = subprocess.Popen(
 		enginePath,
 		universal_newlines=True,
@@ -109,8 +109,6 @@ class Boomerang:
 		"""
 		def onstockfish(e):
 			gameStatus = e.args[0]
-			with open(gameStatus["gameName"]+"_info.txt", 'w') as f:
-				f.write("Event,Site,Date,Round,White,Black,Result\r\n")
 			self.manager.uci()
 
 		def onuciok(e):
@@ -179,12 +177,6 @@ class Boomerang:
 			self.manager.position(startpos, fen, moves)
 			self.manager.go(e.args[0])
 			
-			with open("options/"+name+"_"+currentMove+"_info.txt", 'w') as f:
-				f.write(currentMove + ": "+"\r\n")
-			with open("options/"+name+"_"+currentMove+"_moves.csv", 'w') as f:
-				f.write("move,cp,player\r\n")
-				f.write(currentMove+","+moveCP+","+player+"\r\n")
-			
 			currentLine = {}
 			currentLine["searchingDepth"] = gameStatus["moveDepths"].pop()
 			currentLine["moves"] = gameStatus["JSONmoves"]
@@ -198,8 +190,6 @@ class Boomerang:
 			gameStatus["JSONmoves"].append(JSONmove)
 			
 		def onsearch(e, gameStatus):
-			with open("options/"+gameStatus["gameName"]+"_info.txt", 'a') as f:
-				f.write(e + '\r\n')
 			if re.search('depth (?P<depth>\d+) seldepth \d+ score cp (?P<cp>-?\w+)', e):
 				info = re.search('depth (?P<depth>\d+) seldepth \d+ score cp (?P<cp>-?\w+)', e)
 				gameStatus["centipawns"] = int(info.group('cp'))
@@ -223,8 +213,6 @@ class Boomerang:
 				gameStatus["player"] = 'w'
 				
 				
-			with open("options/"+name+"_"+currentMove+"_moves.csv", 'a') as f:
-					f.write(e.args[0]+","+ str(gameStatus["centipawns"]) +","+gameStatus["player"]+"\r\n")
 			JSONmove = {}
 			JSONmove["move"] = e.args[0]
 			JSONmove["cp"] = str(gameStatus["centipawns"])

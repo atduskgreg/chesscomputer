@@ -208,7 +208,10 @@ $( document ).ready(function() {
 	
 	$("#boomerang").click(function() {
 		$("#moveDisplay").empty()
+		$("#moves").show();
+		$("#loading").show();
 		$.getJSON( "/boomerang?f=" + getFen(pieces) + "%20" + turn, function( data ) {
+			console.log(data);
 			$.each(data, function( index, element ) {
 				$('#moveDisplay').append("<tr><td class='line'>"+element.moves[0].move+"</td><td>"+element.searchingDepth+"</td></tr>");
 				$.each(element.moves, function( index, moves) {
@@ -223,7 +226,7 @@ $( document ).ready(function() {
 				$("#"+move.slice(0,2)).css("outline", "4px solid blue");
 				$("#"+move.slice(2,4)).css("outline", "4px solid red");
 			});
-			$("#moves").show();
+			$("#loading").hide();
 		});
 	});
 	
@@ -296,7 +299,6 @@ function dragStop( event, ui ) {
 			
 			$("#currMove").html(move);
 			
-			
 			$("#showControl input").each( function() {
 				if($( this ).is(":checked")){
 					var side = $( this ).attr('value');
@@ -310,7 +312,7 @@ function dragStop( event, ui ) {
 				}
 			});
 			
-			ui.helper.css({'z-index': 10});
+			ui.helper.css({'z-index': 2});
 		}
 		
 function moveForward(move){
