@@ -216,7 +216,9 @@ $( document ).ready(function() {
 		});
 	});
 	
-	
+	$("#switchTurn").click(function() {
+		switchPlayer();
+	});
 	// letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 	for(var i = 0; i < 8; i++){
 		$("#colSelect").append("<option value='"+colLabels[i]+"'>"+colLabels[i]+"</option>");
