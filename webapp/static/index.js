@@ -319,6 +319,20 @@ function updateScore(){
 	var score = calculateScore(pieces);
 	$("#blackScore").html(score.black);
 	$("#whiteScore").html(score.white);
+	
+	$("#whiteEaten").empty();
+	$("#blackEaten").empty();
+
+	for(var i = 0; i < eatenPieces.length; i++){
+		var img = $(eatenPieces[i][1]);
+		var URLParts = img.attr('src').split('/');
+		var pName = URLParts[URLParts.length-1].split(".")[0];
+		if(pName == pName.toLowerCase()){
+			$("#whiteEaten").append(img);
+		} else{
+			$("#blackEaten").append(img);
+		}
+	}
 }
 		
 function moveForward(move){
