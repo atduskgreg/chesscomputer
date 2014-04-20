@@ -2,13 +2,15 @@ import subprocess, time, threading, Queue, re, sys, os, signal, json
 from fysom import Fysom
 import sys
 #180 game fen: r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2
-
+  
 class Uci:
-
+ 	path = 'C:/Users/Shannon/Documents/School/UROP/Playful Systems/Chesscomputer/webapp/'
+ 	enginePath = path+"stockfish.exe"
+ 	
 	enginePath = "stockfish"
-	if sys.platform == "win32":
-		enginePath += ".exe"
-
+ 	if sys.platform == "win32":
+ 		enginePath += ".exe"
+ 
 	engine = subprocess.Popen(
 		enginePath,
 		universal_newlines=True,
@@ -81,7 +83,7 @@ class Boomerang:
 		self.gameStatus = {"gameName" : gameName,
 					  "startpos" : 'startpos',
 					  "moves" : [],
-					  "moveDepths" : [],
+					  "moveDepths" : {},
 					  "fen" : True,
 					  "centipawns" : 0,
 					  "currentMove" : 1,
@@ -151,16 +153,14 @@ class Boomerang:
 			moveDepths = gameStatus["moveDepths"]
 			#cp = e.args[5]
 
+			moveDepths[bestMove] = (currentDepth-1)
 			if bestMove not in movesList:
 				movesList.append(bestMove)
 				movesListCP.append(cp)
-				moveDepths.append(currentDepth-1)
+			
 
 			if currentDepth <= searchingDepth:
 				self.manager.go("depth " + str(currentDepth))
-			else:
-				moveDepths.append(currentDepth-1)
-				del moveDepths[0]
 		
 		"""
 		EXPLORE
@@ -181,12 +181,7 @@ class Boomerang:
 			self.manager.position(startpos, fen, moves)
 			self.manager.go(e.args[0])
 			
-			currentLine = {}
-			currentLine["searchingDepth"] = gameStatus["moveDepths"].pop()
-			currentLine["moves"] = gameStatus["JSONmoves"]
-			gameStatus["JSONlines"].append(currentLine)
-			
-			gameStatus["JSONmoves"][:] = []
+			del gameStatus["JSONmoves"][:]
 			JSONmove = {}
 			JSONmove["move"] = currentMove
 			JSONmove["cp"] = moveCP
@@ -260,8 +255,8 @@ class Boomerang:
 
 			startpos = gameStatus["startpos"]
 
-			for i in range(len(movesList)):
-				move = movesList.pop()
+			for key in gameStatus["moveDepths"].keys():
+				move = key
 				gameStatus["moves"] = [move]
 				gameStatus["currentMove"] = 1
 				gameStatus["player"] = gameStatus["startPlayer"]
@@ -278,7 +273,12 @@ class Boomerang:
 
 					if (gameStatus["currentMove"]>=totalMoves):
 						break
-
+						
+				currentLine = {}
+				currentLine["searchingDepth"] = gameStatus["moveDepths"][move]
+				currentLine["moves"] = gameStatus["JSONmoves"][:]
+				gameStatus["JSONlines"].append(currentLine)
+				
 			self.boomerang.noMoves()
 			
 		def onwait(e):
@@ -332,7 +332,7 @@ class Boomerang:
 	def resetGame(self):
 		self.gameStatus["startpos"] = 'startpos'
 		self.gameStatus["moves"] = []
-		self.gameStatus["moveDepths"] = []
+		self.gameStatus["moveDepths"] = {}
 		self.gameStatus["fen"] = True,
 		self.gameStatus["centipawns"] = 0
 		self.gameStatus["currentMove"] = 1
@@ -344,32 +344,24 @@ class Boomerang:
 		self.gameStatus["JSONcurrentMove"] = {}
 	
 	def findBoomerang(self, startpos):
-		print self.boomerang.current
-		print self.boomerang.isstate("wait")
 		self.resetGame()
 		self.gameStatus["startpos"] = startpos
 		while True:   
 			if self.boomerang.isstate("start"):
 				res = self.manager.get()
-				print res
 				if re.search('^Stockfish', res):
-					print "getting sf"
 					self.initialize.uci(self.gameStatus)
 				if re.search('^uciok', res):
 					self.initialize.isready()
 				if re.search('^readyok', res):
 					self.boomerang.startsearch(self.movesList, self.movesListCP, self.searchingDepth, self.gameStatus, self.cp)
 			elif self.boomerang.isstate("wait"):
-				print "sending uci"
-				print self.boomerang.current
 				self.initialize.uci(self.gameStatus)
-				print "uci sent"
 				self.manager.clear()
 				self.boomerang.restart()
 			elif self.boomerang.isstate("godeeper"):
 				self.boomerang.exploremove(self.movesList, self.movesListCP, self.totalMoves, self.exploreDepth, self.gameStatus)
 			elif self.boomerang.isstate("analyze"):
-				print "ANALYZE"
 				break
 				
 		self.boomerang.pause()
