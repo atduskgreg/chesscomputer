@@ -1,10 +1,14 @@
 import subprocess, time, threading, Queue, re, sys, os, signal, json
 from fysom import Fysom
+import sys
 #180 game fen: r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2
 
 class Uci:
-	path = 'C:/Users/Shannon/Documents/School/UROP/Playful Systems/Chesscomputer/'
-	enginePath = path+"stockfish.exe"
+
+	enginePath = "stockfish"
+	if sys.platform == "win32":
+		enginePath += ".exe"
+
 	engine = subprocess.Popen(
 		enginePath,
 		universal_newlines=True,

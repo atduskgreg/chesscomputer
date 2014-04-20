@@ -5,10 +5,11 @@
 				
 				<script src="/static/jquery-1.9.1.min.js"></script>
 				<script src="/static/p5.min.js"></script>
-				<script src="static/jquery-ui.custom.min.js"></script>
-				
+				<script src="/static/jquery-ui.custom.min.js"></script>
 				<script src="/static/index.js"></script>
 				<script src="/static/control.js"></script>
+				<script src="/static/score.js"></script>
+
 				<script>
 
 				var drawnLines = [];
@@ -80,6 +81,17 @@
 				.whiteControl.blackControl{
 					backround:green;
 				}
+
+				#scoreDisplay img {
+					width: 25px;
+				}
+				#whiteEaten{
+					min-height: 40px
+				}
+				#blackEaten{
+					min-height: 40px
+				}
+
 				</style>
 	</head>
 	<body>
@@ -95,7 +107,19 @@
 
 		</div>
 		
-	</td><td>
+	</td>
+	<td id="scoreDisplay" style="width:150px; padding-right: 10px">
+		<h3>White: <span id="whiteScore">0</span></h3>
+		<div id="whiteEaten">
+		</div>
+		
+		<h3>Black: <span id="blackScore">0</span></h3>
+		<div id="blackEaten">
+		</div>
+
+	</td>
+	<td>
+
 		<p>
 		<button id="boomerang">Ask Computer</button>
 		</p>
