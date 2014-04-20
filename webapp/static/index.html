@@ -5,10 +5,11 @@
 				
 				<script src="/static/jquery-1.9.1.min.js"></script>
 				<script src="/static/p5.min.js"></script>
-				<script src="static/jquery-ui.custom.min.js"></script>
-				
+				<script src="/static/jquery-ui.custom.min.js"></script>
 				<script src="/static/index.js"></script>
 				<script src="/static/control.js"></script>
+				<script src="/static/score.js"></script>
+
 				<script>
 
 				var drawnLines = [];
@@ -95,7 +96,15 @@
 
 		</div>
 		
-	</td><td>
+	</td>
+	<td style="width:200px">
+		<h3>Score</h3>
+		<h4>White: <span id="whiteScore">0</span></h4>
+		<h4>Black: <span id="blackScore">0</span></h4>
+
+	</td>
+	<td>
+
 		<p>
 		<button id="boomerang">Ask Computer</button>
 		</p>
