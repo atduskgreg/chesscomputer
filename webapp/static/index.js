@@ -289,8 +289,13 @@ function dragStop( event, ui ) {
 	var toRow = parseInt(from[1]) - rInc;
 	
 	var to = numToChar[toCol]+toRow.toString();
-
-	if (from != to) {
+	
+	if ( $("#"+to).length <= 0 ) {
+		eatenPieces.push($("#"+from).children(0).attr('id'));
+		$("#"+from).html('');
+		pieces[from] = "0";
+		updateScore();
+	} else if (from != to) {
 		var piece = ui.helper.attr('id');
 		if ((piece == piece.toUpperCase() && turn=='w')||(piece != piece.toUpperCase() && turn=='b')) {	
 			switchPlayer();
