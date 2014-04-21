@@ -7,9 +7,9 @@ class Uci:
  	path = 'C:/Users/Shannon/Documents/School/UROP/Playful Systems/Chesscomputer/webapp/'
  	enginePath = path+"stockfish.exe"
  	
-	enginePath = "stockfish"
- 	if sys.platform == "win32":
- 		enginePath += ".exe"
+	#enginePath = "stockfish"
+ 	#if sys.platform == "win32":
+ 	#	enginePath += ".exe"
  
 	engine = subprocess.Popen(
 		enginePath,
@@ -96,7 +96,7 @@ class Boomerang:
 					  }
 
 		self.movesList = []
-		self.movesListCP = []
+		self.movesListCP = {}
 		self.cp = 0
 		self.totalMoves = 5
 		self.searchingDepth = 8          # total depth for 'searching' state
@@ -154,9 +154,10 @@ class Boomerang:
 			#cp = e.args[5]
 
 			moveDepths[bestMove] = (currentDepth-1)
+			movesListCP[bestMove] = cp
 			if bestMove not in movesList:
 				movesList.append(bestMove)
-				movesListCP.append(cp)
+				
 			
 
 			if currentDepth <= searchingDepth:
@@ -173,7 +174,7 @@ class Boomerang:
 			name = gameStatus["gameName"]
 			moves = gameStatus["moves"]
 			fen = gameStatus["fen"]
-			moveCP = str(self.movesListCP.pop())
+			moveCP = str(self.movesListCP[currentMove])
 
 			startpos = e.args[1]
 
