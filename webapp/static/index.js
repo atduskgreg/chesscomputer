@@ -306,21 +306,25 @@ function dragStop( event, ui ) {
 		
 		$("#currMove").html(move);
 		
-		$("#showControl input").each( function() {
-			if($( this ).is(":checked")){
-				var side = $( this ).attr('value');
-				if(side == "white"){
-					$("td").removeClass("whiteControl");
-					highlightSquares(getControlledSquares(getWhitePieces()), "whiteControl")
-				} else {
-					$("td").removeClass("blackControl");
-					highlightSquares(getControlledSquares(getBlackPieces()), "blackControl");
-				}
-			}
-		});
+		recalculateControl();
 	}
 	
 	ui.helper.css({'z-index': 2});
+}
+
+function recalculateControl() {
+	$("#showControl input").each( function() {
+		if($( this ).is(":checked")){
+			var side = $( this ).attr('value');
+			if(side == "white"){
+				$("td").removeClass("whiteControl");
+				highlightSquares(getControlledSquares(getWhitePieces()), "whiteControl")
+			} else {
+				$("td").removeClass("blackControl");
+				highlightSquares(getControlledSquares(getBlackPieces()), "blackControl");
+			}
+		}
+		});
 }
 
 function eatenDragStop( event, ui ) {
@@ -331,7 +335,11 @@ function eatenDragStop( event, ui ) {
 		var cell = numToChar[col+1]+(8-row);
 		ui.helper.removeClass('eaten').addClass('pieceImg');
 		$("#"+cell).append(ui.helper);
+		
+		pieces[cell] = ui.helper.attr('id');
 		eatenPieces.splice(eatenPieces.indexOf(ui.helper.attr('id')), 1);
+		
+		recalculateControl();
 		
 		$(".pieceImg").draggable({
 			revert: true,
