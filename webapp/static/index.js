@@ -240,8 +240,20 @@ $( document ).ready(function() {
 		$("#loading").show();
 		$.getJSON( "/boomerang?f=" + getFen(pieces) + "%20" + turn, function( data ) {
 			console.log(data);
+			var boomerangResult = detectBoomerang(data);
+			console.log(boomerangResult);
 			$.each(data, function( index, element ) {
-				$('#moveDisplay').append("<tr><td class='line'>"+element.moves[0].move+"</td><td>"+element.searchingDepth+"</td></tr>");
+				
+				// if there's a boomerang found for one of the possible
+				// moves, highlight the row
+				var trTag = "<tr";
+				if(boomerangResult.boomerangMoves.indexOf(element.moves[0].move) != -1){
+					trTag += " class ='boomerangFound'";
+				}
+				trTag += ">";
+
+
+				$('#moveDisplay').append(trTag +"<td class='line'>"+element.moves[0].move+"</td><td>"+element.searchingDepth+"</td></tr>");
 				$.each(element.moves, function( index, moves) {
 					//console.log( moves.move );
 				});
