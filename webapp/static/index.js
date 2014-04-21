@@ -214,7 +214,7 @@ $( document ).ready(function() {
 		$.getJSON( "/boomerang?f=" + getFen(pieces) + "%20" + turn, function( data ) {
 			console.log(data);
 			$.each(data, function( index, element ) {
-				$('#moveDisplay').append("<tr><td class='line'>"+element.moves[0].move+"</td><td>"+element.searchingDepth+"</td></tr>");
+				$('#moveDisplay').append("<tr><td>"+parseInt(element.moves[0].cp)/100+"</td><td class='line'>"+element.moves[0].move+"</td><td>"+element.searchingDepth+"</td></tr>");
 				$.each(element.moves, function( index, moves) {
 					//console.log( moves.move );
 				});
