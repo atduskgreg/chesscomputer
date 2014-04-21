@@ -3,6 +3,7 @@ var startPos = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
 var moveString = "";
 var moves = [];
 var currMove = 0;
+var currCell = '';
 var turn = 'w';
 
 var eatenPieces = [];
@@ -282,11 +283,6 @@ function dragStart( event, ui ) {
 }
 		
 function dragStop( event, ui ) {
-	var piece = ui.helper.attr('id');
-	if ((piece == piece.toUpperCase() && turn=='w')||(piece != piece.toUpperCase() && turn=='b')) {	
-		switchPlayer();
-	}
-	
 	var cInc = Math.round(ui.position.left/65);
 	var rInc = Math.round(ui.position.top/65);
 	var toCol = charToNum[from[0]] + cInc;
@@ -294,25 +290,54 @@ function dragStop( event, ui ) {
 	
 	var to = numToChar[toCol]+toRow.toString();
 
-	move = from+to;
-	moveForward(move);
-	
-	$("#currMove").html(move);
-	
-	$("#showControl input").each( function() {
-		if($( this ).is(":checked")){
-			var side = $( this ).attr('value');
-			if(side == "white"){
-				$("td").removeClass("whiteControl");
-				highlightSquares(getControlledSquares(getWhitePieces()), "whiteControl")
-			} else {
-				$("td").removeClass("blackControl");
-				highlightSquares(getControlledSquares(getBlackPieces()), "blackControl");
-			}
+	if (from != to) {
+		var piece = ui.helper.attr('id');
+		if ((piece == piece.toUpperCase() && turn=='w')||(piece != piece.toUpperCase() && turn=='b')) {	
+			switchPlayer();
 		}
-	});
+		
+		move = from+to;
+		moveForward(move);
+		
+		$("#currMove").html(move);
+		
+		$("#showControl input").each( function() {
+			if($( this ).is(":checked")){
+				var side = $( this ).attr('value');
+				if(side == "white"){
+					$("td").removeClass("whiteControl");
+					highlightSquares(getControlledSquares(getWhitePieces()), "whiteControl")
+				} else {
+					$("td").removeClass("blackControl");
+					highlightSquares(getControlledSquares(getBlackPieces()), "blackControl");
+				}
+			}
+		});
+	}
 	
 	ui.helper.css({'z-index': 2});
+}
+
+function eatenDragStop( event, ui ) {
+	var cellSize = $("#board td").height();
+	var row = Math.round( (ui.offset.top-$("#board").position().top)/cellSize - 0.5 );
+	var col = Math.round( (ui.offset.left-$("#board").position().left)/cellSize - 0.5 );
+	if ( row<8 && col<8) {
+		var cell = numToChar[col+1]+(8-row);
+		ui.helper.removeClass('eaten').addClass('pieceImg');
+		$("#"+cell).append(ui.helper);
+		eatenPieces.splice(eatenPieces.indexOf(ui.helper.attr('id')), 1);
+		
+		$(".pieceImg").draggable({
+			revert: true,
+			revertDuration:0,
+			appendTo: 'body',
+			stack: '.pieceImg',
+			start: dragStart,
+			start: dragStart,
+			stop: dragStop
+		});
+    }
 }
 
 function updateScore(){
@@ -324,15 +349,26 @@ function updateScore(){
 	$("#blackEaten").empty();
 
 	for(var i = 0; i < eatenPieces.length; i++){
-		var img = $(eatenPieces[i][1]);
-		var URLParts = img.attr('src').split('/');
-		var pName = URLParts[URLParts.length-1].split(".")[0];
+		var pName = eatenPieces[i];
 		if(pName == pName.toLowerCase()){
-			$("#whiteEaten").append(img);
+			var color = 'white';
+			var pCol = 'black';
 		} else{
-			$("#blackEaten").append(img);
+			var color = 'black';
+			var pCol = 'white';
 		}
+		var img = "<img id='"+eatenPieces[i]+"' class='eaten' src='/static/images/"+pCol+"/"+eatenPieces[i]+".png'>";
+		$("#"+color+"Eaten").append(img);
 	}
+	
+	$(".eaten").draggable({
+		revert: true,
+		revertDuration:0,
+		appendTo: 'body',
+		stack: '.pieceImg',
+		stop: eatenDragStop
+	});
+	
 }
 		
 function moveForward(move){
@@ -341,7 +377,7 @@ function moveForward(move){
 	to = move.charAt(2)+move.charAt(3);
 
 	if ($("#"+to).html()!='')
-		eatenPieces.push([currMove, $("#"+to).html()]);
+		eatenPieces.push($("#"+to).children(0).attr('id'));
 
 	piece = $("#"+from).html();
 	$("#"+from).html('').css("outline", "4px solid blue");
@@ -365,7 +401,8 @@ function moveForward(move){
 
 }
 
-function moveBack(move){
+// Not used & replacing eaten pieces no longer works
+/*function moveBack(move){
 	$("#board td").css("outline", "none");
 	from = move.charAt(0)+move.charAt(1);
 	to = move.charAt(2)+move.charAt(3);
@@ -396,7 +433,7 @@ function moveBack(move){
 		start: dragStart,
 		stop: dragStop
 	});
-}
+}*/
 		
 function displayPosition( fen_position ){
 	initPieces();
