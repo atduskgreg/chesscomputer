@@ -103,10 +103,10 @@ $( document ).ready(function() {
 		}
 
 		for(var i = 0; i < pieceTypes["white"].length; i++){
-			$("#whiteOnOff").append("<p><input type='checkbox' checked value='"+pieceTypes["white"][i].selector+"'></input>"+pieceTypes["white"][i].name+"</p>")
+			$("#whiteOnOff").append("<p><button class='solo' id='solo_"+pieceTypes["white"][i].selector+"'>s</button><input type='checkbox' checked value='"+pieceTypes["white"][i].selector+"'></input>"+pieceTypes["white"][i].name+"</p>")
 		}
 		for(var i = 0; i < pieceTypes["black"].length; i++){
-			$("#blackOnOff").append("<p><input type='checkbox' checked value='"+pieceTypes["black"][i].selector+"'></input>"+pieceTypes["black"][i].name+"</p>")
+			$("#blackOnOff").append("<p><button class='solo' id='solo_"+pieceTypes["black"][i].selector+"'>s</button><input type='checkbox' checked value='"+pieceTypes["black"][i].selector+"'></input>"+pieceTypes["black"][i].name+"</p>")
 		}
 
 		$("#showControl input").change(function(){
@@ -141,9 +141,36 @@ $( document ).ready(function() {
 			$("canvas").toggle();
 		});
 
+		$('.solo').click(function(){
+			$(".pieceImg").hide();
+			var pieceString = $(this).attr('id').split("_")[1];
+			// this is only necessary because each pawn has id "P" or "p"
+			// duplicate IDs! This is bad! (same issue below in #onOff input)
+			for(key in pieces){
+				if(pieces[key] == pieceString ){
+					$("#"+key + " img").show();
+				}
+			}
+
+			$("#onOff input").attr('checked', false);
+			$("#onOff input[value="+pieceString+"]").prop('checked', true);
+
+
+			event.preventDefault();
+		});
+
+		$("#showAll").click(function(){
+			event.preventDefault();
+			$("#onOff input").prop('checked', true);
+			for(key in pieces){
+				$("#"+key + " img").show();
+			}
+			
+		});
+
 		$("#onOff input").change(function(){
-			c = $(this);
-			pieceString = c.attr('value');
+			var c = $(this);
+			var pieceString = c.attr('value');
 
 			if(c.is(":checked")){
 				for(key in pieces){
@@ -213,10 +240,20 @@ $( document ).ready(function() {
 		$("#loading").show();
 		$.getJSON( "/boomerang?f=" + getFen(pieces) + "%20" + turn, function( data ) {
 			console.log(data);
+			var boomerangResult = detectBoomerang(data);
+			console.log(boomerangResult);
 			$.each(data, function( index, element ) {
+				
+				// if there's a boomerang found for one of the possible
+				// moves, highlight the row
+				var trTag = "<tr";
+				if(boomerangResult.boomerangMoves.indexOf(element.moves[0].move) != -1){
+					trTag += " class ='boomerangFound'";
+				}
+				trTag += ">";
+
 				var bestMove = element.moves[0];
-				$('#moveDisplay').append("<tr><td class='line'>"+bestMove.move+"</td><td>"+element.searchingDepth+"</td></tr><tr><td><table id='"+bestMove.move+"' class='allMoves'></table></td></tr>");
-				//$('#moveDisplay').append("<tr><td>"+parseInt(bestMove.cp)/100+"</td><td class='line'>"+bestMove.move+"</td><td>"+element.searchingDepth+"</td></tr><tr id='"+bestMove.move+"' class='allMoves'><td><table></table></td></tr>");
+				$('#moveDisplay').append(trTag +"<tr><td class='line'>"+bestMove.move+"</td><td>"+element.searchingDepth+"</td></tr><tr><td><table id='"+bestMove.move+"' class='allMoves'></table></td></tr>");
 				$.each(element.moves, function( index, moves ) {
 					if (index>0)
 						$("#"+bestMove.move).append( "<tr><td>"+moves.move+"</tr></td>" );

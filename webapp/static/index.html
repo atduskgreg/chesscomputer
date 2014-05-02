@@ -9,6 +9,7 @@
 				<script src="/static/index.js"></script>
 				<script src="/static/control.js"></script>
 				<script src="/static/score.js"></script>
+				<script src="/static/boomerang.js"></script>
 
 				<script>
 
@@ -92,6 +93,31 @@
 					min-height: 40px
 				}
 
+				.solo {
+					width: 18px;
+					height: 18px;
+					font-size: 10px;
+					background-color: #ff9;
+				}
+
+				.unsolo {
+					width: 18px;
+					height: 18px;
+					font-size: 10px;
+					background-color: #9f6;
+				}
+
+				#onOff h4 {
+					margin-top: 20px;
+				}
+				#onOff h4 button {
+					/*font-size: 14px;*/
+				}
+
+				.boomerangFound {
+					background: red;
+				}
+
 				</style>
 	</head>
 	<body>
@@ -138,10 +164,13 @@
 		<form id="onOff">
 			<div id="whiteOnOff">
 			<h4>White</h4>
+			
+
 			</div>
 			<div id="blackOnOff">
 				<h4>Black</h4>
 			</div>
+			<button id="showAll">Show All</button>
 
 <!-- 			<input type="submit" value="update" /> -->
 		</form>
