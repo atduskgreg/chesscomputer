@@ -214,16 +214,32 @@ $( document ).ready(function() {
 		$.getJSON( "/boomerang?f=" + getFen(pieces) + "%20" + turn, function( data ) {
 			console.log(data);
 			$.each(data, function( index, element ) {
-				$('#moveDisplay').append("<tr><td>"+parseInt(element.moves[0].cp)/100+"</td><td class='line'>"+element.moves[0].move+"</td><td>"+element.searchingDepth+"</td></tr>");
-				$.each(element.moves, function( index, moves) {
-					//console.log( moves.move );
+				var bestMove = element.moves[0];
+				$('#moveDisplay').append("<tr><td class='line'>"+bestMove.move+"</td><td>"+element.searchingDepth+"</td></tr><tr><td><table id='"+bestMove.move+"' class='allMoves'></table></td></tr>");
+				//$('#moveDisplay').append("<tr><td>"+parseInt(bestMove.cp)/100+"</td><td class='line'>"+bestMove.move+"</td><td>"+element.searchingDepth+"</td></tr><tr id='"+bestMove.move+"' class='allMoves'><td><table></table></td></tr>");
+				$.each(element.moves, function( index, moves ) {
+					if (index>0)
+						$("#"+bestMove.move).append( "<tr><td>"+moves.move+"</tr></td>" );
 				});
 			});
+			
+			$(".allMoves").hide();
 
 			$(".line").click(function() {
+				$(".allMoves").hide();
+				$(".line").removeClass('selected');
+				$( this ).addClass('selected');
+				
 				var move = $(this).text();
 				//moveForward(move);
 				$("#board td").css("outline", "none");
+				$("#"+move.slice(0,2)).css("outline", "4px solid blue");
+				$("#"+move.slice(2,4)).css("outline", "4px solid red");
+				$("#"+move).show();
+			});
+			$(".allMoves td").click(function() {
+				$("#board td").css("outline", "none");
+				var move = $(this).text();
 				$("#"+move.slice(0,2)).css("outline", "4px solid blue");
 				$("#"+move.slice(2,4)).css("outline", "4px solid red");
 			});
