@@ -17,13 +17,19 @@ function detectBoomerang(lines){
 
 function analyzeLine(moves, idealLine){
 	var isBoomerang = false;
+	
+	var threshold = 100;
+	var currentBetter = false;
+	var idealBetter = false;
 	for(var i = 1; i < moves.length; i++){
-		// look for crossing between the two lines
-		var prevDir = ((idealLine[i-1].cp - moves[i-1].cp) > 0);
-		var currDir = ((idealLine[i].cp - moves[i].cp) > 0);
+		// look for gap of 100 centipawns (and reverse of that gap)
+		var diff = idealLine[i].cp - moves[i].cp;
+		if (diff > threshold)
+			idealBetter = true;
+		else if (-diff > threshold)
+			currentBetter = true;
 
-
-		if(prevDir != currDir){
+		if(idealBetter && currentBetter){
 			isBoomerang = true;
 		}
 	}
