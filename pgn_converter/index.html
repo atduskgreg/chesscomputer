@@ -1,0 +1,92 @@
+<html>
+<head>
+	 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+     <script src="pgn4web.js"></script>
+    <script>
+    // $( document ).ready(function() {
+    	console.log("Ready");
+
+    	// TODO: only valid for 2-d array
+    	Array.prototype.clone = function() {
+    		var arr = [];
+    		for( var i = 0; i < this.length; i++ ) {
+ 		   		arr[i] = this[i].slice(0);
+    		}
+    		return arr;
+		}
+    	 
+		function populatePGN(){
+			var pgn = "1. e4 c5 2. Nf3 d6 3. d4 Nf6 4. Nc3 cxd4 5. Nxd4 Nc6 6. Be3 e6 7. f4 Be7 8. Qf3 a6 9. O-O-O Qc7 10. Rg1 Nd7 11. g4 b5 12. Nxc6 Qxc6 13. Bd3 Nc5 14. Kb1 Bb7 15. Rge1 b4 16. Bxc5 bxc3 17. Bd4 cxb2 18. Bxg7 Rg8 19. Bd4 Qa4 20. g5 Bc6 21. Qe3 e5 22. fxe5 dxe5 23. Bc5 Bxg5 24. Qg3 Bd7 25. a3 Rc8 26. Qxe5+ Be6 27. Rg1 Qa5 28. Rxg5 1-0";//$("#pgn").val();
+			ParsePGNGameString(pgn);// magic set internal Board var from pgn
+		}
+	
+    	function convertMoveToAlgebraic(ply_count){
+    		MoveColor = ply_count % 2;
+    		var whites_move = (MoveColor == 0);
+
+    		var before = Board.clone();
+    		console.log("move: " + MovesVar[0][ply_count]);
+    		// this modifies the Board
+    		console.log("move parse success: " + ParseMove(MovesVar[0][ply_count],ply_count));
+    		console.log("before:" + before);
+    		console.log("Board" + Board);
+	
+    		// compare before with Board
+    		var squares = [];
+    		for(var col=0; col<Board.length; col++) {
+				for (var row=0; row<Board[col].length; row++) {
+					if (before[col][row]!=Board[col][row]){
+						console.log("found diff")
+						squares.push([col, row]);
+					}
+				}    		
+    		}
+    		console.log("squares:" + squares);
+	
+    		var start;
+    		var end;
+    		if(whites_move){
+    			var diff = before[squares[0][0]][squares[0][1]] - Board[squares[0][0]][squares[0][1]];
+    			if(diff >= 0){
+    				start = squares[0];
+    				end = squares[1];
+    			} else {
+    				start = squares[1];
+    				end = squares[0];
+    			}
+	
+    		} else {
+    			var diff = before[squares[0][0]][squares[0][1]] - Board[squares[0][0]][squares[0][1]];
+    			if(diff <= 0){
+    				start = squares[0];
+    				end = squares[1];
+    			} else {
+    				start = squares[1];
+    				end = squares[0];
+    			}
+    		}
+	
+    		var colLabels = ["a","b","c","d","e","f","g","h"];
+			// var rowLabels = ["8", "7", "6", "5", "4", "3", "2", "1"];
+			var rowLabels = ["1", "2", "3", "4", "5", "6", "7", "8"];
+	
+			var startString = colLabels[start[0]] + rowLabels[start[1]];
+			var endString = colLabels[end[0]] + rowLabels[end[1]];
+	
+			return (startString + endString);
+	
+    	}
+	// });
+
+
+
+     </script>
+</head>
+<body>
+	<form>
+		<textarea id="pgn"></textarea>
+		<input type="submit" />
+	</form>
+</body>
+</html>
