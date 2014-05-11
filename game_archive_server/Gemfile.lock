@@ -20,6 +20,8 @@ GEM
       data_objects (= 0.10.14)
     json (1.8.1)
     rack (1.5.2)
+    rack-contrib (1.1.0)
+      rack (>= 0.9.1)
     rack-protection (1.5.3)
       rack
     sinatra (1.4.5)
@@ -38,5 +40,6 @@ DEPENDENCIES
   dm-postgres-adapter
   dm-timestamps
   json
+  rack-contrib
   sinatra
   sinatra-cross_origin (~> 0.3.1)
