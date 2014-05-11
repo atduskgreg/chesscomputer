@@ -10,9 +10,10 @@ class Game
   
   property :id, Serial
   property :done, Boolean, :default => false
+  property :metadata, Object
   timestamps :at
 
-  has n, :boomerangs
+  has n, :positions
 
   def to_json
   	json_hash.to_json
@@ -21,23 +22,25 @@ class Game
   def json_hash
   	{"done" => done, "game_id" => id, "created_at" => created_at, "updated_at" => updated_at}
   end
-
 end
 
-class Boomerang
+class Position
   include DataMapper::Resource
   
   property :id, Serial
+  property :checked, Boolean, :default => false
+  property :position_number, Integer
+  property :is_boomerang, Boolean
+  property :fen, Text
   property :moves, Object
-  property :start, Text
   property :scores, Object
   timestamps :at
 
   belongs_to :game
 
   def to_json
-  	{"boomerang_id" => id, "game" => game.json_hash, "moves" => moves, 
-  	 "start" => start, "scores" => scores, "created_at" => created_at, "update_at" => updated_at}.to_json
+  	{"position_id" => id, "is_boomerang" => is_boomerang, "game" => game.json_hash, "moves" => moves, 
+  	 "fen" => fen, "scores" => scores, "created_at" => created_at, "update_at" => updated_at}.to_json
   end
 end
 

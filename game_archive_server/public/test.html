@@ -1,0 +1,47 @@
+<html>
+<head>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script id="exampleCode">
+		var apiURL = "http://chess-archive-server.herokuapp.com"
+		
+		function getNextPosition(){
+			$.ajax({
+				type:"GET",
+				dataType:"jsonp",
+				url: apiURL + "/next_position",
+
+				success:function(data){
+					console.log(data)
+				}
+			});
+		}
+
+
+		function updatePosition(positionId, isBoomerang, moves, scores){
+			$.ajax({
+				type:"POST",
+				crossDomain: true,
+				url: apiURL + "/positions/"+positionId+"",
+				data: {"is_boomerang" : isBoomerang,
+						"moves": moves,
+					    "scores": scores},
+
+				success:function(data){
+					console.log(data)
+				}
+			});
+		}
+	</script>
+	<script>
+	function ready(){
+		$("body").html("<pre>"+$("#exampleCode").html()+"</pre>")
+	}
+	document.addEventListener("DOMContentLoaded", ready, false);
+
+	</script>
+
+	</head>
+	<body>
+
+	</body>
+</html>

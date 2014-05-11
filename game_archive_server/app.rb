@@ -11,37 +11,24 @@ configure do
 end
 
 # get the next game not marked as done
-get "/next_game" do
+get "/next_position" do
 	content_type :json
-	(Game.first :done => false).to_json
+	(Position.first :checked => false).to_json
 end
 
-# mark game as complete
-post "/game/:id/done" do
+
+# update a boomerang with the result
+post "/positions/:id" do
 	content_type :json
-	g = Game.get params[:id]
+	p = Position.get params[:id]
 
-	if g
-		g.done = true
-		g.save
-		g.to_json
-	else 
-		status 404
-	end
-end
-
-# create a boomerang for a particular game
-post "/game/:id/boomerangs" do
-	content_type :json
-	g = Game.get params[:id]
-
-	if g
-		b = g.boomerangs.new
-		b.moves = params[:moves]
-		b.start = params[:start]
-		b.scores = params[:scores]
-		if b.save
-			b.to_json
+	if p
+		p.checked = true
+		p.is_boomerang = params[:is_boomerang]
+		p.moves = params[:moves]
+		p.scores = params[:scores]
+		if p.save
+			p.to_json
 		else
 			status 400
 		end
