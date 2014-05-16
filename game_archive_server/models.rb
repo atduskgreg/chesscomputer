@@ -34,6 +34,8 @@ class Position
   property :fen, Text
   property :moves, Object
   property :scores, Object
+  property :depth, Integer
+  property :etc, Object
   timestamps :at
 
   belongs_to :game
