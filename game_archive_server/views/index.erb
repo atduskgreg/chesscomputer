@@ -5,10 +5,10 @@
 	<% @checked.select{|p| p.is_boomerang}.each do |boomerang| %>
 	<div>
 		<h2>Game <%= boomerang.game_id %> | Position <%= boomerang.id %></h2>
+		<p>Boomerang move had search depth of <b><%= boomerang.depth %></b> cp.</p>
 		<ul>
 		<% boomerang.moves.each_with_index do |move, i| %>
-
-		<li><%= move %> [<%= boomerang.scores[i] %>]</li>
+			<li><%= move %> [<%= boomerang.scores[i] %>]</li>
 		<% end %>
 		</ul>
 	</div>
