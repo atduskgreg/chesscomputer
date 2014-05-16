@@ -11,6 +11,12 @@ configure do
   set :protection, :except => [:json_csrf]
 end
 
+get "/" do
+	@checked = Position.all :checked => true
+	@count = Position.count
+	erb :index
+end
+
 # get the next game not marked as done
 get "/next_position" do
 	content_type :json
