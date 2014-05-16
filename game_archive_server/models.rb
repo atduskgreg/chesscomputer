@@ -44,6 +44,17 @@ class Position
   	{"position_id" => id, "is_boomerang" => is_boomerang, "game" => game.json_hash, "moves" => moves, 
   	 "fen" => fen, "scores" => scores, "depth" => depth, "created_at" => created_at, "update_at" => updated_at}.to_json
   end
+
+  def clean
+    checked = false
+    is_boomerang = nil
+    moves = []
+    scores = []
+    depth = nil
+    etc = nil
+    save
+  end
+
 end
 
 DataMapper.finalize
