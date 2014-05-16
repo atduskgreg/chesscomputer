@@ -14,6 +14,8 @@ function getNextPosition(){
 				var isBoomerang = false;
 				var line = [];
 				var cp = [];
+				
+				// check each move to see if it is listed in boomerangResults
 				$.each(data, function( index, element ) {
 					var firstMove = element.moves[0];
 					// if boomerang found, populate line/cp arrays
@@ -23,9 +25,11 @@ function getNextPosition(){
 							line.push(m.move);
 							cp.push(m.cp);
 						});
+						console.log("Found boomerang");
 						return false; // break
 					}
 				});
+				
 				// post results
 				if(isBoomerang){
 					updatePosition( posID, isBoomerang, line, cp );

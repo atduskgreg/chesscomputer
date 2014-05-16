@@ -18,24 +18,31 @@ function detectBoomerang(lines){
 function analyzeLine(moves, idealLine){
 	var isBoomerang = false;
 	
-	var smThreshold = 0;
-	var lrgThreshold = 50;
-	var maxDiff = 0;
-	var minDiff = 1000;
+	// small and large thresholds--subject to tweaking
+	var smThreshold = 10;
+	var lrgThreshold = 75;
+	
 	var currentBetter = false;
 	var idealBetter = false;
 	var largeGap = false;
+	
+	// max and min diff, testing purposes
+	var maxDiff = 0;
+	var minDiff = 1000;
 	for(var i = 1; i < moves.length; i++){
-		// look for gap of 100 centipawns (and reverse of that gap)
 		var diff = idealLine[i].cp - moves[i].cp;
+		
+		// check that both directions have small gaps
 		if (diff > smThreshold)
 			idealBetter = true;
 		else if (-diff > smThreshold)
 			currentBetter = true;
 		
+		// check if either direction has a large gap
 		if (diff>lrgThreshold || (-diff)>lrgThreshold)
 			largeGap = true;
 
+		// get max and min (testing purposes)
 		if (diff>maxDiff)
 			maxDiff = diff;
 		if (diff<minDiff)
