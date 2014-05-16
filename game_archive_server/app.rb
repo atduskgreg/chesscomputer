@@ -34,6 +34,7 @@ post "/positions/:id" do
 		p.is_boomerang = params[:is_boomerang]
 		p.moves = params[:moves]
 		p.scores = params[:scores]
+		p.depth = params[:depth]
 		if p.save
 			p.to_json
 		else
