@@ -30,6 +30,7 @@ post "/positions/:id" do
 	p = Position.get params[:id]
 
 	if p
+		puts params.inspect
 		p.checked = true
 		p.is_boomerang = params[:is_boomerang]
 		p.moves = params[:moves]

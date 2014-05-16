@@ -17,14 +17,15 @@
 		}
 
 
-		function updatePosition(positionId, isBoomerang, moves, scores){
+		function updatePosition(positionId, isBoomerang, moves, scores, depth){
 			$.ajax({
 				type:"POST",
 				crossDomain: true,
 				url: apiURL + "/positions/"+positionId+"",
 				data: {"is_boomerang" : isBoomerang,
 						"moves": moves,
-					    "scores": scores},
+					    "scores": scores,
+						"depth" : depth},
 
 				success:function(data){
 					console.log(data)
