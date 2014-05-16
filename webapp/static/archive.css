@@ -1,0 +1,103 @@
+body, html {
+	font-family: 'Rosario', sans-serif;
+}
+h4 {
+	margin: 0px;
+}
+button {
+	border: 1px solid #BBBBDE;
+	background: #F1F1F1;
+	cursor: pointer;
+	border-radius: 7px;
+	outline: none;
+	font-size: 1em;
+	font-family: inherit;
+}
+button:hover{
+	background: #DDDDEF;
+}
+canvas {
+	z-index: 100;
+}
+.boomerangFound{
+	background: #ff0000;
+}
+
+#board table td {
+	width: 65px;
+	height:65px;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+}
+
+#cells, th {
+	border-collapse:collapse;
+	border: 1px solid black;
+}
+
+.black {
+	background-color: #000;
+}
+
+#board img {
+	width: 60px;
+	height: 60px;
+}
+
+#board {
+	float: left;
+	margin-right: 20px;
+
+}
+
+#log {
+	float: left;
+	font-family: courier;
+	white-space: pre;
+}
+
+#start{
+	margin-left: 10px;
+}
+#f, #g {
+	width: 250px;
+	height: 50px;
+	margin-top: 5px;
+	padding: 0px;
+}
+
+.line:hover {
+	background: #DDDDEF;
+	cursor: pointer;
+}
+.selected {
+	background: #DDDDEF;
+}
+
+.error {
+	color: red;
+}
+.logmsg {
+	clear:both;
+}
+#loading{
+	text-align: center;
+}
+#turn {
+	font-weight: bold;
+}
+#turnDisplay{
+	font-size:24px;
+}
+#moveDisplay{
+	display:block;
+	width: 100%;
+}
+#main td{
+	vertical-align: top;
+}
+
+body {
+	min-width: 1000px;
+}

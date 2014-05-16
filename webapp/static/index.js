@@ -77,7 +77,8 @@ $( document ).ready(function() {
 		}
 	}
 
-	displayPosition( startPos );
+	//displayPosition( startPos );
+	displayPosition( "2r3k1/1q1r1pbp/p4np1/Bp1bp3/8/P1N2P1P/1PP2QP1/3RRBK1 w" );
 	initOnOffForm();
 
 
@@ -239,6 +240,7 @@ $( document ).ready(function() {
 		$("#moves").show();
 		$("#loading").show();
 		$.getJSON( "/boomerang?f=" + getFen(pieces) + "%20" + turn, function( data ) {
+			console.log(getFen(pieces));
 			console.log(data);
 			var boomerangResult = detectBoomerang(data);
 			console.log(boomerangResult);
@@ -253,7 +255,7 @@ $( document ).ready(function() {
 				trTag += ">";
 
 				var bestMove = element.moves[0];
-				$('#moveDisplay').append(trTag +"<tr><td class='line'>"+bestMove.move+"</td><td>"+element.searchingDepth+"</td></tr><tr><td><table id='"+bestMove.move+"' class='allMoves'></table></td></tr>");
+				$('#moveDisplay').append(trTag +"<td class='line'>"+bestMove.move+"</td><td>"+element.searchingDepth+"</td></tr><tr><td><table id='"+bestMove.move+"' class='allMoves'></table></td></tr>");
 				$.each(element.moves, function( index, moves ) {
 					if (index>0)
 						$("#"+bestMove.move).append( "<tr><td>"+moves.move+"</tr></td>" );

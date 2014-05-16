@@ -4,13 +4,13 @@ import sys
 #180 game fen: r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w K - 1 2
   
 class Uci:
- 	# path = 'C:/Users/Shannon/Documents/School/UROP/Playful Systems/Chesscomputer/webapp/'
- 	# enginePath = path+"stockfish.exe"
- 	
 	enginePath = "stockfish"
  	if sys.platform == "win32":
  		enginePath += ".exe"
- 
+		
+  	path = 'C:/Users/Shannon/Documents/School/UROP/Playful Systems/Chesscomputer/webapp/'
+ 	enginePath = path+"stockfish.exe"
+	
 	engine = subprocess.Popen(
 		enginePath,
 		universal_newlines=True,
@@ -86,6 +86,7 @@ class Boomerang:
 					  "moveDepths" : {},
 					  "fen" : True,
 					  "centipawns" : 0,
+					  "initialCentipawns": {},
 					  "currentMove" : 1,
 					  "startPlayer" : 'w',
 					  "player" : 'w',
@@ -99,7 +100,7 @@ class Boomerang:
 		self.movesListCP = {}
 		self.cp = 0
 		self.totalMoves = 5
-		self.searchingDepth = 8          # total depth for 'searching' state
+		self.searchingDepth = 15          # total depth for 'searching' state
 		self.exploreDepth = "depth 15"   # depth for 'exploring state. "infinite" or "depth #"
 		
 		self.initialize = Fysom({'initial': 'start'})
@@ -193,6 +194,10 @@ class Boomerang:
 			if re.search('depth (?P<depth>\d+) seldepth \d+ score cp (?P<cp>-?\w+)', e):
 				info = re.search('depth (?P<depth>\d+) seldepth \d+ score cp (?P<cp>-?\w+)', e)
 				gameStatus["centipawns"] = int(info.group('cp'))
+				
+				move = re.search(' pv (?P<move>\w+)', e)
+				if move.group('move') not in gameStatus["initialCentipawns"].keys():
+					gameStatus["initialCentipawns"][move.group('move')] = info.group('cp')
 
 		def onbestmove(e):
 			gameStatus = e.args[1]
@@ -202,20 +207,23 @@ class Boomerang:
 			startpos = gameStatus["startpos"]
 			fen = gameStatus["fen"]
 			moves = gameStatus["moves"]
+			bestMove = e.args[0]
+			
+			cp = gameStatus["initialCentipawns"][bestMove]
 
 			if gameStatus["player"] == gameStatus["startPlayer"]:
 				gameStatus["currentMove"]+=1
 						
 			if gameStatus["player"] == 'w':
 				gameStatus["player"] = 'b'
-				gameStatus["centipawns"] *= -1
+				cp *= -1
 			else:
 				gameStatus["player"] = 'w'
 				
 				
 			JSONmove = {}
-			JSONmove["move"] = e.args[0]
-			JSONmove["cp"] = str(gameStatus["centipawns"])
+			JSONmove["move"] = bestMove
+			JSONmove["cp"] = str(cp)
 			JSONmove["player"] = gameStatus["player"]
 			gameStatus["JSONmoves"].append(JSONmove)
 			

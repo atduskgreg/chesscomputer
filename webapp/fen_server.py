@@ -17,5 +17,10 @@ def boomerang():
 def root():
 	return app.send_static_file('index.html')
 
+@app.route('/archive')
+def archive():
+	return app.send_static_file('archive.html')
+
+	
 if __name__ == "__main__":
 	app.run(debug=True)
