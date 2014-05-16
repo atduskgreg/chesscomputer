@@ -11,7 +11,6 @@ function getNextPosition(){
 			// call to boomerang_server.py
 			$.getJSON( "/boomerang?f=" + data.fen, function( data ) {
 				var boomerangResult = detectBoomerang(data);
-				console.log(data);
 				var isBoomerang = false;
 				var line;
 				var cp;
