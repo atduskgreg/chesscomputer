@@ -8,6 +8,7 @@ require './models.rb'
 
 configure do
   enable :cross_origin
+  set :protection, :except => [:json_csrf]
 end
 
 # get the next game not marked as done
