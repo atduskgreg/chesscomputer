@@ -19,8 +19,8 @@ function analyzeLine(moves, idealLine){
 	var isBoomerang = false;
 	
 	// small and large thresholds--subject to tweaking
-	var smThreshold = 10;
-	var lrgThreshold = 75;
+	var smThreshold = 0;
+	var lrgThreshold = 100;
 	
 	var currentBetter = false;
 	var idealBetter = false;
@@ -52,6 +52,10 @@ function analyzeLine(moves, idealLine){
 			isBoomerang = true;
 		}
 	}
+	//for testing thresholds
+	//console.log("min: " +minDiff + " max: " +maxDiff);
+	//console.log(idealBetter + " " +currentBetter + " " +largeGap);
+
 	return isBoomerang;
 }
 

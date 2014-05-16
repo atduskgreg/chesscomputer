@@ -11,9 +11,11 @@ function getNextPosition(){
 			// call to boomerang_server.py
 			$.getJSON( "/boomerang?f=" + data.fen, function( data ) {
 				var boomerangResult = detectBoomerang(data);
+				console.log(data);
 				var isBoomerang = false;
-				var line = [];
-				var cp = [];
+				var line;
+				var cp;
+				var depth;
 				
 				// check each move to see if it is listed in boomerangResults
 				$.each(data, function( index, element ) {
@@ -21,6 +23,10 @@ function getNextPosition(){
 					// if boomerang found, populate line/cp arrays
 					if(boomerangResult.boomerangMoves.indexOf(firstMove.move) != -1){
 						isBoomerang = true;
+						line = [];
+						cp = [];
+						depth = element.searchingDepth;
+						
 						$.each(element.moves, function( index, m ) {
 							line.push(m.move);
 							cp.push(m.cp);
@@ -32,7 +38,7 @@ function getNextPosition(){
 				
 				// post results
 				if(isBoomerang){
-					updatePosition( posID, isBoomerang, line, cp );
+					updatePosition( posID, isBoomerang, line, cp, depth );
 				} else {
 					updatePosition( posID, isBoomerang );
 				}
@@ -42,14 +48,15 @@ function getNextPosition(){
 }
 
 
-function updatePosition(positionId, isBoomerang, moves, scores){
+function updatePosition(positionId, isBoomerang, moves, scores, depth){
 	$.ajax({
 		type:"POST",
 		crossDomain: true,
 		url: apiURL + "/positions/"+positionId+"",
 		data: {"is_boomerang" : isBoomerang,
 				"moves": moves,
-				"scores": scores},
+				"scores": scores,
+				"depth": depth},
 
 		success:function(data){
 			$('#checked').text(positionId);

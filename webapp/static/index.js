@@ -78,7 +78,7 @@ $( document ).ready(function() {
 	}
 
 	//displayPosition( startPos );
-	displayPosition( "2r3k1/1q1r1pbp/p4np1/Bp1bp3/8/P1N2P1P/1PP2QP1/3RRBK1 w" );
+	displayPosition( "r2q2k1/2p1brpp/p1n2n2/1P2p3/4p1b1/1BP5/1P1PQPPP/RNB1K2R w" );
 	initOnOffForm();
 
 

@@ -209,8 +209,7 @@ class Boomerang:
 			moves = gameStatus["moves"]
 			bestMove = e.args[0]
 			
-			cp = gameStatus["initialCentipawns"][bestMove]
-
+			cp = int(gameStatus["initialCentipawns"][bestMove])
 			if gameStatus["player"] == gameStatus["startPlayer"]:
 				gameStatus["currentMove"]+=1
 						
@@ -219,8 +218,7 @@ class Boomerang:
 				cp *= -1
 			else:
 				gameStatus["player"] = 'w'
-				
-				
+			
 			JSONmove = {}
 			JSONmove["move"] = bestMove
 			JSONmove["cp"] = str(cp)
