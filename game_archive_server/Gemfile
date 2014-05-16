@@ -1,0 +1,13 @@
+source 'https://rubygems.org'
+gem "dm-core"
+gem "dm-migrations"
+gem "dm-timestamps"
+gem "sinatra"
+gem "json"
+gem "sinatra-cross_origin", "~> 0.3.1"
+gem "rack-contrib"
+gem "pgn"
+
+group :production do
+	gem "dm-postgres-adapter"
+end
