@@ -4,7 +4,7 @@
 	<p><%= @checked.select{|p| p.is_boomerang}.length %> boomerangs found</p>
 	<% @checked.select{|p| p.is_boomerang}.each do |boomerang| %>
 	<div>
-		<h2>Game <%= boomerang.game_id %> | Position <%= boomerang.id %></h2>
+		<h2>Game <%= boomerang.game_id %> | Position <%= boomerang.position_number %></h2>
 		<p>Boomerang move had search depth of <b><%= boomerang.depth %></b> cp.</p>
 		<ul>
 		<% boomerang.moves.each_with_index do |move, i| %>

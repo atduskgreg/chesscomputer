@@ -8,8 +8,8 @@ class Uci:
  	if sys.platform == "win32":
  		enginePath += ".exe"
 		
-  	path = 'C:/Users/Shannon/Documents/School/UROP/Playful Systems/Chesscomputer/webapp/'
- 	enginePath = path+"stockfish.exe"
+  	# path = 'C:/Users/Shannon/Documents/School/UROP/Playful Systems/Chesscomputer/webapp/'
+ 	# enginePath = path+"stockfish.exe"
 	
 	engine = subprocess.Popen(
 		enginePath,

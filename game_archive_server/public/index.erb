@@ -1,0 +1,16 @@
+<h1>Boomerang Checker</h2>
+
+	<p>Checked <%= @checked.length %>/<%= @count %> positions</p>
+	<p><%= @checked.select{|p| p.is_boomerang}.length %> boomerangs found</p>
+	<% @checked.select{|p| p.is_boomerang}.each do |boomerang| %>
+		<div>
+			<h2>Game <%= boomerang.game_id %> | Position <%= boomerang.id %></h2>
+			<ul>
+			<% boomerang.moves.each_with_index do |move, i| %>
+	
+				<li><%= move %> [<%= boomerang.scores[i] %>]</li>
+			<% end %>
+			</ul>
+		</div>
+
+	<% end %>
