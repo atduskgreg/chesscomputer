@@ -1,16 +1,85 @@
+<html>
+<head>
+	<script src="jquery.min.js"></script>
+	<script src="chartjs/Chart.js"></script>
+	<script>
+	function ready(){
+		var lineConfig = 
+			{white : {
+				label: "White",
+				fillColor: "rgba(220,220,220,0.2)",
+            	strokeColor: "rgba(220,220,220,1)",
+            	pointColor: "rgba(220,220,220,1)",
+            	pointStrokeColor: "#fff",
+            	pointHighlightFill: "#fff",
+            	pointHighlightStroke: "rgba(220,220,220,1)"
+
+			},
+			black : {
+				label: "Black",
+				fillColor: "rgba(151,187,205,0.2)",
+            	strokeColor: "rgba(151,187,205,1)",
+            	pointColor: "rgba(151,187,205,1)",
+            	pointStrokeColor: "#fff",
+            	pointHighlightFill: "#fff",
+            	pointHighlightStroke: "rgba(151,187,205,1)",
+	
+			}
+		}
+		Chart.defaults.global.animation = false;
+		<% @checked.select{|p| p.is_boomerang}.each_with_index do |boomerang,i| %>
+			c = document.getElementById("boomerang-<%= i %>")
+	
+			moveData = []
+	
+			moveList = $("#move-list-<%= i %>");
+			labelList = [];
+
+			<% whites_move = (boomerang.starting_position.player == :white) %>
+			
+			// flip the score upside down when its a boomerang for black
+			<% score_multiplier = (boomerang.boomerang_for(:white) ? 1 : -1) %>
+
+			<% boomerang.moves.each_with_index do |move, move_num| %>
+				moveData.push(<%= boomerang.scores[move_num].to_i * score_multiplier %>);
+				labelList.push("<%= (whites_move ? 'w:' : 'b:') + move %>");
+				moveList.append("<li><%= move %>[<%= boomerang.scores[move_num] %>]</li>")
+				<% whites_move = !whites_move %>
+			<% end %>
+			
+			data = {datasets : [], labels : labelList};
+
+
+			<% if boomerang.starting_position.player == :white %>
+				data.datasets.push(lineConfig.white)
+			<% else %>
+				data.datasets.push(lineConfig.black)
+			<% end %>
+			data.datasets[0].data = moveData;
+
+			options = {scaleBeginAtZero : false}
+			crt = new Chart(c.getContext("2d")).Line(data, options);
+		<% end %>
+	}
+
+	document.addEventListener("DOMContentLoaded", ready, false);
+
+	</script>
+</head>
+<body>
 <h1>Boomerang Checker</h2>
 
 	<p>Checked <%= @checked.length %>/<%= @count %> positions</p>
 	<p><%= @checked.select{|p| p.is_boomerang}.length %> boomerangs found</p>
-	<% @checked.select{|p| p.is_boomerang}.each do |boomerang| %>
+	<% @checked.select{|p| p.is_boomerang}.each_with_index do |boomerang,i| %>
 	<div>
-		<h2>Game <%= boomerang.game_id %> | Position <%= boomerang.position_number %></h2>
-		<p>Boomerang move had search depth of <b><%= boomerang.depth %></b> cp.</p>
-		<ul>
-		<% boomerang.moves.each_with_index do |move, i| %>
-			<li><%= move %> [<%= boomerang.scores[i] %>]</li>
-		<% end %>
+		<h2>Game <%= boomerang.game_id %> | Position <%= boomerang.position_number %> | Boomerang for <%= boomerang.boomerang_for(:white) ? "white" : "black" %></h2>
+		<p>Boomerang move had search depth of <b><%= boomerang.depth %></b> ply.</p>
+		<canvas id="boomerang-<%= i %>" width="400" height="400"></canvas>
+		<ul id="move-list-<%= i %>">
 		</ul>
 	</div>
 
 	<% end %>
+</body>
+</html>

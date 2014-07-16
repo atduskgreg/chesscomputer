@@ -2,8 +2,9 @@ require 'dm-core'
 require 'dm-timestamps'
 require 'dm-migrations'
 require 'json'
+require 'pgn'
 
-DataMapper.setup(:default, ENV['DATABASE_URL'] || "postgres://localhost/chess_archive_server")
+DataMapper.setup(:default, ENV['DATABASE_URL'] || "postgres://localhost/chess_archive_populated")
 
 class Game
   include DataMapper::Resource
@@ -53,6 +54,14 @@ class Position
     depth = nil
     etc = nil
     save
+  end
+
+  def boomerang_for player
+    starting_position.player == player
+  end
+
+  def starting_position
+    @starting_position ||= PGN::FEN.new(fen).to_position
   end
 
 end
