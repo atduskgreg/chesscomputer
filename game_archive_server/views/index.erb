@@ -29,6 +29,16 @@
 		Chart.defaults.global.animation = false;
 		<% @checked.select{|p| p.is_boomerang}.each_with_index do |boomerang,i| %>
 			c = document.getElementById("boomerang-<%= i %>")
+			<% board_table = "<table>" %>
+			<% boomerang.starting_position.inspect.split(/\n/).each do |row| %>
+				<% board_table << "<tr>" %>
+				<% row.split("").each do |square| %>
+					<% board_table << "<td>#{square}</td>" %>
+				<% end %>
+				<% board_table << "</tr>" %>
+
+			<% end %>
+			$("#board-display-<%= i %>").html("<b>Starting Position</b><br/><%= board_table %>");
 	
 			moveData = []
 	
@@ -39,7 +49,7 @@
 			
 			// flip the score upside down when its a boomerang for black
 			<% score_multiplier = (boomerang.boomerang_for(:white) ? 1 : -1) %>
-
+				moveList.append("<li><b>Moves</b></li>")
 			<% boomerang.moves.each_with_index do |move, move_num| %>
 				moveData.push(<%= boomerang.scores[move_num].to_i * score_multiplier %>);
 				labelList.push("<%= (whites_move ? 'w:' : 'b:') + move %>");
@@ -76,8 +86,12 @@
 		<h2>Game <%= boomerang.game_id %> | Position <%= boomerang.position_number %> | Boomerang for <%= boomerang.boomerang_for(:white) ? "white" : "black" %></h2>
 		<p>Boomerang move had search depth of <b><%= boomerang.depth %></b> ply.</p>
 		<canvas id="boomerang-<%= i %>" width="400" height="400"></canvas>
+		<br style="clear:both" />
+		<div class="board-display" style="float: left; whitespace:pre; width: 250px;" id="board-display-<%= i %>"></div>
 		<ul id="move-list-<%= i %>">
 		</ul>
+		<br style="clear:both" />
+
 	</div>
 
 	<% end %>

@@ -64,6 +64,26 @@ class Position
     @starting_position ||= PGN::FEN.new(fen).to_position
   end
 
+  def board_at move_num
+    if @move_boards
+      return @move_boards[move_num]
+    end
+
+    @move_boards = []
+    
+    current_position = starting_position
+    moves.each do |m|
+      current_position = current_position.move(m)
+      @move_boards << current_position
+    end
+
+    return @move_baords[move_num]
+  end
+
+  def move_boards
+    return @move_boards
+  end
+
 end
 
 DataMapper.finalize
