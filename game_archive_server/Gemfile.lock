@@ -51,5 +51,5 @@ DEPENDENCIES
   pgn
   rack-contrib
   sinatra
-  sinatra-cache
+  sinatra-cache (~> 0.3.7)
   sinatra-cross_origin (~> 0.3.1)

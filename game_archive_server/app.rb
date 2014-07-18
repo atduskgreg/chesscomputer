@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 require 'sinatra'
 require 'sinatra/cross_origin'
-require 'sinatra/cache'
+# require 'sinatra/cache'
 
 require 'json'
 require './models.rb'
@@ -11,9 +11,9 @@ configure do
   enable :cross_origin
   set :protection, :except => [:json_csrf]
 
-  set :root, File.dirname(__FILE__)
+  # set :root, File.dirname(__FILE__)
   # set :cache_environment, :development
-  set :cache_enabled, true
+  # set :cache_enabled, true
 end
 
 get "/" do
