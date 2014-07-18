@@ -13,6 +13,7 @@ end
 
 get "/" do
 	@checked = Position.all :checked => true
+	@boomerangs = @checked.select{|p| p.is_boomerang && p.cp_difference < -100 && (p.peak_score > p.normalized_scores.first)}
 	@count = Position.count
 	erb :index
 end

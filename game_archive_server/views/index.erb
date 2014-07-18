@@ -27,7 +27,7 @@
 			}
 		}
 		Chart.defaults.global.animation = false;
-		<% @checked.select{|p| p.is_boomerang}.each_with_index do |boomerang,i| %>
+		<% @boomerangs.each_with_index do |boomerang,i| %>
 			c = document.getElementById("boomerang-<%= i %>")
 			<% board_table = "<table>" %>
 			<% boomerang.starting_position.inspect.split(/\n/).each do |row| %>
@@ -40,20 +40,17 @@
 			<% end %>
 			$("#board-display-<%= i %>").html("<b>Starting Position</b><br/><%= board_table %>");
 	
-			moveData = []
-	
 			moveList = $("#move-list-<%= i %>");
+			moveData = [];
 			labelList = [];
 
+			moveList.append("<li><b>Moves</b></li>")
+
 			<% whites_move = (boomerang.starting_position.player == :white) %>
-			
-			// flip the score upside down when its a boomerang for black
-			<% score_multiplier = (boomerang.boomerang_for(:white) ? 1 : -1) %>
-				moveList.append("<li><b>Moves</b></li>")
 			<% boomerang.moves.each_with_index do |move, move_num| %>
-				moveData.push(<%= boomerang.scores[move_num].to_i * score_multiplier %>);
+				moveData.push(<%= boomerang.normalized_scores[move_num] %>);
 				labelList.push("<%= (whites_move ? 'w:' : 'b:') + move %>");
-				moveList.append("<li><%= move %>[<%= boomerang.scores[move_num] %>]</li>")
+				moveList.append("<li><%= (whites_move ? 'w:' : 'b:') + move %> [<%= boomerang.normalized_scores[move_num] %>]</li>")
 				<% whites_move = !whites_move %>
 			<% end %>
 			
@@ -80,8 +77,8 @@
 <h1>Boomerang Checker</h2>
 
 	<p>Checked <%= @checked.length %>/<%= @count %> positions</p>
-	<p><%= @checked.select{|p| p.is_boomerang}.length %> boomerangs found</p>
-	<% @checked.select{|p| p.is_boomerang}.each_with_index do |boomerang,i| %>
+	<p><%= @boomerangs.length %> boomerangs found</p>
+	<% @boomerangs.each_with_index do |boomerang,i| %>
 	<div>
 		<h2>Game <%= boomerang.game_id %> | Position <%= boomerang.position_number %> | Boomerang for <%= boomerang.boomerang_for(:white) ? "white" : "black" %></h2>
 		<p>Boomerang move had search depth of <b><%= boomerang.depth %></b> ply.</p>

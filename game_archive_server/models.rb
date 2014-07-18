@@ -56,6 +56,19 @@ class Position
     save
   end
 
+  def cp_difference
+    normalized_scores.last - normalized_scores.first
+  end
+
+  def peak_score
+    normalized_scores.max
+  end
+
+  def normalized_scores
+    mult = boomerang_for(:white) ? 1 : -1
+    scores.collect{|s| s.to_i * mult}
+  end
+
   def boomerang_for player
     starting_position.player == player
   end
