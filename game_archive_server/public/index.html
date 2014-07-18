@@ -1,0 +1,3163 @@
+<html>
+<head>
+	<script src="jquery.min.js"></script>
+	<script src="chartjs/Chart.js"></script>
+	<script>
+	function ready(){
+		var lineConfig = 
+			{white : {
+				label: "White",
+				fillColor: "rgba(220,220,220,0.2)",
+            	strokeColor: "rgba(220,220,220,1)",
+            	pointColor: "rgba(220,220,220,1)",
+            	pointStrokeColor: "#fff",
+            	pointHighlightFill: "#fff",
+            	pointHighlightStroke: "rgba(220,220,220,1)"
+			},
+			black : {
+				label: "Black",
+				fillColor: "rgba(151,187,205,0.2)",
+            	strokeColor: "rgba(151,187,205,1)",
+            	pointColor: "rgba(151,187,205,1)",
+            	pointStrokeColor: "#fff",
+            	pointHighlightFill: "#fff",
+            	pointHighlightStroke: "rgba(151,187,205,1)",
+	
+			}
+		}
+		Chart.defaults.global.animation = false;
+		
+			c = document.getElementById("boomerang-0")
+			
+			
+				
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+			$("#board-display-0").html("<b>Starting Position</b><br/><table><tr></tr><tr><td>♜</td><td> </td><td>_</td><td> </td><td>♝</td><td> </td><td>♛</td><td> </td><td>_</td><td> </td><td>♜</td><td> </td><td>♚</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♝</td><td> </td><td>♟</td><td> </td><td>♟</td><td> </td><td>♟</td></tr><tr><td>♟</td><td> </td><td>_</td><td> </td><td>♞</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>♞</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>♙</td><td> </td><td>_</td><td> </td><td>♘</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>♘</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>♙</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>♗</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>♙</td></tr><tr><td>♖</td><td> </td><td>_</td><td> </td><td>♗</td><td> </td><td>_</td><td> </td><td>♕</td><td> </td><td>♖</td><td> </td><td>_</td><td> </td><td>♔</td></tr>");
+	
+			moveList = $("#move-list-0");
+			moveData = [];
+			labelList = [];
+			moveList.append("<li><b>Moves</b></li>")
+			
+			
+				moveData.push(-53);
+				labelList.push("w:f3e5");
+				moveList.append("<li>w:f3e5 [-53]</li>")
+				
+			
+				moveData.push(38);
+				labelList.push("b:c6d4");
+				moveList.append("<li>b:c6d4 [38]</li>")
+				
+			
+				moveData.push(-169);
+				labelList.push("w:e2d1");
+				moveList.append("<li>w:e2d1 [-169]</li>")
+				
+			
+				moveData.push(-168);
+				labelList.push("b:b4c3");
+				moveList.append("<li>b:b4c3 [-168]</li>")
+				
+			
+				moveData.push(-168);
+				labelList.push("w:b2c3");
+				moveList.append("<li>w:b2c3 [-168]</li>")
+				
+			
+				moveData.push(-168);
+				labelList.push("b:d4b5");
+				moveList.append("<li>b:d4b5 [-168]</li>")
+				
+			
+				moveData.push(-44);
+				labelList.push("w:e4d5");
+				moveList.append("<li>w:e4d5 [-44]</li>")
+				
+			
+				moveData.push(-167);
+				labelList.push("b:e7d6");
+				moveList.append("<li>b:e7d6 [-167]</li>")
+				
+			
+			
+			data = {datasets : [], labels : labelList};
+			
+				data.datasets.push(lineConfig.white)
+			
+			data.datasets[0].data = moveData;
+			options = {scaleBeginAtZero : false}
+			crt = new Chart(c.getContext("2d")).Line(data, options);
+		
+			c = document.getElementById("boomerang-1")
+			
+			
+				
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+			$("#board-display-1").html("<b>Starting Position</b><br/><table><tr></tr><tr><td>♜</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♜</td><td> </td><td>_</td><td> </td><td>♚</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>♟</td><td> </td><td>♟</td></tr><tr><td>♟</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>♘</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>♞</td><td> </td><td>_</td><td> </td><td>♞</td><td> </td><td>♛</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♕</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>♙</td></tr><tr><td>♖</td><td> </td><td>_</td><td> </td><td>♗</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♖</td><td> </td><td>_</td><td> </td><td>♔</td></tr>");
+	
+			moveList = $("#move-list-1");
+			moveData = [];
+			labelList = [];
+			moveList.append("<li><b>Moves</b></li>")
+			
+			
+				moveData.push(-420);
+				labelList.push("w:f3f7");
+				moveList.append("<li>w:f3f7 [-420]</li>")
+				
+			
+				moveData.push(-349);
+				labelList.push("b:g8h8");
+				moveList.append("<li>b:g8h8 [-349]</li>")
+				
+			
+				moveData.push(-127);
+				labelList.push("w:c1f4");
+				moveList.append("<li>w:c1f4 [-127]</li>")
+				
+			
+				moveData.push(-633);
+				labelList.push("b:e8f8");
+				moveList.append("<li>b:e8f8 [-633]</li>")
+				
+			
+				moveData.push(-658);
+				labelList.push("w:f7d5");
+				moveList.append("<li>w:f7d5 [-658]</li>")
+				
+			
+				moveData.push(-136);
+				labelList.push("b:g4f2");
+				moveList.append("<li>b:g4f2 [-136]</li>")
+				
+			
+				moveData.push(-411);
+				labelList.push("w:f1f2");
+				moveList.append("<li>w:f1f2 [-411]</li>")
+				
+			
+				moveData.push(-997);
+				labelList.push("b:e4f2");
+				moveList.append("<li>b:e4f2 [-997]</li>")
+				
+			
+			
+			data = {datasets : [], labels : labelList};
+			
+				data.datasets.push(lineConfig.white)
+			
+			data.datasets[0].data = moveData;
+			options = {scaleBeginAtZero : false}
+			crt = new Chart(c.getContext("2d")).Line(data, options);
+		
+			c = document.getElementById("boomerang-2")
+			
+			
+				
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+			$("#board-display-2").html("<b>Starting Position</b><br/><table><tr></tr><tr><td>♜</td><td> </td><td>♞</td><td> </td><td>♝</td><td> </td><td>♛</td><td> </td><td>♚</td><td> </td><td>♝</td><td> </td><td>_</td><td> </td><td>♜</td></tr><tr><td>♟</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>♟</td><td> </td><td>♟</td><td> </td><td>♟</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♞</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>♘</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>♙</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>♙</td><td> </td><td>♙</td></tr><tr><td>♖</td><td> </td><td>♘</td><td> </td><td>♗</td><td> </td><td>♕</td><td> </td><td>♔</td><td> </td><td>♗</td><td> </td><td>_</td><td> </td><td>♖</td></tr>");
+	
+			moveList = $("#move-list-2");
+			moveData = [];
+			labelList = [];
+			moveList.append("<li><b>Moves</b></li>")
+			
+			
+				moveData.push(56);
+				labelList.push("b:f6e4");
+				moveList.append("<li>b:f6e4 [56]</li>")
+				
+			
+				moveData.push(-14);
+				labelList.push("w:b1d2");
+				moveList.append("<li>w:b1d2 [-14]</li>")
+				
+			
+				moveData.push(56);
+				labelList.push("b:c8f5");
+				moveList.append("<li>b:c8f5 [56]</li>")
+				
+			
+				moveData.push(-21);
+				labelList.push("w:c4d5");
+				moveList.append("<li>w:c4d5 [-21]</li>")
+				
+			
+				moveData.push(417);
+				labelList.push("b:e4d2");
+				moveList.append("<li>b:e4d2 [417]</li>")
+				
+			
+				moveData.push(38);
+				labelList.push("w:c1d2");
+				moveList.append("<li>w:c1d2 [38]</li>")
+				
+			
+				moveData.push(-98);
+				labelList.push("b:d8d5");
+				moveList.append("<li>b:d8d5 [-98]</li>")
+				
+			
+				moveData.push(-89);
+				labelList.push("w:f3h4");
+				moveList.append("<li>w:f3h4 [-89]</li>")
+				
+			
+			
+			data = {datasets : [], labels : labelList};
+			
+				data.datasets.push(lineConfig.black)
+			
+			data.datasets[0].data = moveData;
+			options = {scaleBeginAtZero : false}
+			crt = new Chart(c.getContext("2d")).Line(data, options);
+		
+			c = document.getElementById("boomerang-3")
+			
+			
+				
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+			$("#board-display-3").html("<b>Starting Position</b><br/><table><tr></tr><tr><td>♜</td><td> </td><td>♞</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♚</td><td> </td><td>♝</td><td> </td><td>_</td><td> </td><td>♜</td></tr><tr><td>♟</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>♟</td><td> </td><td>♟</td><td> </td><td>♟</td></tr><tr><td>_</td><td> </td><td>♛</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♞</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♝</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>♕</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>♘</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>♙</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>♙</td><td> </td><td>♙</td></tr><tr><td>♖</td><td> </td><td>♘</td><td> </td><td>♗</td><td> </td><td>_</td><td> </td><td>♔</td><td> </td><td>♗</td><td> </td><td>_</td><td> </td><td>♖</td></tr>");
+	
+			moveList = $("#move-list-3");
+			moveData = [];
+			labelList = [];
+			moveList.append("<li><b>Moves</b></li>")
+			
+			
+				moveData.push(66);
+				labelList.push("w:f1d3");
+				moveList.append("<li>w:f1d3 [66]</li>")
+				
+			
+				moveData.push(24);
+				labelList.push("b:b8d7");
+				moveList.append("<li>b:b8d7 [24]</li>")
+				
+			
+				moveData.push(75);
+				labelList.push("w:e1g1");
+				moveList.append("<li>w:e1g1 [75]</li>")
+				
+			
+				moveData.push(17);
+				labelList.push("b:e7e6");
+				moveList.append("<li>b:e7e6 [17]</li>")
+				
+			
+				moveData.push(14);
+				labelList.push("w:b1d2");
+				moveList.append("<li>w:b1d2 [14]</li>")
+				
+			
+				moveData.push(27);
+				labelList.push("b:b6b3");
+				moveList.append("<li>b:b6b3 [27]</li>")
+				
+			
+				moveData.push(378);
+				labelList.push("w:d2b3");
+				moveList.append("<li>w:d2b3 [378]</li>")
+				
+			
+				moveData.push(-74);
+				labelList.push("b:d5c4");
+				moveList.append("<li>b:d5c4 [-74]</li>")
+				
+			
+			
+			data = {datasets : [], labels : labelList};
+			
+				data.datasets.push(lineConfig.white)
+			
+			data.datasets[0].data = moveData;
+			options = {scaleBeginAtZero : false}
+			crt = new Chart(c.getContext("2d")).Line(data, options);
+		
+			c = document.getElementById("boomerang-4")
+			
+			
+				
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+			$("#board-display-4").html("<b>Starting Position</b><br/><table><tr></tr><tr><td>♜</td><td> </td><td>♞</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♜</td><td> </td><td>♚</td><td> </td><td>_</td></tr><tr><td>♟</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♝</td><td> </td><td>♟</td><td> </td><td>♟</td><td> </td><td>♟</td></tr><tr><td>_</td><td> </td><td>♛</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>♞</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>♘</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>♘</td><td> </td><td>♕</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>♙</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>♗</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>♙</td><td> </td><td>♙</td></tr><tr><td>♖</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♖</td><td> </td><td>♔</td><td> </td><td>_</td></tr>");
+	
+			moveList = $("#move-list-4");
+			moveData = [];
+			labelList = [];
+			moveList.append("<li><b>Moves</b></li>")
+			
+			
+				moveData.push(-14);
+				labelList.push("b:b6b2");
+				moveList.append("<li>b:b6b2 [-14]</li>")
+				
+			
+				moveData.push(-38);
+				labelList.push("w:f1b1");
+				moveList.append("<li>w:f1b1 [-38]</li>")
+				
+			
+				moveData.push(-194);
+				labelList.push("b:b2a3");
+				moveList.append("<li>b:b2a3 [-194]</li>")
+				
+			
+				moveData.push(71);
+				labelList.push("w:c4c5");
+				moveList.append("<li>w:c4c5 [71]</li>")
+				
+			
+				moveData.push(-259);
+				labelList.push("b:a3a6");
+				moveList.append("<li>b:a3a6 [-259]</li>")
+				
+			
+				moveData.push(-262);
+				labelList.push("w:d3a6");
+				moveList.append("<li>w:d3a6 [-262]</li>")
+				
+			
+				moveData.push(-262);
+				labelList.push("b:b7a6");
+				moveList.append("<li>b:b7a6 [-262]</li>")
+				
+			
+				moveData.push(-262);
+				labelList.push("w:b1b7");
+				moveList.append("<li>w:b1b7 [-262]</li>")
+				
+			
+			
+			data = {datasets : [], labels : labelList};
+			
+				data.datasets.push(lineConfig.black)
+			
+			data.datasets[0].data = moveData;
+			options = {scaleBeginAtZero : false}
+			crt = new Chart(c.getContext("2d")).Line(data, options);
+		
+			c = document.getElementById("boomerang-5")
+			
+			
+				
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+			$("#board-display-5").html("<b>Starting Position</b><br/><table><tr></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♜</td><td> </td><td>♚</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>♛</td><td> </td><td>_</td><td> </td><td>♞</td><td> </td><td>♝</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♟</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>♟</td><td> </td><td>♙</td><td> </td><td>♟</td><td> </td><td>♗</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>♘</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♙</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♕</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>♖</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♔</td><td> </td><td>_</td></tr>");
+	
+			moveList = $("#move-list-5");
+			moveData = [];
+			labelList = [];
+			moveList.append("<li><b>Moves</b></li>")
+			
+			
+				moveData.push(-1);
+				labelList.push("w:e5d6");
+				moveList.append("<li>w:e5d6 [-1]</li>")
+				
+			
+				moveData.push(-167);
+				labelList.push("b:e7d6");
+				moveList.append("<li>b:e7d6 [-167]</li>")
+				
+			
+				moveData.push(-109);
+				labelList.push("w:c5d6");
+				moveList.append("<li>w:c5d6 [-109]</li>")
+				
+			
+				moveData.push(-108);
+				labelList.push("b:b7b8");
+				moveList.append("<li>b:b7b8 [-108]</li>")
+				
+			
+				moveData.push(-108);
+				labelList.push("w:e2h2");
+				moveList.append("<li>w:e2h2 [-108]</li>")
+				
+			
+				moveData.push(-5);
+				labelList.push("b:e6e5");
+				moveList.append("<li>b:e6e5 [-5]</li>")
+				
+			
+				moveData.push(206);
+				labelList.push("w:d4e5");
+				moveList.append("<li>w:d4e5 [206]</li>")
+				
+			
+				moveData.push(-108);
+				labelList.push("b:b8e8");
+				moveList.append("<li>b:b8e8 [-108]</li>")
+				
+			
+			
+			data = {datasets : [], labels : labelList};
+			
+				data.datasets.push(lineConfig.white)
+			
+			data.datasets[0].data = moveData;
+			options = {scaleBeginAtZero : false}
+			crt = new Chart(c.getContext("2d")).Line(data, options);
+		
+			c = document.getElementById("boomerang-6")
+			
+			
+				
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+			$("#board-display-6").html("<b>Starting Position</b><br/><table><tr></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♜</td><td> </td><td>♚</td><td> </td><td>_</td></tr><tr><td>♖</td><td> </td><td>♛</td><td> </td><td>_</td><td> </td><td>♞</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♟</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♝</td><td> </td><td>♟</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>♟</td><td> </td><td>♙</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>♘</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>♗</td><td> </td><td>♙</td></tr><tr><td>♕</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♔</td><td> </td><td>_</td></tr>");
+	
+			moveList = $("#move-list-6");
+			moveData = [];
+			labelList = [];
+			moveList.append("<li><b>Moves</b></li>")
+			
+			
+				moveData.push(211);
+				labelList.push("b:b7c8");
+				moveList.append("<li>b:b7c8 [211]</li>")
+				
+			
+				moveData.push(14);
+				labelList.push("w:c3d5");
+				moveList.append("<li>w:c3d5 [14]</li>")
+				
+			
+				moveData.push(-12);
+				labelList.push("b:c6d5");
+				moveList.append("<li>b:c6d5 [-12]</li>")
+				
+			
+				moveData.push(-50);
+				labelList.push("w:a2d5");
+				moveList.append("<li>w:a2d5 [-50]</li>")
+				
+			
+				moveData.push(349);
+				labelList.push("b:g8h8");
+				moveList.append("<li>b:g8h8 [349]</li>")
+				
+			
+				moveData.push(-414);
+				labelList.push("w:a7d7");
+				moveList.append("<li>w:a7d7 [-414]</li>")
+				
+			
+				moveData.push(-414);
+				labelList.push("b:c8a8");
+				moveList.append("<li>b:c8a8 [-414]</li>")
+				
+			
+				moveData.push(-412);
+				labelList.push("w:d5a8");
+				moveList.append("<li>w:d5a8 [-412]</li>")
+				
+			
+			
+			data = {datasets : [], labels : labelList};
+			
+				data.datasets.push(lineConfig.black)
+			
+			data.datasets[0].data = moveData;
+			options = {scaleBeginAtZero : false}
+			crt = new Chart(c.getContext("2d")).Line(data, options);
+		
+			c = document.getElementById("boomerang-7")
+			
+			
+				
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+			$("#board-display-7").html("<b>Starting Position</b><br/><table><tr></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>♛</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♜</td><td> </td><td>_</td><td> </td><td>♚</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♖</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♟</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♝</td><td> </td><td>♟</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>♟</td><td> </td><td>♙</td><td> </td><td>♕</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>♗</td><td> </td><td>♙</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♔</td><td> </td><td>_</td></tr>");
+	
+			moveList = $("#move-list-7");
+			moveData = [];
+			labelList = [];
+			moveList.append("<li><b>Moves</b></li>")
+			
+			
+				moveData.push(195);
+				labelList.push("w:c5c6");
+				moveList.append("<li>w:c5c6 [195]</li>")
+				
+			
+				moveData.push(73);
+				labelList.push("b:c8e8");
+				moveList.append("<li>b:c8e8 [73]</li>")
+				
+			
+				moveData.push(173);
+				labelList.push("w:d7d6");
+				moveList.append("<li>w:d7d6 [173]</li>")
+				
+			
+				moveData.push(178);
+				labelList.push("b:f6c3");
+				moveList.append("<li>b:f6c3 [178]</li>")
+				
+			
+				moveData.push(-22);
+				labelList.push("w:g1h2");
+				moveList.append("<li>w:g1h2 [-22]</li>")
+				
+			
+				moveData.push(278);
+				labelList.push("b:e3e2");
+				moveList.append("<li>b:e3e2 [278]</li>")
+				
+			
+				moveData.push(136);
+				labelList.push("w:d6e6");
+				moveList.append("<li>w:d6e6 [136]</li>")
+				
+			
+				moveData.push(45);
+				labelList.push("b:e8f7");
+				moveList.append("<li>b:e8f7 [45]</li>")
+				
+			
+			
+			data = {datasets : [], labels : labelList};
+			
+				data.datasets.push(lineConfig.white)
+			
+			data.datasets[0].data = moveData;
+			options = {scaleBeginAtZero : false}
+			crt = new Chart(c.getContext("2d")).Line(data, options);
+		
+			c = document.getElementById("boomerang-8")
+			
+			
+				
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+				
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+					
+				
+				
+			
+			$("#board-display-8").html("<b>Starting Position</b><br/><table><tr></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>♛</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♜</td><td> </td><td>_</td><td> </td><td>♚</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♖</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♝</td><td> </td><td>♟</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>♟</td><td> </td><td>♙</td><td> </td><td>♕</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♙</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>♙</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♟</td><td> </td><td>_</td><td> </td><td>♗</td><td> </td><td>♙</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td></tr><tr><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>_</td><td> </td><td>♔</td><td> </td><td>_</td></tr>");
+	
+			moveList = $("#move-list-8");
+			moveData = [];
+			labelList = [];
+			moveList.append("<li><b>Moves</b></li>")
+			
+			
+				moveData.push(381);
+				labelList.push("w:g3e5");
+				moveList.append("<li>w:g3e5 [381]</li>")
+				
+			
+				moveData.push(-33);
+				labelList.push("b:c8d7");
+				moveList.append("<li>b:c8d7 [-33]</li>")
+				
+			
+				moveData.push(170);
+				labelList.push("w:d5d7");
+				moveList.append("<li>w:d5d7 [170]</li>")
+				
+			
+				moveData.push(494);
+				labelList.push("b:g7e5");
+				moveList.append("<li>b:g7e5 [494]</li>")
+				
+			
+				moveData.push(52);
+				labelList.push("w:d7b5");
+				moveList.append("<li>w:d7b5 [52]</li>")
+				
+			
+				moveData.push(17);
+				labelList.push("b:e5f4");
+				moveList.append("<li>b:e5f4 [17]</li>")
+				
+			
+				moveData.push(60);
+				labelList.push("w:h3h4");
+				moveList.append("<li>w:h3h4 [60]</li>")
+				
+			
+				moveData.push(19);
+				labelList.push("b:f8d8");
+				moveList.append("<li>b:f8d8 [19]</li>")
+				
+			
+			
+			data = {datasets : [], labels : labelList};
+			
+				data.datasets.push(lineConfig.white)
+			
+			data.datasets[0].data = moveData;
+			options = {scaleBeginAtZero : false}
+			crt = new Chart(c.getContext("2d")).Line(data, options);
+		
+	}
+	document.addEventListener("DOMContentLoaded", ready, false);
+	</script>
+</head>
+<body>
+<h1>Boomerang Checker</h2>
+	<p>Checked 114/30411 positions</p>
+	<p>9 boomerangs found</p>
+	
+	<div>
+		<h2>Game 1 | Position 20 | Boomerang for white</h2>
+		<p>Boomerang move had search depth of <b>6</b> ply.</p>
+		<canvas id="boomerang-0" width="400" height="400"></canvas>
+		<br style="clear:both" />
+		<div class="board-display" style="float: left; whitespace:pre; width: 250px;" id="board-display-0"></div>
+		<ul id="move-list-0">
+		</ul>
+		<br style="clear:both" />
+	</div>
+	
+	<div>
+		<h2>Game 1 | Position 40 | Boomerang for white</h2>
+		<p>Boomerang move had search depth of <b>10</b> ply.</p>
+		<canvas id="boomerang-1" width="400" height="400"></canvas>
+		<br style="clear:both" />
+		<div class="board-display" style="float: left; whitespace:pre; width: 250px;" id="board-display-1"></div>
+		<ul id="move-list-1">
+		</ul>
+		<br style="clear:both" />
+	</div>
+	
+	<div>
+		<h2>Game 2 | Position 7 | Boomerang for black</h2>
+		<p>Boomerang move had search depth of <b>6</b> ply.</p>
+		<canvas id="boomerang-2" width="400" height="400"></canvas>
+		<br style="clear:both" />
+		<div class="board-display" style="float: left; whitespace:pre; width: 250px;" id="board-display-2"></div>
+		<ul id="move-list-2">
+		</ul>
+		<br style="clear:both" />
+	</div>
+	
+	<div>
+		<h2>Game 2 | Position 10 | Boomerang for white</h2>
+		<p>Boomerang move had search depth of <b>8</b> ply.</p>
+		<canvas id="boomerang-3" width="400" height="400"></canvas>
+		<br style="clear:both" />
+		<div class="board-display" style="float: left; whitespace:pre; width: 250px;" id="board-display-3"></div>
+		<ul id="move-list-3">
+		</ul>
+		<br style="clear:both" />
+	</div>
+	
+	<div>
+		<h2>Game 2 | Position 21 | Boomerang for black</h2>
+		<p>Boomerang move had search depth of <b>2</b> ply.</p>
+		<canvas id="boomerang-4" width="400" height="400"></canvas>
+		<br style="clear:both" />
+		<div class="board-display" style="float: left; whitespace:pre; width: 250px;" id="board-display-4"></div>
+		<ul id="move-list-4">
+		</ul>
+		<br style="clear:both" />
+	</div>
+	
+	<div>
+		<h2>Game 2 | Position 54 | Boomerang for white</h2>
+		<p>Boomerang move had search depth of <b>7</b> ply.</p>
+		<canvas id="boomerang-5" width="400" height="400"></canvas>
+		<br style="clear:both" />
+		<div class="board-display" style="float: left; whitespace:pre; width: 250px;" id="board-display-5"></div>
+		<ul id="move-list-5">
+		</ul>
+		<br style="clear:both" />
+	</div>
+	
+	<div>
+		<h2>Game 2 | Position 61 | Boomerang for black</h2>
+		<p>Boomerang move had search depth of <b>7</b> ply.</p>
+		<canvas id="boomerang-6" width="400" height="400"></canvas>
+		<br style="clear:both" />
+		<div class="board-display" style="float: left; whitespace:pre; width: 250px;" id="board-display-6"></div>
+		<ul id="move-list-6">
+		</ul>
+		<br style="clear:both" />
+	</div>
+	
+	<div>
+		<h2>Game 2 | Position 68 | Boomerang for white</h2>
+		<p>Boomerang move had search depth of <b>3</b> ply.</p>
+		<canvas id="boomerang-7" width="400" height="400"></canvas>
+		<br style="clear:both" />
+		<div class="board-display" style="float: left; whitespace:pre; width: 250px;" id="board-display-7"></div>
+		<ul id="move-list-7">
+		</ul>
+		<br style="clear:both" />
+	</div>
+	
+	<div>
+		<h2>Game 2 | Position 70 | Boomerang for white</h2>
+		<p>Boomerang move had search depth of <b>9</b> ply.</p>
+		<canvas id="boomerang-8" width="400" height="400"></canvas>
+		<br style="clear:both" />
+		<div class="board-display" style="float: left; whitespace:pre; width: 250px;" id="board-display-8"></div>
+		<ul id="move-list-8">
+		</ul>
+		<br style="clear:both" />
+	</div>
+	
+</body>
+</html>

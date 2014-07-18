@@ -2,6 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 require 'sinatra'
 require 'sinatra/cross_origin'
+require 'sinatra/cache'
 
 require 'json'
 require './models.rb'
@@ -9,13 +10,16 @@ require './models.rb'
 configure do
   enable :cross_origin
   set :protection, :except => [:json_csrf]
+
+  set :root, File.dirname(__FILE__)
+  # set :cache_environment, :development
+  set :cache_enabled, true
 end
 
 get "/" do
 	@checked = Position.all :checked => true
 	@boomerangs = @checked.select{|p| p.is_boomerang && p.cp_difference < -100 && (p.peak_score > p.normalized_scores.first)}
 	@count = Position.count
-	response.headers['Cache-Control'] = 'public, max-age=90000'
 	erb :index
 end
 
