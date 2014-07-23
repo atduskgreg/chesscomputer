@@ -9,13 +9,14 @@
 				}
 				return result;
 			}
-			function reduce(numerator,denominator){
+			function reduceFraction(numerator,denominator){
 			  var gcd = function gcd(a,b){
 			    return b ? gcd(b, a%b) : a;
 			  };
 			  gcd = gcd(numerator,denominator);
 			  return [numerator/gcd, denominator/gcd];
 			}
+
 			function toPrecision(value, precision) {
     			var precision = precision || 0,
 			    neg = value < 0,
@@ -42,6 +43,11 @@
 					p = percentageOdds(elo1, elo2);
 					percent = toPrecision(parseFloat(toPrecision(p,2)) * 100, 0);
 
+					roundedPercent = Math.round(percent/10.0)*10
+
+
+					odds = reduceFraction(roundedPercent,100);
+
 					var winnerString = "";
 					if(elo1 > elo2){
 						winnerString = "player 1";
@@ -49,7 +55,9 @@
 						winnerString = "player 2";
 					}
 
-					$("#display").html("<p>"+percent+"% chance of victory for "+winnerString+"</p>");
+
+
+					$("#display").html("<p><b>"+percent+"% chance of victory for "+winnerString+" (about a "+odds[0]+"/"+odds[1]+" chance of winning)</b></p>");
 				});
 			}
 
@@ -73,5 +81,6 @@
 			<p><label>&nbsp;</label> <input type="submit" value="calculate odds" /></p>
 		</form>
 		<div id="display"></div>
+		<div id="explain"><p><em>This estimate is based on fitting a polynomial to the correlation between Elo score and win frequency observed in the <a href="http://chessgames.com">chessgames.com</a> data. See <a href="http://chesscomputer.tumblr.com/post/92579997125/elo-difference-vs-win-percentage-by-atduskgreg">here</a> for more. Thanks to <a href="http://www.randalolson.com/2014/05/24/chess-tournament-matches-and-elo-ratings/">Randal Olson</a> for observing this correlation.</em></p></div>
 	</body>
 <html>
