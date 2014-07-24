@@ -22,6 +22,7 @@ var charToNum = {
 var startPos = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
 var rootImageURL = "/images";
 
+var newPositionCallback;
 
 var pieces = {};
 
@@ -30,7 +31,8 @@ var pieces = {};
 colLabels = ["a","b","c","d","e","f","g","h"];
 rowLabels = ["8", "7", "6", "5", "4", "3", "2", "1"];
 
-function initBoard(boardSelector){
+function initBoard(boardSelector, callback){
+	newPositionCallback = callback;
 	var black = false;
 	$(boardSelector).append("<table id='cells'></table>")
 
@@ -107,7 +109,32 @@ function displayPosition( fen_position ){
 		}
 	}
 	makePiecesDraggable();
-	
+}
+
+function getFen( boardArray ) {
+	var fen = "";
+	for(var j=8; j>0; j--){ // cols
+		var empty = 0;
+		for(var i=1; i<9; i++){ // rows
+			var cell = numToChar[i]+j.toString();
+			if(boardArray[cell]!="0"){
+				if (empty!=0) {
+					fen+=empty;
+					empty = 0;
+				}
+				fen+=boardArray[cell];
+			} else {
+				empty++;
+			}
+		}
+		if (empty!=0) {
+			fen+=empty;
+			empty = 0;
+		}
+		if (j>0)
+			fen += "/"
+	}
+	return fen;
 }
 
 function makePiecesDraggable(){
@@ -177,7 +204,7 @@ function moveForward(move){
 
 	
 	makePiecesDraggable();
-
+	newPositionCallback(getFen(pieces));	
 }
 
 function eatenDragStop( event, ui ) {

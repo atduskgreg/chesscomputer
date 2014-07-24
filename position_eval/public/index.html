@@ -6,11 +6,38 @@
 		<link type="text/css" href="/css/board.css" rel="stylesheet" />
 
 		<script>
-			
+			var turn = "w";
+			var fen = ""
+
+			function newPosition(newFen){
+				fen = newFen;
+				if(turn == "w"){
+					turn = "b";
+				} else if(turn == "b"){
+					turn = "w";
+				}
+				$("#turn input:radio[value="+turn+"]").prop("checked", true);
+				printFen();
+			}
+
+			function fenWithTurn(){
+				return fen + " " + turn;
+			}
+
+			function printFen(){
+				$("#fen-display").html(fenWithTurn);
+			}
 
 			function ready(){
-				initBoard("#board");
+				initBoard("#board", newPosition);
 				newGame();
+
+				$("#turn input:radio[name=turn]").click(function() {
+   		 			var value = $(this).val();
+   		 			turn = value;
+   		 			printFen();
+
+				});
 			}
 
 			document.addEventListener("DOMContentLoaded", ready, false);
@@ -20,7 +47,18 @@
 		</style>
 	</head>
 	<body>
+		<div>
+			<form id="turn">
+				<input type="radio" name="turn" value="w" checked="checked">white
+				<input type="radio" name="turn" value="b">black
+			</form>
+		</div>
 		<div id="board">
+		</div>
+
+
+		<div id="output">
+			<pre id="fen-display"></pre>
 		</div>
 	</body>
 <html>
