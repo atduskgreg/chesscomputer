@@ -1,0 +1,27 @@
+#board table td {
+	width: 65px;
+	height:65px;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+}
+
+#cells, th {
+	border-collapse:collapse;
+	border: 1px solid black;
+}
+
+.black {
+	background-color: #000;
+}
+
+#board img {
+	width: 60px;
+	height: 60px;
+}
+
+#board {
+	float: left;
+	margin-right: 20px;
+
+}

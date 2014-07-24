@@ -30,8 +30,14 @@
 			}
 
 			function percentageOdds(elo1, elo2){
-				var c = [ -3.33050902e-12, 7.69651076e-09, -6.73076942e-06, 2.79500149e-03, 4.92282512e-01];
-				return polyval(c, Math.abs(elo1-elo2));
+				var diff = Math.abs(elo1-elo2);
+
+				if(diff > 600){
+					return 0.99;
+				}else {
+					var c = [ -3.33050902e-12, 7.69651076e-09, -6.73076942e-06, 2.79500149e-03, 4.92282512e-01];
+					return polyval(c, diff);
+				}
 			}
 
 			function ready(){
