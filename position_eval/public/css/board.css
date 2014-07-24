@@ -21,7 +21,20 @@
 }
 
 #board {
-	float: left;
 	margin-right: 20px;
+}
 
+#whiteEaten img{
+	height: 20px
+}
+#blackEaten img{
+	height: 20px
+}
+#output {
+	margin-top: 25px;
+	float:left;
+}
+
+#taken {
+	border-bottom: 1px solid #aaa;
 }

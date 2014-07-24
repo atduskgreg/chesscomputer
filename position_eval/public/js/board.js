@@ -25,6 +25,7 @@ var rootImageURL = "/images";
 var newPositionCallback;
 
 var pieces = {};
+var eatenPieces = [];
 
 
 //e2e4 d2d4 g8f6 g1f3 e7e6 e2e3 f8e7 b1c3 e8g8 f1e2 d7d5 e1g1 b8c6 c1d2 c8d7 f3e5 c6e5 d4e5 f6e4 c3e4 d5e4
@@ -204,7 +205,7 @@ function moveForward(move){
 	pieces[from] = "0";
 	pieces[to] = pcId;
 
-	// updateScore();
+	updateScore();
 
 	
 	makePiecesDraggable();
@@ -223,7 +224,7 @@ function eatenDragStop( event, ui ) {
 		pieces[cell] = ui.helper.attr('id');
 		eatenPieces.splice(eatenPieces.indexOf(ui.helper.attr('id')), 1);
 		
-		recalculateControl();
+		// recalculateControl();
 		
 		$(".pieceImg").draggable({
 			revert: true,
@@ -235,4 +236,56 @@ function eatenDragStop( event, ui ) {
 			stop: dragStop
 		});
     }
+}
+
+function updateScore(){
+	var score = calculateScore(pieces);
+	$("#blackScore").html(score.black);
+	$("#whiteScore").html(score.white);
+	
+	$("#whiteEaten").empty();
+	$("#blackEaten").empty();
+
+	for(var i = 0; i < eatenPieces.length; i++){
+		var pName = eatenPieces[i];
+		if(pName == pName.toLowerCase()){
+			var color = 'white';
+			var pCol = 'black';
+		} else{
+			var color = 'black';
+			var pCol = 'white';
+		}
+		var img = "<img id='"+eatenPieces[i]+"' class='eaten' src='/images/"+pCol+"/"+eatenPieces[i]+".png'>";
+		$("#"+color+"Eaten").append(img);
+	}
+	
+	$(".eaten").draggable({
+		revert: true,
+		revertDuration:0,
+		appendTo: 'body',
+		stack: '.pieceImg',
+		stop: eatenDragStop
+	});
+}
+
+function calculateScore(pieces){
+	
+	var pieceValues = {"p" : 1, "b" : 3, "n" : 3, "r" : 5, "q" : 9, "k" : 0};
+
+	var blackValues = 0;
+	var whiteValues = 0
+	for(var square in pieces){
+		var piece = pieces[square];
+		if(piece != "0"){ // skip empty squares
+			// black
+			if(piece.toLowerCase() == piece){
+				blackValues += pieceValues[piece.toLowerCase()];
+			} else { // white
+				whiteValues += pieceValues[piece.toLowerCase()];
+			}
+
+		}
+	}
+
+	return {"white" : (39 - blackValues), "black": (39 - whiteValues)};;
 }

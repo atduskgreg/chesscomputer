@@ -56,24 +56,33 @@
 		</style>
 	</head>
 	<body>
-		<div>
-			<form id="turn">
-				<b>Select Side:</b> 
-				<input type="radio" name="turn" value="w" checked="checked">white
-				<input type="radio" name="turn" value="b">black
-			</form>
-		</div>
-		<div id="board">
+		<div id="interface" style="float:left;">
+
+			<div>
+				<form id="turn">
+					<b>Select Side:</b> 
+					<input type="radio" name="turn" value="w" checked="checked">white
+					<input type="radio" name="turn" value="b">black
+				</form>
+			</div>
+	
+			<div id="board"></div>
+			<h3 id="taken">Taken pieces</h3>
+			<div id="whiteEaten"></div>		
+			<div id="blackEaten"></div>
+			<br style="clear:both" />
 		</div>
 
-		<h3>Current fen</h3>
-		<pre id="fen-display"></pre>
-		<div>
-			<form id="evaluate" action="/evaluate" method="get">
-				<input type="submit" value="Evaluate"></input>
-			</form>
+		<div id="output">
+			<h3>Current fen</h3>
+			<pre id="fen-display"></pre>
+			<div>
+				<form id="evaluate" action="/evaluate" method="get">
+					<input type="submit" value="Evaluate"></input>
+				</form>
+			</div>
+			<h3>Stockfish analysis</h3>
+			<pre id="eval-result"></pre>
 		</div>
-		<h3>Stockfish analysis</h3>
-		<pre id="eval-result"></pre>
 	</body>
 <html>
