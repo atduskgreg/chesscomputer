@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 ruby "1.9.3"
 gem "sinatra"
+gem "rack-contrib"
 gem "json"
 gem "sinatra-cross_origin", "~> 0.3.1"
