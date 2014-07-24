@@ -15,6 +15,6 @@ end
 get "/evaluate" do
 	content_type :json
 	puts params["fen"]
-	result = `./bin/stockfish #{params["fen"]}`
+	result = `./stockfish-src/stockfish #{params["fen"]}`
 	{"evaluation" => result}.to_json
 end
