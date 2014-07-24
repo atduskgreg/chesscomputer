@@ -15,7 +15,7 @@ get "/evaluate" do
 	content_type :json
 	puts params["fen"]
 
-	stockfish_path = (ENV['RACK_ENV'] == "prodution") ? "./bin/stockfish-heroku"  : "./bin/stockfish"
+	stockfish_path = (ENV['RACK_ENV'] == "production") ? "./bin/stockfish-heroku"  : "./bin/stockfish"
 
 	result = `#{stockfish_path} #{params["fen"]}`
 	{"evaluation" => result}.to_json
