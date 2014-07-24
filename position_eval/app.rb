@@ -1,8 +1,7 @@
 require 'rubygems'
-# require 'bundler/setup'
+require 'bundler/setup'
 require 'sinatra'
 require 'sinatra/cross_origin'
-# require 'sinatra/cache'
 
 require 'json'
 
@@ -16,4 +15,6 @@ end
 get "/evaluate" do
 	content_type :json
 	puts params["fen"]
+	result = `./stockfish #{params["fen"]}`
+	{"evaluation" => result}.to_json
 end

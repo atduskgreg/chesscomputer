@@ -31,6 +31,10 @@ var pieces = {};
 colLabels = ["a","b","c","d","e","f","g","h"];
 rowLabels = ["8", "7", "6", "5", "4", "3", "2", "1"];
 
+function getStartPos(){
+	return startPos;
+}
+
 function initBoard(boardSelector, callback){
 	newPositionCallback = callback;
 	var black = false;
