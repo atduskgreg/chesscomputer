@@ -27,7 +27,7 @@ UNAME = $(shell uname)
 EXE = stockfish
 
 ### Installation dir definitions
-PREFIX = /Users/greg/Documents/mit/playful_systems/chess/chesscomputer/Stockfish-eval
+PREFIX = /app/stockfish-src
 # Haiku has a non-standard filesystem layout
 ifeq ($(UNAME),Haiku)
 	PREFIX=/boot/system/non-packaged
