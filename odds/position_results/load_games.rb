@@ -11,12 +11,19 @@ puts "Opening #{ARGV[0]} to load games"
 source = ARGV[1]
 puts "Source is: #{ARGV[1]}"
 
+def to_utf8(str)
+  str = str.force_encoding("UTF-8")
+  return str if str.valid_encoding?
+  str = str.force_encoding("BINARY")
+  str.encode("UTF-8", invalid: :replace, undef: :replace)
+end
+
 f = File.read(ARGV[0])
 
 # Individual games can be badly formed so we need
 # to manually split the file into many games so
 # we can rescue individual crashes in PGN's parser
-game_segments = f.split(/\n\n\n/)
+game_segments = to_utf8(f).split(/\n\n\n/)
 unparseable = 0
 
 game_segments.each_with_index do |segment, i|
