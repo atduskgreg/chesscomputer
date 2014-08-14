@@ -7,7 +7,12 @@ positions = Position.all :checked => true
 puts "Analyziing #{positions.length} positions"
 
 positions.each do |pos|
-	if pos.game.result != Game::DRAW
+	if(pos.turn == Position::BLACKS_TURN)
+		pos.score = pos.score * -1
+	end
+
+
+	if pos.game.result != Game::DRAW && pos.score
 
 		if pos.score > 0
 			higherPlayerWins = (pos.game.result == Game::WHITE_VICTORY) ? 1: 0

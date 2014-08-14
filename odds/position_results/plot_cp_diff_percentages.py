@@ -27,7 +27,7 @@ plt.scatter(score,percent)
 coefficients = np.polyfit(score, percent, 4)
 print coefficients
 poly = np.poly1d(coefficients)
-xs = np.arange(1,600)
+xs = np.arange(-500,500)
 ys = poly(xs)
 
 line = plt.plot(xs,ys)
