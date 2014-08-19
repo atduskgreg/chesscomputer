@@ -36,6 +36,7 @@ game_moves.each_with_index do |game, i|
 
 		results << result
 	end
+
 end
 
 results = results.sort_by{|r| r[:ply]}.reverse

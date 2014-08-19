@@ -28,6 +28,10 @@ class Game
     @pgn ||= PGN.parse(pgn_string)[0]
   end
 
+  def description
+    "#{pgn.tags["White"]} (White) v. #{pgn.tags["Black"]} (Black) at #{pgn.tags["Event"]}, #{pgn.tags["Site"]}, #{pgn.tags["Date"]}"
+  end
+
   def self.score_for_pgn_position(position)
     result = {:black => 0, :white => 0}
 
