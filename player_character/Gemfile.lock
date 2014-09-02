@@ -1,0 +1,16 @@
+GIT
+  remote: https://github.com/tobiasvl/pgn.git
+  revision: fe8ebbe99ef4805f513607d4561af5fe992e05cb
+  specs:
+    pgn (0.0.6)
+      whittle
+
+GEM
+  specs:
+    whittle (0.0.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  pgn!

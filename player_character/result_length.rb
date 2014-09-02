@@ -3,8 +3,12 @@ if ARGV.length != 2
 	exit
 end
 
-require 'pgn'
+
+# require './pgn_loader'
 require 'descriptive_statistics'
+# require 'rubygems'
+require 'pgn'
+# require 'bundler/setup'
 require 'tempfile'
 
 def t_test_lengths(lengths, pop_mean)
