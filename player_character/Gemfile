@@ -1,1 +1,2 @@
-gem "pgn", :git => "https://github.com/tobiasvl/pgn.git"
+gem "pgn", :git => "https://github.com/gauleng/pgn.git", :branch => "pgn-annotations"
+gem "descriptive_statistics"

@@ -1,8 +1,10 @@
-if ARGV.length < 2
-	puts "usage: ruby queen_trades <\"Player Name\"> path/to/games.pgn"
+if ARGV.length < 1
+	puts "usage: ruby queen_trades path/to/player_games.pgn"
 	exit
 end
 
+require 'rubygems'
+require 'bundler/setup'
 require 'pgn'
 require 'descriptive_statistics'
 require 'tempfile'
@@ -21,8 +23,14 @@ def t_test(data, pop_mean)
 	return stats
 end
 
-player = ARGV[0]
-games = PGN.parse(open(ARGV[1]).read)
+def make_player_regex(filename)
+	parts = filename.split(/\/|\./)
+	last_name = parts[parts.length - 2].downcase
+	return Regexp.new last_name, Regexp::IGNORECASE
+end
+
+player_regex = make_player_regex(ARGV[0])
+games = PGN.parse(open(ARGV[0]).read)
 
 TRADE_MIN_PLY = 4
 
@@ -87,13 +95,13 @@ DRAW = "1/2-1/2"
 PLAYER_WIN = 1
 PLAYER_LOSS = -1
 PLAYER_DRAW = 0
-def result_for_player(player, game)
+def result_for_player(regex, game)
 
 	if game.result == DRAW
 		return PLAYER_DRAW
 	end
 
-	if game.tags["Black"] == player
+	if game.tags["Black"] =~ regex
 		if game.result == BLACK_VICTORY
 			return PLAYER_WIN
 		elsif game.result == WHITE_VICTORY
@@ -128,7 +136,7 @@ draws = []
 
 trades.each do |trade|
 
-	case result_for_player(player, trade[:game])
+	case result_for_player(player_regex, trade[:game])
 	when PLAYER_WIN
 		wins << trade
 	when PLAYER_LOSS
@@ -158,8 +166,8 @@ puts "Drawn-games: Trade happened at #{draw_trade_mean}/#{draw_length_mean} ply 
 # What does the t-score mean here?
 # Normalize this by game length?
 
-wins = wins.collect{|win| trade_start(win[:losses])}
-losses = losses.collect{|loss| trade_start(loss[:losses])}
+wins = wins.collect{|win| trade_start(win[:losses])/win[:game].positions.length.to_f}
+losses = losses.collect{|loss| trade_start(loss[:losses])/loss[:game].positions.length.to_f}
 
 population = wins + losses
 

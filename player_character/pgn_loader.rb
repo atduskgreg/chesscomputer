@@ -14,9 +14,8 @@ class PGNLoader
 		game_segments.each_with_index do |segment, i|
 			begin
 				game = PGN.parse(segment)
-				raise "Found file segment lacking game:\n#{segment}." unless games.length == 1
+				raise "Found file segment lacking game:\n#{segment}" unless games.length == 1
 		
-
 				games << game
 			
 			rescue Whittle::Error
