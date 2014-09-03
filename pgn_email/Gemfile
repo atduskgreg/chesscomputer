@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+# gem "dm-core"
+# gem "dm-migrations"
+# gem "dm-timestamps"
+gem "sinatra"
+gem "pgn"
+
+# group :production do
+	gem "dm-postgres-adapter"
+# end

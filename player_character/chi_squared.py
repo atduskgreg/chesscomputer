@@ -16,4 +16,4 @@ expected = [float(x) for x in lines[1].split(",")]
 
 result = stats.chisquare(np.array(observed),np.array(expected))
 
-print "chi:%.3f\np:%.3f"  % result
+print "chi:%.5f\np:%.5f"  % result
