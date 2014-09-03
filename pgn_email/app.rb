@@ -8,5 +8,5 @@ get "/" do
 end
 
 post "/pgn_email" do
-	params.inspect
+	puts params.inspect
 end
