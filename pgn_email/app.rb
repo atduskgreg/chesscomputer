@@ -9,6 +9,9 @@ get "/" do
 end
 
 post "/pgn_email" do
-	pgn = PGN.parse(params["attachements"]["0"][:tempfile].read)
+	puts params.keys
+	puts params["attachments"].keys
+	puts params["attachments"]["0"].keys
+	pgn = PGN.parse(params["attachments"]["0"][:tempfile].read)
 	puts pgn.inspect
 end
