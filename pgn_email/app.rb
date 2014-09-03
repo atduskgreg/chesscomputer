@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'sinatra'
+require 'pgn'
 
 
 get "/" do
@@ -8,5 +9,6 @@ get "/" do
 end
 
 post "/pgn_email" do
-	puts params.inspect
+	pgn = PGN.parse(params["attachements"]["0"][:tempfile].read)
+	puts pgn.inspect
 end

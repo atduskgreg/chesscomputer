@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/gauleng/pgn.git
+  revision: 9e99a5f14be588e94290cd92492283fe24a09c70
+  branch: pgn-annotations
+  specs:
+    pgn (0.0.6)
+      whittle
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -14,8 +22,6 @@ GEM
       do_postgres (~> 0.10.6)
     do_postgres (0.10.14)
       data_objects (= 0.10.14)
-    pgn (0.0.6)
-      whittle
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
@@ -31,5 +37,5 @@ PLATFORMS
 
 DEPENDENCIES
   dm-postgres-adapter
-  pgn
+  pgn!
   sinatra
