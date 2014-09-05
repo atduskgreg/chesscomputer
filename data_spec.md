@@ -39,6 +39,6 @@
 
 ### Opening Descriptions
 
-This is the one that's most up-in-the-air at the moment. We're working with Maurice to elicit from him some explanations of what the various types of openings mean. In other words, when they say "White played a King-side Indian", you should be able to put up a graphic that says something like "King's Indian is an **open** opening. It will likely lead to a **fast*** game with a **king-side** attack."
+This is the one that's most up-in-the-air at the moment. We're working with Maurice to elicit from him some explanations of what the various types of openings mean. In other words, when they say "White played a King-side Indian", you should be able to put up a graphic that says something like "King's Indian is an **open** opening. It will likely lead to a **fast** game with a **king-side** attack."
 
 So far, I know that openings are categorized into open, semi-open, and closed as well as king-side v. queen-side. I'm trying to get more explanatory detail of these out of Maurice.
