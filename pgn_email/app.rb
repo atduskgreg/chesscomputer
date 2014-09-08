@@ -25,6 +25,10 @@ get "/" do
 	erb :index
 end
 
+get "/player/:player_id" do
+	erb :player
+end
+
 post "/pgn_email" do
 	pgn = PGN.parse(params["attachments"]["0"][:tempfile].read)
 	puts pgn.inspect
