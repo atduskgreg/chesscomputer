@@ -1,0 +1,41 @@
+.game {
+	float: left;
+	margin: 20px;
+}
+
+table {
+	font-size: 10px;
+	margin-bottom: 10px;
+}
+
+.game a {
+	text-decoration: none;
+}
+
+.game a:hover{
+	background-color: #aaf;
+}
+
+.game p{
+	font-size: 10px;
+	text-align: center;
+	color: #aaa;
+	margin: 0;
+}
+
+
+.game .score {
+	color: #000;
+	font-size: 14px;
+}
+
+.game .white {
+	background-color: #fff;
+	color: #000;
+	border:1px solid #000;
+}
+
+.game .black {
+	background-color: #000;
+	color:#fff;
+}
