@@ -1,40 +1,36 @@
-class PositionAnalysis
-	def initialize path_to_stockfish
-		@stockfish = path_to_stockfish
-	end
-
-	def analyze(fen_string)
-		stockfish_result = `./#{@stockfish} #{fen_string}`
-		lines = stockfish_result.split(/\n/)
-		result = {}
-		lines[5..16].each do |line|
-			term_eval = parse_line(line)
-			result[term_eval[:term]] = term_eval[:eval]
-		end
-
-		total_eval = parse_line(lines[18])
-		result[total_eval[:term]] = total_eval[:eval]
-		return result
-	end
-
-	def parse_line(line)
-		parts = line.split(/\s{2,}|\|/).reject{|i| i.empty?}
-		puts parts.inspect
-		{:term => parts[0].strip,
-		 :eval => {
-		 	:white => {:mg => clean(parts[1]),
-		 			   :eg => clean(parts[2])},
-		 	:black => {:mg => clean(parts[3]),
-		 			   :eg => clean(parts[4])},
-		 	:total => {:mg => clean(parts[5]),
-		 		       :eg => clean(parts[6])}}}
-	end
-
-	def clean(r)
-		if r =~ /---/
-		 	return nil
-		else 
-			return r.to_f
-		end
-	end
+if ARGV.length < 1
+	puts "usage: ruby position_choice path/to/player_games.pgn"
+	exit
 end
+
+ARGV = ["../../data/players/ASHLEY.PGN"]
+
+require 'pathname'
+require './position_analysis'
+require 'bundler/setup'
+require 'pgn'
+
+STOCKFISH_PATH = Pathname(__FILE__).parent + "bin" + "stockfish"
+
+def make_player_regex(filename)
+	parts = filename.split(/\/|\./)
+	last_name = parts[parts.length - 2].downcase
+	return Regexp.new last_name, Regexp::IGNORECASE
+end
+
+player_regex = make_player_regex(ARGV[0])
+games = PGN.parse(open(ARGV[0]).read)
+
+pa = PositionAnalysis.new STOCKFISH_PATH.to_s
+
+game = games[0]
+
+pa.compare(game.positions[11].to_fen, game.positions[12].to_fen, :side => :black)
+
+# player = (game.tags["Black"] =~ player_regex) ? :black : :white
+
+# game.positions.each_with_index do |pos, i|
+# 	if (pos.player == player) && (i < game.positions.length - 1)
+
+# 	end
+# end
