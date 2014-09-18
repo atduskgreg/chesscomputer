@@ -1,2 +1,7 @@
 gem "pgn", :git => "https://github.com/gauleng/pgn.git", :branch => "pgn-annotations"
+gem "dm-core"
+gem "dm-migrations"
+gem "dm-timestamps"
+gem "dm-aggregates"
+gem "dm-postgres-adapter"
 gem "descriptive_statistics"
