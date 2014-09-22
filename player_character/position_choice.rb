@@ -44,7 +44,7 @@ terms = ["Material", "Imbalance", "Pawns", "Knights", "Bishops", "Rooks", "Queen
 result = {}
 terms.each{|term| result[term] = {"eg" => [], "mg" => []}}
 
-games[0..2].each_with_index do |game,i|
+games.each_with_index do |game,i|
 	puts "#{i+1}/#{games.length}"	
 
 	if game.tags["Black"] =~ player_regex
@@ -58,10 +58,15 @@ games[0..2].each_with_index do |game,i|
 	
 	game.positions.each_with_index do |pos, i|
 	 	if (pos.player == player) && (i < game.positions.length - 2) # there's a next move to compare to
-			r = pa.compare(game.positions[i].to_fen, game.positions[i+1].to_fen, :side => player)
-			terms.each do |term|
-				result[term]["mg"] << r[term][:mg]
-				result[term]["eg"] << r[term][:eg]
+	 		begin
+				r = pa.compare(game.positions[i].to_fen, game.positions[i+1].to_fen, :side => player)
+				terms.each do |term|
+					result[term]["mg"] << r[term][:mg]
+					result[term]["eg"] << r[term][:eg]
+				end
+			rescue Exception => e
+				puts "Exception: #{e.inspect}"
+				puts "\tposition: #{i} game: #{game.inspect}"
 			end
 	 	end
 	end

@@ -1,0 +1,144 @@
+---
+Material:
+  mg:
+    mean: 0.0
+    stats:
+      t: 0.0
+      p: 0.0
+  eg:
+    mean: 0.0
+    stats:
+      t: 0.0
+      p: 0.0
+Imbalance:
+  mg:
+    mean: 0.0
+    stats:
+      t: 0.0
+      p: 0.0
+  eg:
+    mean: 0.0
+    stats:
+      t: 0.0
+      p: 0.0
+Pawns:
+  mg:
+    mean: 0.0
+    stats:
+      t: 0.0
+      p: 0.0
+  eg:
+    mean: 0.0
+    stats:
+      t: 0.0
+      p: 0.0
+Knights:
+  mg:
+    mean: 0.0005649526387009463
+    stats:
+      t: -1.046
+      p: 0.296
+  eg:
+    mean: 0.0040392422192151575
+    stats:
+      t: -1.297
+      p: 0.195
+Bishops:
+  mg:
+    mean: -0.00081190798376184
+    stats:
+      t: -0.15
+      p: 0.881
+  eg:
+    mean: 0.002606562922868741
+    stats:
+      t: -0.076
+      p: 0.939
+Rooks:
+  mg:
+    mean: 0.011231393775372082
+    stats:
+      t: 0.597
+      p: 0.55
+  eg:
+    mean: 0.004940798376184005
+    stats:
+      t: 1.279
+      p: 0.201
+Queens:
+  mg:
+    mean: 0.001491880920162382
+    stats:
+      t: -0.087
+      p: 0.931
+  eg:
+    mean: 0.002557510148849797
+    stats:
+      t: -0.087
+      p: 0.931
+Mobility:
+  mg:
+    mean: 0.05141407307171849
+    stats:
+      t: 0.502
+      p: 0.616
+  eg:
+    mean: 0.07487652232746946
+    stats:
+      t: 0.575
+      p: 0.565
+King safety:
+  mg:
+    mean: 0.01806664411366713
+    stats:
+      t: 0.922
+      p: 0.357
+  eg:
+    mean: -0.00036874154262516926
+    stats:
+      t: 0.405
+      p: 0.685
+Threats:
+  mg:
+    mean: 0.009262516914749672
+    stats:
+      t: -0.96
+      p: 0.337
+  eg:
+    mean: 0.011882611637347709
+    stats:
+      t: -0.799
+      p: 0.424
+Passed pawns:
+  mg:
+    mean: 0.011373477672530448
+    stats:
+      t: -0.675
+      p: 0.5
+  eg:
+    mean: 0.009741204330175907
+    stats:
+      t: -1.738
+      p: 0.082
+Space:
+  mg:
+    mean: 0.004264208389715827
+    stats:
+      t: 1.097
+      p: 0.273
+  eg:
+    mean: 0.0
+    stats:
+      t: 0.0
+      p: 0.0
+Total:
+  mg:
+    mean: 0.0
+    stats:
+      t: 0.0
+      p: 0.0
+  eg:
+    mean: 0.0
+    stats:
+      t: 0.0
+      p: 0.0
