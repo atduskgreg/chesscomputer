@@ -2,10 +2,10 @@
 
 ### Player Stats
 
-* **Mobility** A number from 0-100.
-* **Positional** A number from 0-100.
-* **Tactical** A number from 0-100.
-* **Materialistic** A number from 0-100.
+* **Threats** A number from 0-100.
+* **King safety** A number from 0-100.
+* **Space** A number from 0-100.
+* **Passed pawns** A number from 0-100.
 * **Queen Trade Frequency** A percentage from 0-100 representing how often queen trades occur in their games (0-100). (only present if statistically significant, otherwise it will say "typical")
 * **Queen Trade Win Rate** A percentage from 0-100 representing the player's win rate after a queen trade. This could also be considered a stand-in for how good their end-game is (only present if statistically significant, otherwise it will say "typical").
 * **Average Win Length** A number indicating average length of their winning games in moves. (only present if statistically significant, otherwise it will say "typical")
@@ -16,11 +16,18 @@
 
 * **Elo Odds** Given the Elo scores of two players facing each other, my [Elo Calculator](http://gregborenstein.com/assets/chess/elo_calculator.html) can tell you the odds of the player with the higher Elo score winning. This takes the form of a percentage or a fractional odds.
 
+* **Relative Characteristics** Given two players we compare their player characteristics (Threats, King safety, Passed Pawns, and Space) to indicate who's stronger in each area. This will be a relative number from -1 to 1 with negative values indicating an advantage for player 2 and positive values indicating an advantage for player 1.
+
+**Example**
+
+<a href="https://www.flickr.com/photos/unavoidablegrain/15300637806" title="Maurice Ashley v. Eugene Perelshteyn by Greg Borenstein, on Flickr"><img src="https://farm6.staticflickr.com/5569/15300637806_b51c559b85_o.png" width="800" height="600" alt="Maurice Ashley v. Eugene Perelshteyn"></a>
+
 **Example** 
 
     Player 1: 2710
     Player 2: 2680
     => "57% chance of victory for player 1 (about a 3/5 chance of winning)"
+
 
 
 * **Average Elo Bracket Game Length** The average game length for players of this Elo bracket. Given in number of moves. Again, given the Elo scores for two players, I'll provide a calculator that will tell you the average game length for their Elo rating.
