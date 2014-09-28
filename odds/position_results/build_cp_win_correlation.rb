@@ -6,9 +6,11 @@ scores = {}
 positions = Position.all :checked => true
 puts "Analyziing #{positions.length} positions"
 
-positions.each do |pos|
-	
+def bin(n)
+	(n/10.0).floor * 10
+end
 
+positions.each do |pos|
 	if pos.game.result != Game::DRAW && pos.score && pos.score.abs < 1000
 
 		if(pos.turn == Position::BLACKS_TURN)
@@ -23,11 +25,11 @@ positions.each do |pos|
 			whiteWins = 0
 		end
 
-		if scores[pos.score]
-			scores[pos.score][:white_wins] = scores[pos.score][:white_wins] + whiteWins
-			scores[pos.score][:game_count] = scores[pos.score][:game_count] + 1
+		if scores[bin(pos.score)]
+			scores[bin(pos.score)][:white_wins] = scores[bin(pos.score)][:white_wins] + whiteWins
+			scores[bin(pos.score)][:game_count] = scores[bin(pos.score)][:game_count] + 1
 		else
-			scores[pos.score] = {:white_wins => whiteWins, :game_count => 1}
+			scores[bin(pos.score)] = {:white_wins => whiteWins, :game_count => 1}
 		end
 	
 	end
