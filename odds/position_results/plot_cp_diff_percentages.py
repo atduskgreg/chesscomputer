@@ -1,8 +1,12 @@
 import numpy as np
 from matplotlib import pyplot as plt
-
+from scipy.optimize import curve_fit
+from scipy.stats import logistic
 import csv
 
+def sigmoid(x, x0, k):
+     y = 1 / (1 + np.exp(-k*(x-x0)))
+     return y
 
 
 def getColumn(column, colType):
@@ -24,12 +28,21 @@ plt.xlabel("CP score")
 plt.ylabel("win percentage")
 plt.scatter(score,percent)
 
-coefficients = np.polyfit(score, percent, 4)
-print coefficients
-poly = np.poly1d(coefficients)
-xs = np.arange(-500,500)
-ys = poly(xs)
+popt, pcov = curve_fit(sigmoid, score, percent)
+print popt
+x = np.linspace(-1000, 1000, 50)
+y = sigmoid(x, *popt)
+plt.plot(x,y, label='fit', color="r", linewidth=3.0)
 
-line = plt.plot(xs,ys)
-plt.setp(line, color='r', linewidth=3.0)
+
+
+# # coefficients = np.polyfit(score, percent, 5)
+# # print coefficients
+# # poly = np.poly1d(coefficients)
+# xs = np.arange(-1000,1000)
+# # ys = logistic.fit(xs)
+# # xFit = curve_fit(sigmoid, percent, 3, 2)[0]
+# ys = sigmoid(xs)
+# line = plt.plot(xs,ys)
+# plt.setp(line, color='r', linewidth=3.0)
 plt.show()

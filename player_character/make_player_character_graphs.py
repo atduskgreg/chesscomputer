@@ -17,7 +17,7 @@ m = open("running_choice_average.yml")
 mean_data = yaml.safe_load(m)
 m.close()
 
-attributes = ['Passed pawns', 'King safety', 'Threats', 'Space']
+attributes = ['Passed pawns', 'King safety', 'Threats', 'Space', 'Mobility']
 n = np.arange(len(attributes))
 bars = []
 colors = []

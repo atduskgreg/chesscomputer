@@ -7,6 +7,19 @@ require 'pgn'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "postgres://localhost/position_results")
 
+
+class Stockfish
+  SEARCH_DEPTH = 16
+  STOCKFISH = "./../../Stockfish-eval/src/stockfish"
+  def self.analyze fen_string
+    result = `#{STOCKFISH} position #{fen_string} go depth #{SEARCH_DEPTH}`
+    parts = result.split(/\n/).last.split(" ")
+    bestmove = parts[1]
+    score = parts[3]
+    {:bestmove => bestmove, :score => score}
+  end
+end
+
 class Game
   WHITE_VICTORY = "1-0"
   BLACK_VICTORY = "0-1"

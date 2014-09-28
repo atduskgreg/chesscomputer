@@ -7,26 +7,27 @@ positions = Position.all :checked => true
 puts "Analyziing #{positions.length} positions"
 
 positions.each do |pos|
-	if(pos.turn == Position::BLACKS_TURN)
-		pos.score = pos.score * -1
-	end
+	
 
+	if pos.game.result != Game::DRAW && pos.score && pos.score.abs < 1000
 
-	if pos.game.result != Game::DRAW && pos.score
+		if(pos.turn == Position::BLACKS_TURN)
+			pos.score = pos.score * -1
+		end
 
-		if pos.score > 0
-			higherPlayerWins = (pos.game.result == Game::WHITE_VICTORY) ? 1: 0
-		elsif pos.score < 0
-			higherPlayerWins = (pos.game.result == Game::BLACK_VICTORY) ? 1: 0
-		else # pos.score == 0
-			higherPlayerWins = 0
+		puts "#{pos.id} #{pos.turn} #{pos.game.result} #{pos.score}"
+
+		if pos.game.result == Game::WHITE_VICTORY
+			whiteWins = 1
+		else
+			whiteWins = 0
 		end
 
 		if scores[pos.score]
-			scores[pos.score]["higherPlayerWins"] = scores[pos.score]["higherPlayerWins"] + higherPlayerWins
-			scores[pos.score]["gameCount"] = scores[pos.score]["gameCount"] + 1
+			scores[pos.score][:white_wins] = scores[pos.score][:white_wins] + whiteWins
+			scores[pos.score][:game_count] = scores[pos.score][:game_count] + 1
 		else
-			scores[pos.score] = {"higherPlayerWins" => higherPlayerWins, "gameCount" => 1}
+			scores[pos.score] = {:white_wins => whiteWins, :game_count => 1}
 		end
 	
 	end
@@ -35,12 +36,12 @@ end
 puts "Found #{scores.length} different scores"
 
 CSV.open("cp_diff_win_percentage.csv", "wb") do |csv|
-	csv << ["CPScore", "HigherPlayerWinPercentage", "HigherPlayerWins","HigherPlayerLosses"]
+	csv << ["CPScore (white perspective)", "WhiteWinPercent"]
 	scores.each do |score, result|
-		# if result["gameCount"] > 50
-			percentage = result["higherPlayerWins"].to_f / result["gameCount"]
-			losses = result["gameCount"] - result["higherPlayerWins"]
-			csv << [score, percentage, result["higherPlayerWins"], losses]
+		# if result[:game_count] > 50
+			percentage = result[:white_wins].to_f/result[:game_count] #result["higherPlayerWins"].to_f / result["gameCount"]
+			#losses = result["gameCount"] - result["higherPlayerWins"]
+			csv << [score, percentage]#, result["higherPlayerWins"], losses]
 		# end
 	end
 end
