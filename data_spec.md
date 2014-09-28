@@ -9,9 +9,12 @@
 ** **Mobility** A number from 0-100.
 * **Queen Trade Frequency** A percentage from 0-100 representing how often queen trades occur in their games (0-100). (only present if statistically significant, otherwise it will say "typical")
 * **Queen Trade Win Rate** A percentage from 0-100 representing the player's win rate after a queen trade. This could also be considered a stand-in for how good their end-game is (only present if statistically significant, otherwise it will say "typical").
+* **Non-Queen Trade Win Rate** A percentage from 0-100 representing the player's win rate in games without a queen trade. (Only present if the Queen Trade Win Rate is significant)
 * **Average Win Length** A number indicating average length of their winning games in moves. (only present if statistically significant, otherwise it will say "typical")
+* * **Average Win Diff** The difference between their average win and their average game (only present if average win length is statistically significant)
 * **Average Loss Length** A number indicating average length of their losing games in moves. (only present if statistically significant, otherwise it will say "typical")
-* **Average Game Length** A number indicating length of their average. (only present if this (or either of the previous two stats) are statistically significant, otherwise it will say "typical")
+* **Average Loss Diff** The difference between their average loss and their average game (only present if average loss length is statistically significant)
+* **Average Game Length** A number indicating length of their average. (only present if either of the previous two stats are statistically significant, otherwise it will say "typical")
  
 ### Player Matchup
 
@@ -21,15 +24,13 @@
 
 **Example**
 
-<a href="https://www.flickr.com/photos/unavoidablegrain/15300637806" title="Maurice Ashley v. Eugene Perelshteyn by Greg Borenstein, on Flickr"><img src="https://farm6.staticflickr.com/5569/15300637806_b51c559b85_o.png" width="800" height="600" alt="Maurice Ashley v. Eugene Perelshteyn"></a>
+<a href="https://www.flickr.com/photos/unavoidablegrain/15300637806" title="Maurice Ashley v. Eugene Perelshteyn by Greg Borenstein, on Flickr"><img src="https://farm6.staticflickr.com/5569/15300637806_5af26c04be_o.png" width="800" height="600" alt="Maurice Ashley v. Eugene Perelshteyn"></a>
 
 **Example** 
 
     Player 1: 2710
     Player 2: 2680
     => "57% chance of victory for player 1 (about a 3/5 chance of winning)"
-
-
 
 * **Average Elo Bracket Game Length** The average game length for players of this Elo bracket. Given in number of moves. Again, given the Elo scores for two players, I'll provide a calculator that will tell you the average game length for their Elo rating.
 
