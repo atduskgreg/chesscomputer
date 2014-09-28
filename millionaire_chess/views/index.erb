@@ -1,7 +1,7 @@
 <div id="live-boards" >
 <% @games.each do |game| %>
 	<div class="game">
-		<%= html_board(game.positions.last) %>
+		<%= html_board(game.pgn.positions.last) %>
 		<p class="score">50-50</p>
 		<p class="matchup">2715 <a class="white" href="/player/ashley">Ashley</a> v. <a class="black" href="/player/carlsen">Carlsen</a> 2695</p>
 		<p class="odds">Favored: WHITE 56% (3/5)</p>
