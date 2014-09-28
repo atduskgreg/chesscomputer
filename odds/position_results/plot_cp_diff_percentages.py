@@ -35,7 +35,6 @@ y = sigmoid(x, *popt)
 plt.plot(x,y, label='fit', color="r", linewidth=3.0)
 
 
-
 # # coefficients = np.polyfit(score, percent, 5)
 # # print coefficients
 # # poly = np.poly1d(coefficients)
