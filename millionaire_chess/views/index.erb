@@ -1,10 +1,50 @@
+<script src="/assets/elo_odds.js"></script>
+<script>
+function ready(){
+	$(".game").each(function(i, e){ 
+		whiteElo = parseInt($(e).find(".whiteElo").html());
+		blackElo = parseInt($(e).find(".blackElo").html());
+
+		p = percentageOdds(whiteElo, blackElo);
+		percent = toPrecision(parseFloat(toPrecision(p,2)) * 100, 0);
+
+		roundedPercent = Math.round(percent/10.0)*10
+
+
+		odds = reduceFraction(roundedPercent,100);
+
+		var winnerString = "";
+		if(whiteElo > blackElo){
+			winnerString = "white";
+		} else {
+			winnerString = "black";
+		}
+
+
+
+		$(e).find(".odds").html("<p><b>Favorite: " +winnerString + "<br/>"+percent+"% ("+odds[0]+"/"+odds[1]+")</b></p>");
+
+	});
+
+	// $("form").submit(function(event){
+	// 	event.preventDefault();
+	// 	var elo1 = parseInt($("#elo1").val());
+	// 	var elo2 = parseInt($("#elo2").val());
+
+		
+	// });
+}
+
+document.addEventListener("DOMContentLoaded", ready, false);
+</script>
+
 <div id="live-boards" >
 <% @games.each do |game| %>
 	<div class="game">
 		<%= html_board(game.pgn.positions.last) %>
 		<p class="score"><%= game.score[:white] %> - <%= game.score[:black] %></p>
-		<p class="matchup">2715 <a class="white" href="/player/ashley">Ashley</a> v. <a class="black" href="/player/carlsen">Carlsen</a> 2695</p>
-		<p class="odds">Favored: WHITE 56% (3/5)</p>
+		<p class="matchup"><span class="whiteElo"><%= game.white.elo %></span> <a class="white" href="/player/ashley">Ashley</a> v. <a class="black" href="/player/carlsen">Carlsen</a> <span class="blackElo"><%= game.black.elo %></span></p>
+		<p class="odds">Calculating favorite...</p>
 	</div>
 <% end %>
 </div>

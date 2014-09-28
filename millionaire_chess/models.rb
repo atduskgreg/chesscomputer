@@ -10,11 +10,11 @@ class Game
 		@pgn.instance_variable_set("@positions", [PGN::FEN.new(fen).to_position])
 		@analysis = Stockfish.analyze(fen)
 
-		white = Player.new
-		white.elo = 2750 + 2750 + rand(-150..150)
+		@white = Player.new
+		@white.elo = 2750 + rand(-150..150)
 
-		black = Player.new
-		black.elo = 2750 + 2750 + rand(-150..150)
+		@black = Player.new
+		@black.elo = 2750 + rand(-150..150)
 
 	end
 
