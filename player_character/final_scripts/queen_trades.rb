@@ -8,20 +8,10 @@ require 'bundler/setup'
 require 'pgn'
 require 'descriptive_statistics'
 require 'tempfile'
+require 'csv'
+require './helpers'
 
-def t_test(data, pop_mean)
-	tmp = Tempfile.new("t_test_temp")
-	tmp.write(data.join(","))
-	tmp.close
-	
-	t_result = `python t_test.py #{tmp.path} --population-mean=#{pop_mean}`
-
-	tmp.unlink
-
-	stats = {}
-	t_result.split("\n").each{|e| r = e.split(":"); stats[r[0]] = r[1].to_f}
-	return stats
-end
+$logger.progname = "queen_trades"
 
 def chisquare(observed, expected)
 	tmp = Tempfile.new("chisquare_tmp")
@@ -118,12 +108,15 @@ def result_for_player(regex, game)
 	end
 
 	if game.tags["Black"] =~ regex
+		$logger.info game.tags["Black"]
 		if game.result == BLACK_VICTORY
 			return PLAYER_WIN
 		elsif game.result == WHITE_VICTORY
 			return PLAYER_LOSS
 		end
 	else # playing as white
+		$logger.info game.tags["White"]
+
 		if game.result == WHITE_VICTORY
 			PLAYER_WIN
 		elsif game.result == BLACK_VICTORY
@@ -131,9 +124,6 @@ def result_for_player(regex, game)
 		end
 	end
 end
-
-
-
 
 
 trades = []
@@ -149,10 +139,9 @@ games.each do |game|
 	end
 end
 
-puts
-puts "### Player #{ARGV[0].split("/").last}"
-puts
-puts "* Traded queens in #{trades.length}/#{games.length} games (#{percent(trades.length.to_f/games.length)})"
+
+$logger.info "### Player #{ARGV[0].split("/").last}"
+$logger.info "* Traded queens in #{trades.length}/#{games.length} games (#{percent(trades.length.to_f/games.length)})"
 
 wins = []
 losses = []
@@ -186,16 +175,14 @@ no_trades.each do |game|
 	end
 end
 
-puts
-puts "#### Record after trade analysis"
-puts
+$logger.info "#### Record after trade analysis"
 
 trade_percent = percent(wins.length.to_f/(wins.length + losses.length))
 non_trade_percent = percent(n_wins.length.to_f/(n_wins.length + n_losses.length))
 
-puts "* **Trade record**  #{wins.length}/#{wins.length + losses.length} (#{trade_percent}) (#{draws.length} draws)"
-puts "* **Non-trade record** #{n_wins.length}/#{n_wins.length + n_losses.length} (#{non_trade_percent}) (#{n_draws.length} draws)"
-puts "* **#{trade_percent > non_trade_percent ? "Higher" : "Lower"}** win percentage after queen trade."
+$logger.info "* **Trade record**  #{wins.length}/#{wins.length + losses.length} (#{trade_percent}) (#{draws.length} draws)"
+$logger.info "* **Non-trade record** #{n_wins.length}/#{n_wins.length + n_losses.length} (#{non_trade_percent}) (#{n_draws.length} draws)"
+$logger.info "* **#{trade_percent > non_trade_percent ? "Higher" : "Lower"}** win percentage after queen trade."
 
 # We're asking if the outcomes of queen trade games are signficantly different
 # than non-queen trade games:
@@ -203,53 +190,9 @@ observed = [wins.length, losses.length]
 expected = [n_wins.length, n_losses.length]
 
 chi_result = chisquare(observed,expected)
-puts "* chi-squared: #{chi_result["chi"]}"
-puts "* p-score: #{chi_result["p"]}"
+$logger.info "* chi-squared: #{chi_result["chi"]}"
+$logger.info "* p-score: #{chi_result["p"]}"
 
 if chi_result["p"] <= 0.05
-	puts "* **RESULT IS SIGNIFICANT**"
+	$logger.info "* **RESULT IS SIGNIFICANT**"
 end
-
-__END__
-win_trade_mean = wins.collect{|win| trade_start(win[:losses])}.mean.round(2)
-win_length_mean = wins.collect{|win| win[:game].positions.length}.mean.round(2)
-
-loss_trade_mean = losses.collect{|loss| trade_start(loss[:losses])}.mean.round(2)
-loss_length_mean = losses.collect{|loss| loss[:game].positions.length}.mean.round(2)
-
-draw_trade_mean = draws.collect{|draw| trade_start(draw[:losses])}.mean.round(2)
-draw_length_mean = draws.collect{|draw| draw[:game].positions.length}.mean.round(2)
-
-puts
-puts "#### Length-analysis"
-puts
-puts "* Won-games: Trade happened at #{win_trade_mean}/#{win_length_mean} ply on average (#{percent(win_trade_mean/win_length_mean)})."
-puts "* Lost-games: Trade happened at #{loss_trade_mean}/#{loss_length_mean} ply on average (#{percent(loss_trade_mean/loss_length_mean)})."
-puts "* Drawn-games: Trade happened at #{draw_trade_mean}/#{draw_length_mean} ply on average (#{percent(draw_trade_mean/draw_length_mean)})."
-
-
-wins = wins.collect{|win| trade_start(win[:losses])/win[:game].positions.length.to_f}
-losses = losses.collect{|loss| trade_start(loss[:losses])/loss[:game].positions.length.to_f}
-
-# draws = draws.collect{|draw| trade_start(draw[:losses])/draw[:game].positions.length.to_f}
-
-population = wins + losses
-
-r =  t_test(wins, population.mean)
-puts "* Wins: t-score: #{r["t"]} p-value: #{r["p"]}"
-
-if r["p"] <= 0.05
-	puts "* **WIN RESULT IS SIGNICANT**"
-end
-
-r =  t_test(losses, population.mean)
-puts "* Losses: t-score: #{r["t"]} p-value: #{r["p"]}"
-if r["p"] <= 0.05
-	puts "* **LOSS RESULT IS SIGNICANT**"
-end
-
-# puts "Draws:"
-# r = t_test(draws, (wins+losses+draws).mean)
-# puts "t-score: #{r["t"]}\np-value: #{r["p"]}"
-
-
