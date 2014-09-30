@@ -2,15 +2,15 @@
 
 ### Player Stats
 
-* **Threats** A number from 0-100.
+* **Threats** A number from -100-100.
 * **Threats significant** "yes" or "no", indicating whether or not this value deviates significantly from the average
-* **King safety** A number from 0-100.
+* **King safety** A number from -100-100.
 * **King safety significant** "yes" or "no", indicating whether or not this value deviates significantly from the average
-* **Space** A number from 0-100.
+* **Space** A number from -100-100.
 * **Space significant** "yes" or "no", indicating whether or not this value deviates significantly from the average
-* **Passed pawns** A number from 0-100.
+* **Passed pawns** A number from -100-100.
 * **Passed pawns significant** "yes" or "no", indicating whether or not this value deviates significantly from the average
-* **Mobility** A number from 0-100.
+* **Mobility** A number from -100-100.
 * **Mobility significant** "yes" or "no", indicating whether or not this value deviates significantly from the average
 * **Queen Trade Frequency** A percentage from 0-100 representing how often queen trades occur in their games (0-100). (only present if statistically significant, otherwise it will say "typical")
 * **Queen Trade Win Rate** A percentage from 0-100 representing the player's win rate after a queen trade. This could also be considered a stand-in for how good their end-game is (only present if statistically significant, otherwise it will say "typical").

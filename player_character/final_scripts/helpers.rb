@@ -1,6 +1,9 @@
 require 'logger'
 require 'tempfile'
 
+PLAYER_STAT_MAX = 0.007
+PLAYER_STAT_MIN = 0.007
+
 $logger = Logger.new File.new("players.log", "a")
 $logger.formatter = proc do |severity, time, progname, msg|
 	"#{severity} [#{time.strftime('%Y-%m-%d %H:%M')}] #{progname}: #{msg}\n"
@@ -31,4 +34,9 @@ def t_test(lengths, pop_mean)
 	stats = {}
 	t_result.split("\n").each{|e| r = e.split(":"); stats[r[0]] = r[1].to_f}
 	return stats
+end
+
+def normalize_player_stat stat
+	percent = stat/(PLAYER_STAT_MAX - PLAYER_STAT_MIN)
+	(percent*100).round
 end
