@@ -29,13 +29,8 @@ def chisquare(observed, expected)
 	return stats
 end
 
-def make_player_regex(filename)
-	parts = filename.split(/\/|\./)
-	last_name = parts[parts.length - 2].downcase
-	return Regexp.new last_name, Regexp::IGNORECASE
-end
-
 player_regex = make_player_regex(ARGV[0])
+
 games = PGN.parse(open(ARGV[0]).read)
 
 TRADE_MIN_PLY = 4
@@ -141,7 +136,8 @@ end
 
 
 $logger.info "### Player #{ARGV[0].split("/").last}"
-$logger.info "* Traded queens in #{trades.length}/#{games.length} games (#{percent(trades.length.to_f/games.length)})"
+trade_frequency = percent(trades.length.to_f/games.length)
+$logger.info "* Traded queens in #{trades.length}/#{games.length} games (#{trade_frequency})"
 
 wins = []
 losses = []
@@ -177,12 +173,13 @@ end
 
 $logger.info "#### Record after trade analysis"
 
-trade_percent = percent(wins.length.to_f/(wins.length + losses.length))
-non_trade_percent = percent(n_wins.length.to_f/(n_wins.length + n_losses.length))
+trade_win_percent = percent(wins.length.to_f/(wins.length + losses.length))
+non_trade_win_percent = percent(n_wins.length.to_f/(n_wins.length + n_losses.length))
 
-$logger.info "* **Trade record**  #{wins.length}/#{wins.length + losses.length} (#{trade_percent}) (#{draws.length} draws)"
-$logger.info "* **Non-trade record** #{n_wins.length}/#{n_wins.length + n_losses.length} (#{non_trade_percent}) (#{n_draws.length} draws)"
-$logger.info "* **#{trade_percent > non_trade_percent ? "Higher" : "Lower"}** win percentage after queen trade."
+
+$logger.info "* **Trade record**  #{wins.length}/#{wins.length + losses.length} (#{trade_win_percent}) (#{draws.length} draws)"
+$logger.info "* **Non-trade record** #{n_wins.length}/#{n_wins.length + n_losses.length} (#{non_trade_win_percent}) (#{n_draws.length} draws)"
+$logger.info "* **#{trade_win_percent > non_trade_win_percent ? "Higher" : "Lower"}** win percentage after queen trade."
 
 # We're asking if the outcomes of queen trade games are signficantly different
 # than non-queen trade games:
@@ -193,6 +190,14 @@ chi_result = chisquare(observed,expected)
 $logger.info "* chi-squared: #{chi_result["chi"]}"
 $logger.info "* p-score: #{chi_result["p"]}"
 
+
+
 if chi_result["p"] <= 0.05
 	$logger.info "* **RESULT IS SIGNIFICANT**"
+	result = {"queen trade frequency" => trade_frequency, "queen trade win rate" =>  trade_win_percent, "non queen trade win rate" => non_trade_win_percent}
+else
+	result = {"queen trade frequency" => "typical", "queen trade win rate" =>  "typical", "non queen trade win rate" => "typical"}
 end
+
+puts to_csv_row(result)
+

@@ -1,10 +1,34 @@
 require 'logger'
+require 'tempfile'
 
 $logger = Logger.new File.new("players.log", "a")
 $logger.formatter = proc do |severity, time, progname, msg|
 	"#{severity} [#{time.strftime('%Y-%m-%d %H:%M')}] #{progname}: #{msg}\n"
 end
 
-# HERE
-# code for sub-scripts to use to package up their results
-# as a partial CSV row so that some parent script can gather them together
+def to_csv_row h
+	result = h.keys.collect(&:to_s).join(",")
+	result << "\n" << h.values.join(",")
+	result
+end
+
+def make_player_regex(filename)
+	parts = filename.split(/\/|\./)
+	last_name = parts[parts.length - 2].downcase.split("_")[0]
+	return Regexp.new last_name, Regexp::IGNORECASE
+end
+
+
+def t_test(lengths, pop_mean)
+	tmp = Tempfile.new("t_test_tmp")
+	tmp.write(lengths.join(","))
+	tmp.close
+	
+	t_result = `python t_test.py #{tmp.path} --population-mean=#{pop_mean}`
+
+	tmp.unlink
+
+	stats = {}
+	t_result.split("\n").each{|e| r = e.split(":"); stats[r[0]] = r[1].to_f}
+	return stats
+end
