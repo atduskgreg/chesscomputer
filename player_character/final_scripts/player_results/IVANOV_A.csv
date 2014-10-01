@@ -1,0 +1,2 @@
+queen trade frequency,queen trade win rate,non queen trade win rate,average win length,average win diff,average loss length,average loss diff,average game length,player name,Mobility,Mobility signficant,King safety,King safety signficant,Threats,Threats signficant,Passed pawns,Passed pawns signficant,Space,Space signficant
+46.0%,47.0%,60.0%,typical,typical,typical,typical,typical,Alexander Ivanov,0.004707287011496988,yes,-0.0009982283539125107,no,0.000539330364011428,no,-0.001897008449279496,yes,0.0007016883957157755,yes
