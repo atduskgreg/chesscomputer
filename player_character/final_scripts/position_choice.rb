@@ -80,7 +80,7 @@ end
 important_terms = ["Mobility", "King safety", "Threats", "Passed pawns", "Space"]
 
 
-csv = {}
+csv = {"player name" => player_name}
 important_terms.each do |t| 
 	csv[t] = data[t]["mg"]["mean"] - baseline[t]["mg"]
 	csv[t + " signficant"] = data[t]["mg"]["stats"]["p"] < 0.05 ? "yes" : "no"

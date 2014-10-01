@@ -1,0 +1,191 @@
+<html>
+<head>
+	</head>
+	<title>DeepView: Computational Tools for Chess Spectatorship - MIT Media Lab Playful Systems Group</title>
+	<link rel="stylesheet" href="blueprint/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="blueprint/print.css" type="text/css" media="print"><!--[if lt IE 8]><link rel="stylesheet" href="blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+	
+    <style>
+    	a {
+    		text-decoration: none;
+    		color: #666;
+    		font-weight: bold;
+    	}
+
+    	a:hover {
+    		color: #ccc;
+    	}
+
+    	#sidebar li{
+    		font-size: 16px;
+    		list-style-type: none;
+    	}
+
+    	#sidebar {
+    		margin-top: 85px;
+    		text-align:right;
+    	}
+
+    	#sidebar ul {
+    		margin: 0;
+    	}
+
+    	#sidebar a {
+    		font-weight: normal;
+    	}
+
+    	.by a {
+    		color: #000;
+    	}
+
+    	.by a:hover {
+    		color: #ccc;
+    	}
+
+    	h2 {
+    		text-align: right;
+    	}
+
+    	.by {
+    		margin-bottom: 10px;
+    	}
+
+    	h2 a {
+    		background-color: #ccc;
+    		color: #fff;
+    		padding: 5px;
+    		font-weight: normal;
+    	}
+
+    	h2 a:hover{
+    		color: #fff;
+    		background-color: #666;
+    	}
+
+    	#research {
+    		margin-top: 20px;
+    	}
+
+    	#research img{
+    		width: 400px;
+    	}
+
+    	#research h3 .slug{
+    		/*background-color: #ccc;*/
+    		/*color: #fff;*/
+    		/*padding: 5px;*/
+    		/*border-bottom: 1px solid #ccc;
+    		margin-top: 25px;*/
+    		font-weight: bold;
+    	}
+
+    	#research h3 {
+    		    		font-size: 26px;
+    		    		margin-top: 20px;
+    		    		margin-bottom: 20px;
+
+    	}
+    	
+        .summary {
+            /*background-color: #ccc;*/
+            
+            /*text-align:center;*/
+            color: #666;
+        }
+
+        .citations {
+            color: #ccc;
+            font-style: italic;
+            border-top: 1px solid #ccc;
+            padding: 10px;
+
+        }
+
+        .summary a {
+            color: #999;
+        }
+
+        .summary a:hover{
+            color:#ccc;
+        }
+
+        .citations p{
+            margin-bottom: 0;
+        }
+
+
+    </style>
+	<body>
+		<div class="container">
+			<div class="span-6 last">
+				<h2><a href="">Playful Systems</a></h2>
+			</div>
+			<br style="clear:both" />
+			<div class="span-6" id="sidebar">
+				<ul>
+					<li><a href="#player_character">Understanding Players</a></li>
+					<li><a href="#elo_score_odds">Making Odds</a></li>
+					<li><a href="#position_score">A Score for Chess?</a></li>
+					<li><a href="#sacrifice_detection">Brilliances and Blunders</a></li>
+					<li><a href="#online_version">How Can I Use It?</a></li>
+                    <li><a href="#tools">Tools and Citations</a></li>
+
+				</ul>
+			</div>
+			<div class="span-16 push-1">
+				<div class="span-24"><div class="span-5"><h1><b>DeepView</b></h1></div><div class="span-12 last"><h1>Computational Tools<br/>for Chess Spectatorship</h1></div></div>
+
+				<h6 class="by"><a href="http://gregborenstein.com">Greg Borenstein</a>, <a href="http://media.mit.edu/people/slavin">Prof. Kevin Slavin</a>, <a href="http://media.mit.edu/people/mashley">Grandmaster Maurice Ashley</a></h6>
+
+				<div class="span-16">
+					<p>Competitive chess is an exciting spectator sport. It is fast-paced, dynamic, and deeply psychological. 	Unfortunately, most of the drama inherent in the game is only visible to spectators who are themselves expert chess players. DeepView seeks to use computational tools to make the drama of high-level Chess accessible to novice viewers.</p>
+					<img class="span-6" src="images/maurice-ashley.jpg"/><p> There is a long tradition of software trying to beat human players at chess. DeepView takes advantage of the algorithmic tools created in the development of advanced chess engines such as Deep Blue, but instead uses them to understand and explain the styles of individual players and the dynamics of a given match. It puts powerful data science tools that can calculate player position preferences and likely game outcomes in the hands of Chess commentators who can use them to better explain the exciting human story inside every match.</p>
+	
+					<p>DeepView is a collaboration with chess Grandmaster and Media Lab Fellow, Maurice Ashley. Ashley is the founder of the <a href="http://millionairechess.com">Millionaire Chess Open</a>, the largest money-prize open chess tournament in history, first held October 9-13, 2014. Ashley is a gifted chess commentator on a mission to make chess as popular as poker.</p>
+
+					</p>DeepView's mission is to help everyone see chess like Maurice.</p>
+
+				</div>
+                <div class="span-16 last summary">
+                    <h3 style="border-bottom:1px solid #ccc">Method and Impact</h3>
+                    <p>DeepView is a suite of computational and statistical tools meant to help novice viewers understand the drama of a high-level chess match through storytelling. Good drama includes characters and situations. We worked with GM Ashley to indentify the elements of individual player's styles and the components of an ongoing match that computation could help bring chess to life. We gathered an archive of more than 750,000 games from <a href="http://chessgames.com">chessgames.com</a> including extensive collections of games played by each of the grandmasters in the tournament. We then used the <a href="http://stockfishchess.org/">Stockfish</a> open source chess engine to analyze the details of each move within these games. We combined these results into a comprehensive statistical analysis that provided us with meaningful and compelling information to pass on to viewers and to provide to chess comentators to aid in their work.
+                    </p>
+                    <p>The questions we answered include:</p>
+                    <ul>
+                        <li><a href="#player_character">How do you describe different players' style of chess?</a></li>
+                         <li><a href="#player_character">Can you describe the matchup between two players in a way that sets expectations for a match?</a></li>
+                        <li><a href="#player_character">Are some players more likely to win short or long games?</a></li>
+                        <li><a href="#player_character">Are some players particularly good or bad in the late phase of the game?</a></li>
+                        <li><a href="#elo_score_odds">How likely is a player with a higher ranking to actually beat a lower player?</a></li>
+                        <li><a href="#position_score">Can we reduce a chess position to a single meaningful score that would be easily understood?</a></li>
+                    </ul>
+                    <p>In addition to making chess more accessible to novice viewers, we believe that providing access to these kinds of statistics will change how expert players play chess, allowing them to prepare differently for specific opponents and to detect limitations or quirks in their own play.</p>
+
+                    <p>Further, we believe that the techniques used here could be applied to other sports and games as well. Specifically we wonder why traditional sports broadcasting doesn't use measures of significance to filter or interpret the statistics they show to their viewers. For example, is a batter's RBI count actually informative without knowing whether it is typical or extraordinary compared to other players? And when it comes to eSports with their exploding viewer population, this approach points to rich possibilities improving the spectator experience and translating complex gameplay so it is more legible for novice fans.</p>
+            </div>
+
+				<div class="span-16" id="research">
+
+					<a name="player_character"><h3 class="span-18"><span class="slug span-6">Player Character</span><span class="span-10">Computing Player Personalities by Analyzing Move Choices</span></h3></a>
+					<a href="https://www.flickr.com/photos/unavoidablegrain/15322388275" title="Eugene Perelshteyn by Greg Borenstein, on Flickr"><img  src="https://farm4.staticflickr.com/3882/15322388275_090458c9fd_o.png" alt="Eugene Perelshteyn"></a>
+
+
+					<a name="elo_score_odds"><h3 class="span-18"><span class="slug span-6">Elo Oddsmaking</span> <span class="span-10">Determining Odds of Victory Between Two Players</span></h3></a>
+					<a href="https://www.flickr.com/photos/unavoidablegrain/14534471598" title="Elo difference vs win percentage by Greg Borenstein, on Flickr"><img  src="https://farm4.staticflickr.com/3868/14534471598_0b4fbc96a8_o.png" alt="Elo difference vs win percentage"></a>
+
+					<a name="position_score"><h3 class="span-18"><span class="slug span-6">A Score for Chess</span><span class="span-10">Using a Chess Engine and Machine Learning to Predict Victory from a Chess Position</span></h3></a>
+					<a href="https://www.flickr.com/photos/unavoidablegrain/15374620155" title="Stockfish CP score to predict victory probability by Greg Borenstein, on Flickr"><img src="https://farm3.staticflickr.com/2947/15374620155_0fa70d9989_o.png" alt="Stockfish CP score to predict victory probability"></a>
+	
+					<a name="sacrifice_detection"><h3  class="span-18"><span class="slug span-6">Brilliances and Blunders</span> <span class="span-10">Detecting Tournament Highlights and Statistics</span></h3></a>
+					<a href="https://www.flickr.com/photos/unavoidablegrain/14715061797" title="detecting victory by sacrifice by Greg Borenstein, on Flickr"><img src="https://farm6.staticflickr.com/5573/14715061797_2ae4aa65fb_o.png"  alt="detecting victory by sacrifice"></a>
+
+					<a name="online_version"><h3  class="span-18"><span class="slug span-6">Open Source</span> <span class="span-10">DeepView Will Soon Be Available Online for You to Try</span></h3></a>
+					
+			</div>
+             <div class="span-16  last summary citations">
+                    <a name="tools"></a><p>DeepView uses the <a href="http://stockfishchess.org/">Stockfish</a> open source chess engine to analyze chess positions. It relies heavily on the <a href="http://chessgames.com">chessgames.com</a> archive of over 750,000 games. DeepView was chiefly implelemted in Ruby and Python and makes exstenive use of the <a href="http://www.scipy.org/">SciPy</a> scientific computing library, <a href="https://github.com/capicue/pgn/">this Ruby PGN library</a>, and <a href="http://www.sinatrarb.com/">the Sinatra web framework</a>. Special thanks to <a href="http://web.mit.edu/skao/www/portfolio/">Shannon Kao</a>, our invaluable UROP.</p>
+                </div>
+			</div>
+		</div>
+	</body>
+</html>
