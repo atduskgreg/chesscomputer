@@ -1,0 +1,2 @@
+queen trade frequency,queen trade win rate,non queen trade win rate,average win length,average win diff,average loss length,average loss diff,average game length,player name,Mobility,Mobility signficant,King safety,King safety signficant,Threats,Threats signficant,Passed pawns,Passed pawns signficant,Space,Space signficant
+typical,typical,typical,91,-2,103,10,93,Le Quang Liem,-0.004853793384225216,yes,0.0001579525806728807,no,0.0010047434655086514,yes,0.0009614900010277653,no,-0.0006400548123991017,yes

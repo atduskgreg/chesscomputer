@@ -1,0 +1,2 @@
+queen trade frequency,queen trade win rate,non queen trade win rate,average win length,average win diff,average loss length,average loss diff,average game length,player name,Mobility,Mobility signficant,King safety,King safety signficant,Threats,Threats signficant,Passed pawns,Passed pawns signficant,Space,Space signficant
+typical,typical,typical,typical,typical,typical,typical,typical,Wesley So,0.002856550384072218,yes,0.0017652121500624871,no,0.0013496918022448904,yes,-0.00020343456170438846,no,0.00011680750802169895,no
