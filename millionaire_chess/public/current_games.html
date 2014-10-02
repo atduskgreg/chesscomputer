@@ -1,0 +1,101 @@
+<html>
+<head>
+	<script src="/assets/elo_odds.js"></script>
+	<script src="/assets/jquery-1.11.1.min.js"></script>
+	<script src="/assets/jchess.js"></script>
+	<script src="/assets/jquery.xdomainajax.js"></script>
+ 	<link rel="stylesheet" href="stylesheets/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
+ 	<link rel="stylesheet" href="stylesheets/chess.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<script>
+	function ready(){
+		// $.ajax({
+  //  			url: "http://gregborenstein.com/assets/chess/games.pgn",
+		//     type: 'GET',
+		//     success: function(res) {
+		//     	pgn = $($(res.responseText)[5]).text();
+		//     	console.log(pgn)
+		//     	$("#board").chess({pgn: pgn});
+		//         // var headline = $(res.responseText).find('a.tsh').text();
+		//         // alert(headline);
+		//     }
+		// });
+		// console.log($("#pgn").html());
+
+		chess = $("#board").chess({pgn : $("#pgn").html(), square_size : 21.5});
+		console.log(chess.square_size);
+		console.log(chess);
+		chess.transitionTo(chess.game.moves.length);
+		console.log(chess.annotation());
+
+	}
+	document.addEventListener("DOMContentLoaded", ready, false);
+	
+	</script>
+	<style>
+	.chessboard img {
+		width: 100%;
+		height: 100%;
+	}
+	</style>
+
+</head>
+
+<body>
+	<div id="board"></div>
+<!-- 	<pre id="pgn">
+		[Event "Local Event"]
+      [Site "Local Site"]
+      [Round "1"]
+      [Date "2011.10.31"]
+      [White "dudektria"]
+      [Black "Stockfish 2.1.1"]
+      [Result "0-1"]
+
+      1. d4 Nf6 2. c4 e6 3. Nf3 d5 4. Nc3 c6 5. Bg5 h6 6. Bh4 dxc4 7. e4 g5 8. Bg3 b5
+      9. Be2 Bb7 10. Be5 Nbd7 11. b3 Bb4 12. Qc2 cxb3 13. axb3 Nxe5 14. Nxe5 Qxd4 15.
+      Rc1 Qxe5 16. O-O Rd8 17. Rfd1 Rxd1+ 18. Bxd1 Ke7 19. Bf3 g4 20. Be2 Rd8 21. Nd1
+      Rd2 22. Qb1 Rxe2 23. Ne3 Qf4 24. Rf1 Nxe4 25. Qd1 Rxf2 26. Nc2 Rxf1+ 27. Qxf1
+      Bc5+ 28. Qf2 Qc1+ 29. Ne1 Qxe1# 0-1
+
+    </pre> -->
+	<pre id="pgn" style="display:none">
+[Event "Sinquefield Cup 2014"]
+[Site "St Louis, Mo"]
+[Date "2014.08.29"]
+[Round "3.1"]
+[White "Carlsen, Magnus"]
+[Black "Caruana, Fabiano"]
+[Result "0-1"]
+[LiveChessVersion "1.4.4"]
+[BlackElo "2801"]
+[WhiteElo "2877"]
+[ECO "C24"]
+
+1. e4 {[%clk 1:30:58]} e5 {[%clk 1:30:52]} 2. Bc4 {[%clk 1:31:22]} Nf6
+{[%clk 1:30:19]} 3. d3 {[%clk 1:31:45]} c6 {[%clk 1:26:45]} 4. Nf3
+{[%clk 1:32:02]} d5 {[%clk 1:26:58]} 5. Bb3 {[%clk 1:32:26]} Bb4+
+{[%clk 1:26:58]} 6. c3 {[%clk 1:30:02]} Bd6 {[%clk 1:27:22]} 7. Bg5
+{[%clk 1:27:55]} dxe4 {[%clk 1:21:58]} 8. dxe4 {[%clk 1:28:19]} h6
+{[%clk 1:21:49]} 9. Bh4 {[%clk 1:28:33]} Qe7 {[%clk 1:19:57]} 10. Nbd2
+{[%clk 1:25:15]} Nbd7 {[%clk 1:19:31]} 11. Bg3 {[%clk 1:24:58]} Bc7
+{[%clk 1:13:10]} 12. O-O {[%clk 1:12:24]} Nh5 {[%clk 1:11:10]} 13. h3
+{[%clk 0:57:31]} Nxg3 {[%clk 1:05:11]} 14. fxg3 {[%clk 0:57:56]} Nc5
+{[%clk 1:05:26]} 15. Bxf7+ {[%clk 0:49:48]} Kxf7 {[%clk 0:57:47]} 16. Nxe5+
+{[%clk 0:49:24]} Kg8 {[%clk 0:58:07]} 17. Ng6 {[%clk 0:49:45]} Qg5
+{[%clk 0:53:53]} 18. Rf8+ {[%clk 0:40:12]} Kh7 {[%clk 0:54:09]} 19. Nxh8
+{[%clk 0:27:10]} Bg4 {[%clk 0:26:20]} 20. Qf1 {[%clk 0:27:33]} Nd3
+{[%clk 0:25:37]} 21. Qxd3 {[%clk 0:15:04]} Rxf8 {[%clk 0:25:48]} 22. hxg4
+{[%clk 0:15:25]} Qxg4 {[%clk 0:22:10]} 23. Nf3 {[%clk 0:14:03]} Qxg3
+{[%clk 0:18:30]} 24. e5+ {[%clk 0:09:35]} Kxh8 {[%clk 0:18:55]} 25. e6
+{[%clk 0:07:56]} Bb6+ {[%clk 0:17:12]} 26. Kh1 {[%clk 0:08:25]} Qg4
+{[%clk 0:16:59]} 27. Qd6 {[%clk 0:02:51]} Rd8 {[%clk 0:06:01]} 28. Qe5
+{[%clk 0:02:47]} Rd5 {[%clk 0:06:04]} 29. Qb8+ {[%clk 0:03:08]} Kh7
+{[%clk 0:04:31]} 30. e7 {[%clk 0:02:51]} Qh5+ {[%clk 0:04:42]} 31. Nh2
+{[%clk 0:02:33]} Rd1+ {[%clk 0:04:42]} 32. Rxd1 {[%clk 0:03:01]} Qxd1+
+{[%clk 0:05:07]} 33. Nf1 {[%clk 0:03:21]} Qxf1+ {[%clk 0:05:20]} 34. Kh2
+{[%clk 0:03:41]} Qg1+ {[%clk 0:05:43]} 0-1
+
+	</pre>
+
+</body>
+</html>

@@ -1,2 +1,2 @@
-player name,queen trade frequency,queen trade win rate,non queen trade win rate,average win length,average win diff,average loss length,average loss diff,average game length,Mobility,Mobility signficant,King safety,King safety signficant,Threats,Threats signficant,Passed pawns,Passed pawns signficant,Space,Space signficant
-Varuzhan Akobian,48.0%,66.0%,71.0%,typical,typical,92,13,79,33,yes,-15,no,-20,yes,24,yes,7,no
+queen trade frequency,queen trade win rate,non queen trade win rate,average win length,average win diff,average loss length,average loss diff,average game length,player name,Mobility,Mobility signficant,King safety,King safety signficant,Threats,Threats signficant,Passed pawns,Passed pawns signficant,Space,Space signficant
+48.0%,66.0%,71.0%,typical,typical,92,13,79,Varuzhan Akobian,0.0019879272527456512,yes,-0.0009272032611975355,no,-0.001174200893652862,yes,0.001426024925041923,yes,0.00039053061866479435,no
