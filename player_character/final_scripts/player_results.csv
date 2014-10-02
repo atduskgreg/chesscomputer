@@ -1,1 +1,23 @@
 queen trade frequency,queen trade win rate,non queen trade win rate,average win length,average win diff,average loss length,average loss diff,average game length,player name,Mobility,Mobility signficant,King safety,King safety signficant,Threats,Threats signficant,Passed pawns,Passed pawns signficant,Space,Space signficant
+48.0%,66.0%,71.0%,typical,typical,92,13,79,Varuzhan Akobian,8,yes,-4,no,-5,yes,5,yes,2,no
+45.0%,74.0%,64.0%,typical,typical,typical,typical,typical,Sergei Azarov,15,yes,-12,no,1,no,0,no,3,yes
+45.0%,68.0%,62.0%,typical,typical,typical,typical,typical,Sabino Brunello,-1,no,-4,no,2,no,7,no,0,no
+45.0%,62.0%,63.0%,typical,typical,typical,typical,typical,Ioan-Cristian Chirila,-3,no,48,yes,4,no,8,no,0,no
+52.0%,69.0%,70.0%,typical,typical,typical,typical,typical,Alexey Dreev,7,yes,-11,yes,2,no,3,yes,1,yes
+typical,typical,typical,typical,typical,typical,typical,typical,Ruben Felgaer,3,no,8,no,0,no,-1,no,0,no
+46.0%,47.0%,60.0%,typical,typical,typical,typical,typical,Alexander Ivanov,18,yes,-4,no,2,no,-7,yes,3,yes
+45.0%,77.0%,65.0%,typical,typical,typical,typical,typical,Giorgi Kacheishvili,12,yes,-9,no,-2,no,2,no,1,no
+43.0%,63.0%,64.0%,77,2,89,14,75,Kaido Kulaots,23,yes,16,no,-4,yes,-3,no,3,yes
+60.0%,65.0%,70.0%,typical,typical,98,6,92,Aleksandr Lenderman,-16,yes,-9,no,2,no,11,yes,-3,yes
+typical,typical,typical,91,-2,103,10,93,Le Quang Liem,-19,yes,1,no,4,yes,4,no,-2,yes
+52.0%,56.99999999999999%,66.0%,typical,typical,typical,typical,typical,Ehsan Ghaem Maghami,10,yes,-18,yes,4,yes,0,no,1,no
+42.0%,56.99999999999999%,83.0%,typical,typical,typical,typical,typical,Daniel Naroditsky,7,no,-23,no,5,no,-2,no,0,no
+54.0%,61.0%,71.0%,79,-5,96,12,84,Parimarjan Negi,4,no,7,no,4,yes,6,yes,0,no
+60.0%,55.00000000000001%,66.0%,83,-4,100,13,87,Eugene Perelshteyn,-4,no,-23,no,-1,no,1,no,-1,no
+50.0%,54.0%,66.0%,typical,typical,typical,typical,typical,Alejandro Ramirez-Alvarez,7,no,-10,no,2,no,0,no,2,no
+typical,typical,typical,typical,typical,typical,typical,typical,Ray Robson,-6,no,-14,no,4,yes,6,no,1,no
+50.0%,52.0%,69.0%,typical,typical,typical,typical,typical,Julio Catalino Sadorra,6,no,66,yes,4,no,21,yes,1,no
+typical,typical,typical,typical,typical,typical,typical,typical,Samuel Shankland,4,no,26,no,0,no,9,yes,0,no
+typical,typical,typical,typical,typical,typical,typical,typical,Wesley So,11,yes,7,no,5,yes,-1,no,0,no
+57.99999999999999%,70.0%,74.0%,typical,typical,typical,typical,typical,Bu Xiangzhi,-11,yes,-10,no,4,yes,-1,no,-1,no
+typical,typical,typical,typical,typical,104,13,91,Yangyi Yu,-13,yes,28,yes,2,no,6,yes,-2,yes

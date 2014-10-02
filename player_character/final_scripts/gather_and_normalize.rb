@@ -24,12 +24,17 @@ end
 puts "biggest: #{biggest}"
 puts "smallest: #{smallest}"
 
+smallest = -0.006
+biggest = 0.02
+puts
+puts "seting bounds to #{smallest} to #{biggest}"
+
 CSV.open("player_results.csv", "a") do |output|
 	ARGV.each do |f|
 		input = CSV.parse(open(f).read)
 		pc_cols = [9,11,13,15,17]
+		row = []
 		input[1].each_with_index do |col,i|
-			row = []
 			if pc_cols.include? i
 				puts col.to_f
 				row << normalize_player_stat(col.to_f, {:max => biggest, :min => smallest})
