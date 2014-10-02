@@ -3,6 +3,7 @@ require 'bundler/setup'
 require 'sinatra'
 require 'pgn'
 require './models'
+require 'json'
 
 helpers do
 	def html_board(position)
@@ -30,6 +31,14 @@ end
 
 get "/player/:player_id" do
 	erb :player
+end
+
+post "/current_score" do
+	content_type :json
+	games = PGN.parse(params[:pgn])
+	r = Stockfish.analyze(games[0].positions.last.to_fen.to_s)
+	r["boardId"] = params[:boardId]
+	r.to_json
 end
 
 post "/pgn_email" do

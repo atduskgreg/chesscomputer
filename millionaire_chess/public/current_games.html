@@ -52,9 +52,26 @@
 			winnerString = "black";
 		}
 
-
-
 		return "<p><b>Favorite: " +winnerString + "<br/>"+percent+"% ("+odds[0]+"/"+odds[1]+")</b></p>";
+
+	}
+
+	function positionOddsToString(odds){
+		result = "Position odds: ";
+		n = Math.round(odds*100);
+		if(n > 50){
+			result += n + "% of white victory";
+		}
+		if(n < 50){
+			result += (100-n) + "% of black victory";
+		}
+
+		if(n == 50){
+			result += " 50/50.";
+		}
+
+
+		return result;
 
 	}
 
@@ -76,27 +93,32 @@
 		    		chess.transitionTo(chess.game.moves.length);
 		    		console.log(chess);
 		    		h = chess.game.header;
-		    		// $("#" +boardId).append("<p>White: "+h.White+" ("+h.WhiteElo+")</p>")
 
-					$("#" +boardId).append("<p class='matchup'><span class='whiteElo'>"+h.WhiteElo+"</span> <a class='white' href='/player/ashley'>"+h.White+"</a> v. <a class='black' href='/player/carlsen'>"+h.Black+"</a> <span class='blackElo'>"+h.BlackElo+"</span></p>\
+					$("#" +boardId).append("<p class='score'>Calculating...</p><p class='matchup'><span class='whiteElo'>"+h.WhiteElo+"</span> <a class='white' href='/player/ashley'>"+h.White+"</a> v. <a class='black' href='/player/carlsen'>"+h.Black+"</a> <span class='blackElo'>"+h.BlackElo+"</span></p>\
 					    <p class='odds'>"+eloString(parseInt(h.WhiteElo), parseInt(h.BlackElo))+"</p>");
 
 		    		currGame++;
+		    		console.log(boardId);
+		    		console.log(gameString)
+		    		$.ajax({
+					  type: 'POST',
+					  url: "/current_score",
+					  data: {pgn:gameString, boardId: boardId},
+					  dataType: 'json',
+					  success:function(data){
+					  	console.log(data);
+					  	console.log(data.boardId);
+					  	$("#"+data.boardId + " .score").html(positionOddsToString(data.white_victory_odds));
+					  }
+					});
+
 
 		    	}
 
-		    	// $("#board").chess({pgn: pgn});
-		        // var headline = $(res.responseText).find('a.tsh').text();
-		        // alert(headline);
+
 		    }
 		});
-		// console.log($("#pgn").html());
 
-		// chess = $("#board").chess({pgn : $("#pgn").html(), square_size : 21.5});
-		// console.log(chess.square_size);
-		// console.log(chess);
-		// chess.transitionTo(chess.game.moves.length);
-		// console.log(chess.annotation());
 
 
 	}

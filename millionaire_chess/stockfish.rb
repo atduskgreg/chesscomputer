@@ -19,7 +19,10 @@ class Stockfish
 	
 		white_victory_odds = predict(score)
 
-		{:white_victory_odds => white_victory_odds, :best_move => bestmove, :best_move_cp_score => score}
+		{:white_victory_odds => white_victory_odds,
+		 :best_move => bestmove, 
+		 :best_move_cp_score => score,
+		 :current_move => turn(fen)}
 	end
 
 	
