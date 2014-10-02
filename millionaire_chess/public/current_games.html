@@ -4,28 +4,100 @@
 	<script src="/assets/jquery-1.11.1.min.js"></script>
 	<script src="/assets/jchess.js"></script>
 	<script src="/assets/jquery.xdomainajax.js"></script>
- 	<link rel="stylesheet" href="stylesheets/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
+ 	<!-- <link rel="stylesheet" href="stylesheets/main.css" type="text/css" media="screen" title="no title" charset="utf-8"> -->
  	<link rel="stylesheet" href="stylesheets/chess.css" type="text/css" media="screen" title="no title" charset="utf-8">
+ 		<link rel="stylesheet" href="/assets/main.css" type="text/css" />
+
 	<script>
+	// function getFen( boardData ) {
+	// 	var fen = "";
+	// 	for(var row=0; row< 8; row++){
+	// 		for(var col = 0; col < 8; col++){
+	// 			entry = boardData[row][col];
+	// 			if(entry == "-" ){
+	// 				fen = fen.concat("1");
+	// 			} else{
+	// 				fen = fen.concat(entry.piece);
+	// 			}
+	// 		}
+	// 		if(row < 7){
+	// 			fen = fen.concat("/")
+	// 		}
+	// 	}
+
+	// 	fen = fen.replace(/11111111/g, "8")
+	// 			 .replace(/1111111/g, "7")
+	// 			 .replace(/111111/g, "6")
+	// 			 .replace(/11111/g, "5")
+	// 			 .replace(/1111/g, "4")
+	// 			 .replace(/111/g, "3")
+	// 			 .replace(/11/g, "2");
+
+	// 	return fen;
+	// }
+
+	function eloString(whiteElo, blackElo){
+		p = percentageOdds(whiteElo, blackElo);
+		percent = toPrecision(parseFloat(toPrecision(p,2)) * 100, 0);
+
+		roundedPercent = Math.round(percent/10.0)*10
+
+
+		odds = reduceFraction(roundedPercent,100);
+
+		var winnerString = "";
+		if(whiteElo > blackElo){
+			winnerString = "white";
+		} else {
+			winnerString = "black";
+		}
+
+
+
+		return "<p><b>Favorite: " +winnerString + "<br/>"+percent+"% ("+odds[0]+"/"+odds[1]+")</b></p>";
+
+	}
+
 	function ready(){
-		// $.ajax({
-  //  			url: "http://gregborenstein.com/assets/chess/games.pgn",
-		//     type: 'GET',
-		//     success: function(res) {
-		//     	pgn = $($(res.responseText)[5]).text();
-		//     	console.log(pgn)
-		//     	$("#board").chess({pgn: pgn});
-		//         // var headline = $(res.responseText).find('a.tsh').text();
-		//         // alert(headline);
-		//     }
-		// });
+		pgn = ""
+		$.ajax({
+   			url: "http://gregborenstein.com/assets/chess/games.pgn",
+		    type: 'GET',
+		    success: function(res) {
+		    	pgn = $($(res.responseText)[5]).text();
+
+		    	parts = pgn.split(/\[Event/);
+		    	currGame = 0;
+		    	for(var i = 1; i < parts.length; i+=2){
+		    		gameString = "[Event" + parts[i];
+		    		boardId = "game"+currGame;
+		    		$("#boards").append("<div class='game' id='"+boardId+"'></div>");
+		    		chess = $("#"+boardId).chess({pgn:gameString, square_size: 21.5});
+		    		chess.transitionTo(chess.game.moves.length);
+		    		console.log(chess);
+		    		h = chess.game.header;
+		    		// $("#" +boardId).append("<p>White: "+h.White+" ("+h.WhiteElo+")</p>")
+
+					$("#" +boardId).append("<p class='matchup'><span class='whiteElo'>"+h.WhiteElo+"</span> <a class='white' href='/player/ashley'>"+h.White+"</a> v. <a class='black' href='/player/carlsen'>"+h.Black+"</a> <span class='blackElo'>"+h.BlackElo+"</span></p>\
+					    <p class='odds'>"+eloString(parseInt(h.WhiteElo), parseInt(h.BlackElo))+"</p>");
+
+		    		currGame++;
+
+		    	}
+
+		    	// $("#board").chess({pgn: pgn});
+		        // var headline = $(res.responseText).find('a.tsh').text();
+		        // alert(headline);
+		    }
+		});
 		// console.log($("#pgn").html());
 
-		chess = $("#board").chess({pgn : $("#pgn").html(), square_size : 21.5});
-		console.log(chess.square_size);
-		console.log(chess);
-		chess.transitionTo(chess.game.moves.length);
-		console.log(chess.annotation());
+		// chess = $("#board").chess({pgn : $("#pgn").html(), square_size : 21.5});
+		// console.log(chess.square_size);
+		// console.log(chess);
+		// chess.transitionTo(chess.game.moves.length);
+		// console.log(chess.annotation());
+
 
 	}
 	document.addEventListener("DOMContentLoaded", ready, false);
@@ -41,7 +113,7 @@
 </head>
 
 <body>
-	<div id="board"></div>
+	<div id="boards"></div>
 <!-- 	<pre id="pgn">
 		[Event "Local Event"]
       [Site "Local Site"]

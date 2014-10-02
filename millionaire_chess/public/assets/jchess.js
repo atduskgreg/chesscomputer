@@ -263,7 +263,7 @@ jQuery.eachWithContext = function(context, object, callback) {
         // This allows us to have json encoded comments
         pgn = pgn.replace(/\{((\\})|([^}]))+}/g, function(){ return instance.pluckAnnotation.apply(instance, arguments); });
 
-        var headers = ['Event','Site','Date','Round','White','Black','Result'];
+        var headers = ['Event','Site','Date','Round','White','Black','Result', "BlackElo", "WhiteElo"];
         for (var i=0; i < headers.length; i++) {
           var re      = new RegExp(headers[i] + ' "([^"]*)"]');
           var result  = re.exec(pgn);
