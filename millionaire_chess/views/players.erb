@@ -1,6 +1,6 @@
 <h2>All Players</h2>
 <ul>
 	<% @players.each do |p| %>
-	<li><a href="/player/<%= p.id %>"><%= p.player_name %></a></li>
+	<li><a href="/player/<%= p.player_name.split(" ").join("%20") %>"><%= p.player_name %></a></li>
 	<% end %>
 </ul>

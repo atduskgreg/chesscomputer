@@ -1,0 +1,11 @@
+<script src="/assets/elo_odds.js"></script>
+<script>
+function ready(){
+	$("#oddsDescription").html(eloString(parseInt($("#pl1Elo").html()), parseInt($("#pl2Elo").html()), ["<%= @player1.player_name %>", "<%= @player2.player_name %>"]));
+}
+document.addEventListener("DOMContentLoaded", ready, false);
+</script>
+
+<h2><%= @player1.player_name %> (<span id="pl1Elo"><%= @player1.elo %></span>) vs <%= @player2.player_name %> (<span id="pl2Elo"><%= @player2.elo %></span>)</h2>
+
+<p id="oddsDescription"></p>

@@ -36,25 +36,7 @@
 	// 	return fen;
 	// }
 
-	function eloString(whiteElo, blackElo){
-		p = percentageOdds(whiteElo, blackElo);
-		percent = toPrecision(parseFloat(toPrecision(p,2)) * 100, 0);
-
-		roundedPercent = Math.round(percent/10.0)*10
-
-
-		odds = reduceFraction(roundedPercent,100);
-
-		var winnerString = "";
-		if(whiteElo > blackElo){
-			winnerString = "white";
-		} else {
-			winnerString = "black";
-		}
-
-		return "<p><b>Favorite: " +winnerString + "<br/>"+percent+"% ("+odds[0]+"/"+odds[1]+")</b></p>";
-
-	}
+	
 
 	function positionOddsToString(odds){
 		result = "Position odds: ";

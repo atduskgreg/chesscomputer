@@ -49,9 +49,20 @@ get "/players" do
 	erb :players
 end
 
-get "/player/:player_id" do
-	@player = Player.get params[:player_id]
+get "/player/:player_name" do
+	@player = Player.search params[:player_name]
+	if !@player
+		redirect "/players"
+	end
+		
 	erb :player
+end
+
+get "/matchup/:player1/v/:player2" do
+	@player1 = Player.search params[:player1]
+	@player2 = Player.search params[:player2]
+
+	erb :matchup
 end
 
 post "/current_score" do

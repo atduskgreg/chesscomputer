@@ -1,3 +1,30 @@
+function eloString(whiteElo, blackElo, names){
+	p = percentageOdds(whiteElo, blackElo);
+	percent = toPrecision(parseFloat(toPrecision(p,2)) * 100, 0);
+
+	roundedPercent = Math.round(percent/10.0)*10
+
+
+	odds = reduceFraction(roundedPercent,100);
+
+	var winnerString = "";
+	if(whiteElo > blackElo){
+		winnerString = "white";
+
+		if(names){
+			winnerString = names[0];
+		} 
+	} else {
+		winnerString = "black";
+		if(names){
+			winnerString = names[1];
+		} 
+	}
+
+	return "<p><b>Favorite: " +winnerString + "<br/>"+percent+"% ("+odds[0]+"/"+odds[1]+")</b></p>";
+
+}
+
 function polyval(coefficients, val){
 	var result = 0;
 	for(var i = 0; i < coefficients.length; i++){

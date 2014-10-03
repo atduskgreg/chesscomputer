@@ -44,7 +44,6 @@ class Player
     index = Ferret::Index::Index.new(:default_field => 'content', :path =>"players-index")
     result = index.search(player_name)
     if result.hits.length > 0
-      puts index[result.hits[0].doc]
       return Player.get index[result.hits[0].doc]['file']
     else
       return nil
