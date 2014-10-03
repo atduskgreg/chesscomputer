@@ -97,3 +97,12 @@ table {
 #sacrifices .moves {
 	font-size: 10px;
 }
+
+
+.playerCompare {
+	width: 400px;
+	float: left;
+	/*font-size: ;*/
+	border-right: 1px solid #ccc;
+	margin-left: 20px;
+}

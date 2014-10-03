@@ -61,7 +61,8 @@ class Player
   def load_from_csv path_to_csv
     csv = CSV.parse(open(path_to_csv).read)
     stats = csv[1].collect do |c|
-        c.gsub!(".0%", "")
+      #TODO: this screwws up with a value like "56.0000000000001%"
+        c.gsub!(/\.\d+%/, "")
         if c == "yes"
           c = true
         end
@@ -77,6 +78,14 @@ class Player
     stats.each_with_index do |col, i|
       self.send("#{csv[0][i].gsub(" ", "_").downcase}=".to_sym, col)
     end
+  end
+
+  def compare_to player2
+    result = {}
+    [:mobility, :king_safety, :space, :threats, :passed_pawns].each do |a|
+      result[a] = self.send(a) - player2.send(a)
+    end
+    result
   end
 
 end
