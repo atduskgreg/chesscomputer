@@ -87,36 +87,36 @@ class Game
   		sacrificed_pieces
   	end
 
- #  	def find_sacrifice_moves game
-	# 	npos = game.pgn.positions.length - 1 
-	# 	final_score = Game.score_for_pgn_position(game.pgn.positions.last)
-	# 	gap = (final_score[:white] - final_score[:black]).abs
+  	def find_sacrifice_moves
+		npos = pgn.positions.length - 1 
+		final_score = Game.score_for_pgn_position(pgn.positions.last)
+		gap = (final_score[:white] - final_score[:black]).abs
 	
-	# 	num_checked = 0
+		num_checked = 0
 	
-	# 	moves = []
+		moves = []
 	
-	# 	move_num = game.pgn.moves.length - 1
+		move_num = pgn.moves.length - 1
 	
-	# 	found = false
+		found = false
 	
-	# 	while !found && num_checked < 20
-	# 		moves << game.pgn.moves[move_num]
+		while !found && num_checked < 20
+			moves << pgn.moves[move_num]
 	
-	# 		score = Game.score_for_pgn_position(game.pgn.positions[npos])
-	# 		gap = (score[:white] - score[:black]).abs
+			score = Game.score_for_pgn_position(pgn.positions[npos])
+			gap = (score[:white] - score[:black]).abs
 	
-	# 		if gap < 3 && num_checked > 6 # enforce a minimum number of moves
-	# 			found = true
-	# 		end
+			if gap < 3 && num_checked > 6 # enforce a minimum number of moves
+				found = true
+			end
 	
-	# 		move_num = move_num - 1
-	# 		npos = npos - 1
-	# 		num_checked = num_checked + 1
-	# 	end
+			move_num = move_num - 1
+			npos = npos - 1
+			num_checked = num_checked + 1
+		end
 	
-	# 	return moves.reverse
-	# end
+		return moves.reverse
+	end
 
 	def html_description(options={})
 		result = "<span class='playerName'>#{pgn.tags["White"]}</span> (White) v. <span class='playerName'>#{pgn.tags["Black"]}</span> (Black)"

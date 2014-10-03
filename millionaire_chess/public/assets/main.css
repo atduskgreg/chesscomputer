@@ -49,3 +49,51 @@ table {
 	color: #000;
 	text-align: left;
 }
+
+.sacrificeScore {
+	border: 1px solid #ccc;
+	border-left: none;
+	border-right: none;
+	margin-bottom: 10px;
+}
+
+.whiteSacrifice .sacrificeVictory {
+	border-bottom: 1px solid #ccc;
+}
+
+#sacrifices .blackSacrifice .sacrificeVictory {
+	background: #000;
+	color: #fff;
+}
+
+.missingPieces {
+	padding-left: 10px;
+}
+
+.missingPieces ul {
+ padding-left: 20px;
+}
+
+.sacrifice {
+	float: none;
+	width: 150px;
+	border: 1px solid #ccc;
+	border-top:none;
+}
+
+.sacrifice table {
+	padding: 10px;
+	padding-bottom: 0;
+}
+
+#sacrifices .game p{
+ color: #000;	
+}
+
+.moves {
+	margin-top:0;
+}
+
+#sacrifices .moves {
+	font-size: 10px;
+}

@@ -3,17 +3,31 @@
 <div id="sacrifices">
 	<h3>Sacrifice Victories (<%= @sacrifice_games.length %>)</h3>
 <% @sacrifice_games.each do |game| %>
-	<div class="sacrifice game">
+	<div class="game sacrifice">
+		<div class="sacrificeScore <%= game.result == Game::WHITE_VICTORY ? "whiteSacrifice" : "blackSacrifice" %>">
+			<p class="sacrificeVictory"><%= game.result == Game::WHITE_VICTORY ? "White victory" : "Black victory" %> </p>
+			<p>Final material margin: <%= game.final_material[:margin_of_victory].abs %></p>
+			<p>
+				Sacrifice: <%= game.sacrificed_pieces.collect{|p| piece_hash[p]}.join(" ") %>
+			</p>
+		</div>
 		<p style="width:150px"><%= game.html_description %></p>
 		<%= html_board(game.pgn.positions.last) %>
-		<p><%= game.result == Game::WHITE_VICTORY ? "white victory" : "black victory" %> </p>
-		<p>Final material margin: <%= game.final_material[:margin_of_victory].abs %></p>
-
-		<div class="missingPieces">
-		<p>
-			Sacrifice: <%= game.sacrificed_pieces.collect{|p| piece_hash[p]}.join(" ") %>
-		</p>
 		
+		<div class="missingPieces">
+		
+		<p>Final moves:</p>
+		<ul class="moves">
+		<% moves = game.find_sacrifice_moves; moves.each_with_index do |move,i| %>
+			<% if i.even? %>
+				<% if moves[i+1] %>
+					<li><%= move %> <%= moves[i+1] %></li>
+				<% else %>
+					<li><%= move %></li>
+				<% end %>
+			<% end %>
+		<% end %>
+		</ul>
 	</div>
 	</div>
 <% end %>
