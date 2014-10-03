@@ -26,6 +26,7 @@ GEM
       dm-core (~> 1.2.0)
     do_postgres (0.10.14)
       data_objects (= 0.10.14)
+    ferret (0.11.8.5)
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
@@ -44,5 +45,6 @@ DEPENDENCIES
   dm-migrations
   dm-postgres-adapter
   dm-timestamps
+  ferret
   pgn!
   sinatra

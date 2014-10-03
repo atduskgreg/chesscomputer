@@ -6,6 +6,7 @@ require 'dm-migrations'
 # require 'dm-aggregates'
 require 'pgn'
 require 'csv'
+require 'ferret'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "postgres://localhost/millionaire_chess")
 
@@ -38,6 +39,25 @@ class Player
   property :passed_pawns_signficant,Boolean
   property :space, Float
   property :space_signficant, Boolean
+
+  def self.search player_name
+    index = Ferret::Index::Index.new(:default_field => 'content', :path =>"players-index")
+    result = index.search(player_name)
+    if result.hits.length > 0
+      puts index[result.hits[0].doc]
+      return Player.get index[result.hits[0].doc]['file']
+    else
+      return nil
+    end
+  end
+
+  def self.build_index!
+    index = Ferret::Index::Index.new(:default_field => 'content', :path =>"players-index")
+    Player.all.each do |p|
+      puts "#{p.id} #{p.player_name}"
+      index.add_document :file => p.id, :content => p.player_name
+    end
+  end
 
   def load_from_csv path_to_csv
     csv = CSV.parse(open(path_to_csv).read)

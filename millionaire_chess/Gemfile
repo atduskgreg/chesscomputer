@@ -4,6 +4,7 @@ gem "dm-migrations"
 gem "dm-timestamps"
 gem "sinatra"
 gem "pgn", :git => "https://github.com/gauleng/pgn.git", :branch => "pgn-annotations"
+gem "ferret"
 
 # group :production do
 	gem "dm-postgres-adapter"
