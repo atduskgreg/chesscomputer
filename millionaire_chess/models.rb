@@ -41,7 +41,6 @@ class Player
 
   def load_from_csv path_to_csv
     csv = CSV.parse(open(path_to_csv).read)
-    # cols = csv[0].collect{|c| c.gsub(" ", "_").downcase}
     stats = csv[1].collect do |c|
         c.gsub!(".0%", "")
         if c == "yes"
@@ -59,8 +58,8 @@ class Player
     stats.each_with_index do |col, i|
       self.send("#{csv[0][i].gsub(" ", "_").downcase}=".to_sym, col)
     end
-
   end
+
 end
 
 class Game
@@ -93,24 +92,24 @@ class Game
   	end
 
   	def check_sacrifice!
-  		position = pgn.positions.last
-  		score = Game.score_for_pgn_position(position)
-  		margin_of_victory = score[:white] - score[:black]
-  		sacrifice = false
-
-  		if margin_of_victory.abs > 3
-			if pgn.result == Game::WHITE_VICTORY && margin_of_victory < 0
-				sacrifice = true
-			end
-			if pgn.result == Game::BLACK_VICTORY && margin_of_victory > 0
-				sacrifice = true
-			end
-		end
-
-		score[:margin_of_victory] = margin_of_victory
-		self.is_sacrifice = sacrifice
-		self.final_material = score
-		self.save
+  	 	position = pgn.positions.last
+  	 	score = Game.score_for_pgn_position(position)
+  	 	margin_of_victory = score[:white] - score[:black]
+  	 	sacrifice = false
+  
+  	 	if margin_of_victory.abs > 3
+		  	if pgn.result == Game::WHITE_VICTORY && margin_of_victory < 0
+		  		sacrifice = true
+		  	end
+		  	if pgn.result == Game::BLACK_VICTORY && margin_of_victory > 0
+		  		sacrifice = true
+		  	end
+		  end
+  
+		  score[:margin_of_victory] = margin_of_victory
+		  self.is_sacrifice = sacrifice
+		  self.final_material = score
+		  self.save
   	end
 
   	def sacrificed_pieces
@@ -141,35 +140,35 @@ class Game
   		sacrificed_pieces
   	end
 
-  	def find_sacrifice_moves
-		npos = pgn.positions.length - 1 
-		final_score = Game.score_for_pgn_position(pgn.positions.last)
-		gap = (final_score[:white] - final_score[:black]).abs
-	
-		num_checked = 0
-	
-		moves = []
-	
-		move_num = pgn.moves.length - 1
-	
-		found = false
-	
-		while !found && num_checked < 20
-			moves << pgn.moves[move_num]
-	
-			score = Game.score_for_pgn_position(pgn.positions[npos])
-			gap = (score[:white] - score[:black]).abs
-	
-			if gap < 3 && num_checked > 6 # enforce a minimum number of moves
-				found = true
-			end
-	
-			move_num = move_num - 1
-			npos = npos - 1
-			num_checked = num_checked + 1
-		end
-	
-		return moves.reverse
+  def find_sacrifice_moves
+	 	 npos = pgn.positions.length - 1 
+	 	 final_score = Game.score_for_pgn_position(pgn.positions.last)
+	 	 gap = (final_score[:white] - final_score[:black]).abs
+	   
+	 	 num_checked = 0
+	   
+	 	 moves = []
+	   
+	 	 move_num = pgn.moves.length - 1
+	   
+	 	 found = false
+	   
+	 	 while !found && num_checked < 20
+	 	 	moves << pgn.moves[move_num]
+	   
+	 	 	score = Game.score_for_pgn_position(pgn.positions[npos])
+	 	 	gap = (score[:white] - score[:black]).abs
+	   
+	 	 	if gap < 3 && num_checked > 6 # enforce a minimum number of moves
+	 	 		found = true
+	 	 	end
+	   
+	 	 	move_num = move_num - 1
+	 	 	npos = npos - 1
+	 	 	num_checked = num_checked + 1
+	 	 end
+	   
+	 	 return moves.reverse
 	end
 
 	def html_description(options={})
@@ -189,29 +188,29 @@ class Game
 
 
 	def description
-  	  "#{pgn.tags["White"]} (White) v. #{pgn.tags["Black"]} (Black) at #{pgn.tags["Event"]}, #{pgn.tags["Site"]}, #{pgn.tags["Date"]}"
-  	end
+    "#{pgn.tags["White"]} (White) v. #{pgn.tags["Black"]} (Black) at #{pgn.tags["Event"]}, #{pgn.tags["Site"]}, #{pgn.tags["Date"]}"
+  end
 
-  	def self.score_for_pgn_position(position)
-  	  result = {:black => 0, :white => 0, :black_missing => [], :white_missing => []}
+  def self.score_for_pgn_position(position)
+    result = {:black => 0, :white => 0, :black_missing => [], :white_missing => []}
 	
-  	  values = {"p" => 1, "b" => 3, "n" => 3, "r" => 5, "q" => 9}
+    values = {"p" => 1, "b" => 3, "n" => 3, "r" => 5, "q" => 9}
 	
-  	  position.board.squares.flatten.each do |square|
-  	    if square && values.keys.include?(square.downcase)
-  	      piece_value = values[square.downcase]
+    position.board.squares.flatten.each do |square|
+      if square && values.keys.include?(square.downcase)
+        piece_value = values[square.downcase]
 	
-  	      if square == square.downcase # black in FEN
-  	        result[:black] = result[:black] + piece_value
+        if square == square.downcase # black in FEN
+          result[:black] = result[:black] + piece_value
 
-  	      else # white
-  	        result[:white] = result[:white] + piece_value
-  	      end
-  	    end
-  	  end
+        else # white
+          result[:white] = result[:white] + piece_value
+        end
+      end
+    end
 	
-  	  return result
-  	end
+    return result
+  end
 end
 
 DataMapper.finalize

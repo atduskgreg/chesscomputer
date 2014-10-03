@@ -44,7 +44,13 @@ end
 # 	erb :index
 # end
 
+get "/players" do
+	@players = Player.all
+	erb :players
+end
+
 get "/player/:player_id" do
+	@player = Player.get params[:player_id]
 	erb :player
 end
 

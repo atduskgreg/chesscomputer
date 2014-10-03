@@ -16,9 +16,10 @@ $(function () {
         xAxis: {
             categories: [
                 'Mobility',
-                'Positional',
-                'Tactical',
-                'Material'
+                'Space',
+                'Passed pawns',
+                'King safety',
+                'Threats'
             ]
         },
         yAxis: {
@@ -42,8 +43,8 @@ $(function () {
             }
         },
         series: [{
-            name: 'Maurice Ashley',
-            data: [84, 32, 92, 45]
+            name: '<%= @player.player_name %>',
+            data: [<%= @player.mobility %>, <%= @player.space %>, <%= @player.passed_pawns %>, <%= @player.threats %>]
 
         }]
     });
@@ -51,18 +52,38 @@ $(function () {
 </script>
 
 
-<h2>Maurice Ashley</h2>
+<h2><%= @player.player_name %></h2>
 
 <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 <ul>
-	<li><b>Elo Score</b> 2715</li>
+	<li><b>Elo Score</b> <%= @player.elo %></li>
 
 </ul>
 <ul>
-	<li><b>Queen Trade Frequency</b> 55% (87/158 games)</li>
-	<li><b>Queen Trade Record</b> <span style="color:red">-6%</span> (60% vs 66%)</li>
-	<li><b>Average Win Length</b> <span style="color:red">-5 moves</span> (41.5 v 50)</li>
-	<li><b>Average Loss Length</b> <span style="color:green">+5 moves</span> (55 v 50)</li>
-	<li><b>Average Game Length</b> <em>typical</em>
+	<li><b>Queen Trade Frequency</b> <%= @player.queen_trade_frequency %>%</li>
+	<li><b>Win Rate After Queen Trade</b>  
+        <% if @player.queen_trade_win_rate > @player.non_queen_trade_win_rate %>
+            <span style="color:green">+
+        <% else %>
+            <span style="color:red">
+        <% end %>
+        <%= @player.queen_trade_win_rate - @player.non_queen_trade_win_rate %>%</span> (<%= @player.queen_trade_win_rate %>% vs <%= @player.non_queen_trade_win_rate %>%)</li>
+	<li><b>Average Win Length</b> 
+        <% if @player.average_win_length < @player.average_game_length %>
+            <span style="color:red">
+        <% else %>
+            <span style="color:green">+
+        <% end %>
+
+        <%= (@player.average_win_length - @player.average_game_length)/2.0 %> moves</span> (<%= @player.average_win_length/2.0 %> vs <%= @player.average_game_length/2.0 %>)</li>
+	<li><b>Average Loss Length</b> 
+        <% if @player.average_loss_length < @player.average_game_length %>
+            <span style="color:red">
+        <% else %>
+            <span style="color:green">+
+        <% end %>
+
+        <%= (@player.average_loss_length - @player.average_game_length)/2.0 %> moves</span> (<%= @player.average_loss_length/2.0 %> vs <%= @player.average_game_length/2.0 %>)</li>
+	<li><b>Average Game Length</b> <em><%= @player.average_game_length/2.0 %></em>
 </ul>
