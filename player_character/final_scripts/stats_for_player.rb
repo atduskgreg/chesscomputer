@@ -17,15 +17,15 @@ end
 
 header = []
 data = []
-
-["queen_trades.rb", "game_length.rb", "position_choice.rb"].each do |script|
+#, "position_choice.rb"
+["queen_trades.rb", "game_length.rb"].each do |script|
 	puts "running #{script}"
 	script_header, script_data = parse_script_result(`ruby #{script} #{ARGV[0]}`)
 	header << script_header
 	data << script_data
 end
 
-CSV.open("player_results/" + player_name(ARGV[0]) +".csv", "wb") do |csv|
+CSV.open("with_non_significant/" + player_name(ARGV[0]) +".csv", "wb") do |csv|
 	csv << header.flatten
 	csv << data.flatten
 end

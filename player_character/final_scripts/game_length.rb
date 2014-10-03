@@ -75,33 +75,35 @@ $logger.info "t-stat: #{loss_stats["t"]}"
 $logger.info "p-value: #{loss_stats["p"]}"
 
 
-csv = {"average win length" => "typical", 
-	   "average win diff" => "typical", 
-	   "average loss length" => "typical", 
-	   "average loss diff" => "typical", 
-	   "average game length" => "typical"}
+csv = {"loss stats significant" => false, "win stats significant" => false}
+
+csv["average loss length"] = result[:loss_lengths].mean.round
+csv["average loss diff"] = result[:loss_lengths].mean.round - result[:all_lengths].mean.round
+csv["average game length"] = result[:all_lengths].mean.round
 
 if loss_stats["p"] < 0.05
 	$logger.info "*Losses differ significantly in length from the average game*"
-	csv["average loss length"] = result[:loss_lengths].mean.round
-	csv["average loss diff"] = result[:loss_lengths].mean.round - result[:all_lengths].mean.round
-	csv["average game length"] = result[:all_lengths].mean.round
+	csv["loss stats significant"] = true
 else
 	$logger.info "*Losses do not differ significantly in length from the average game*"
 end
+
+	
+
 
 $logger.info "=Wins="
 $logger.info "t-stat: #{win_stats["t"]}"
 $logger.info "p-value: #{win_stats["p"]}"
 
+csv["average win length"] = result[:win_lengths].mean.round
+csv["average win diff"] = result[:win_lengths].mean.round - result[:all_lengths].mean.round
+csv["average game length"] = result[:all_lengths].mean.round
+
 if win_stats["p"] < 0.05
 	$logger.info "*Wins differ significantly in length from the average game*"
-	csv["average win length"] = result[:win_lengths].mean.round
-	csv["average win diff"] = result[:win_lengths].mean.round - result[:all_lengths].mean.round
-	csv["average game length"] = result[:all_lengths].mean.round
+	csv["win stats significant"] = true
 else
 	$logger.info "*Wins do not differ significantly in length from the average game*"
-	
 end
 
 puts to_csv_row(csv)

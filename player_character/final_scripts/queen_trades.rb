@@ -190,14 +190,15 @@ chi_result = chisquare(observed,expected)
 $logger.info "* chi-squared: #{chi_result["chi"]}"
 $logger.info "* p-score: #{chi_result["p"]}"
 
+result = {"queen trade frequency" => trade_frequency, "queen trades significant" =>  (chi_result["p"] <= 0.05), "queen trade win rate" =>  trade_win_percent, "non queen trade win rate" => non_trade_win_percent}
 
 
-if chi_result["p"] <= 0.05
-	$logger.info "* **RESULT IS SIGNIFICANT**"
-	result = {"queen trade frequency" => trade_frequency, "queen trade win rate" =>  trade_win_percent, "non queen trade win rate" => non_trade_win_percent}
-else
-	result = {"queen trade frequency" => "typical", "queen trade win rate" =>  "typical", "non queen trade win rate" => "typical"}
-end
+# if chi_result["p"] <= 0.05
+# 	$logger.info "* **RESULT IS SIGNIFICANT**"
+# 	result = {"queen trade frequency" => trade_frequency, "queen trade win rate" =>  trade_win_percent, "non queen trade win rate" => non_trade_win_percent}
+# else
+# 	result = {"queen trade frequency" => "typical", "queen trade win rate" =>  "typical", "non queen trade win rate" => "typical"}
+# end
 
 puts to_csv_row(result)
 

@@ -8,6 +8,36 @@ require 'pgn'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "postgres://localhost/millionaire_chess")
 
+class Player
+  include DataMapper::Resource
+  
+  property :id, Serial
+  property :elo, Integer
+  property :name, String
+  
+  property :queen_trade_frequency, Integer
+  property :queen_trades_significant, Boolean
+  property :queen_trade_win_percent, Integer
+  property :non_queen_trade_win_percent, Integer
+  property :loss_stats_significant, Boolean
+  property :win_stats_significant, Boolean
+  property :average_loss_length, Integer
+  property :average_loss_diff, Integer
+  property :average_win_length, Integer
+  property :average_win_diff, Integer
+  property :average_game_length, Integer
+
+  property :mobility, Float
+  property :mobility_signficant, Boolean
+  property :king_safety, Float
+  property :king_safety_signficant, Boolean
+  property :threats, Float
+  property :threats_signficant, Boolean
+  property :passed_pawns, Float
+  property :passed_pawns_signficant,Boolean
+  property :space, Float
+  property :space_signficant, Boolean
+end
 
 class Game
   	WHITE_VICTORY = "1-0"
@@ -162,6 +192,3 @@ end
 
 DataMapper.finalize
 
-class Player
-	attr_accessor :elo
-end
