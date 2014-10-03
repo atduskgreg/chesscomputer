@@ -5,6 +5,7 @@ require 'dm-timestamps'
 require 'dm-migrations'
 # require 'dm-aggregates'
 require 'pgn'
+require 'csv'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "postgres://localhost/millionaire_chess")
 
@@ -13,12 +14,12 @@ class Player
   
   property :id, Serial
   property :elo, Integer
-  property :name, String
-  
+  property :player_name, String
+
   property :queen_trade_frequency, Integer
   property :queen_trades_significant, Boolean
-  property :queen_trade_win_percent, Integer
-  property :non_queen_trade_win_percent, Integer
+  property :queen_trade_win_rate, Integer
+  property :non_queen_trade_win_rate, Integer
   property :loss_stats_significant, Boolean
   property :win_stats_significant, Boolean
   property :average_loss_length, Integer
@@ -37,6 +38,29 @@ class Player
   property :passed_pawns_signficant,Boolean
   property :space, Float
   property :space_signficant, Boolean
+
+  def load_from_csv path_to_csv
+    csv = CSV.parse(open(path_to_csv).read)
+    # cols = csv[0].collect{|c| c.gsub(" ", "_").downcase}
+    stats = csv[1].collect do |c|
+        c.gsub!(".0%", "")
+        if c == "yes"
+          c = true
+        end
+        if c == "no"
+          c = false
+        end
+        if c == "typical"
+          c = 0.0
+        end
+        c
+     end
+
+    stats.each_with_index do |col, i|
+      self.send("#{csv[0][i].gsub(" ", "_").downcase}=".to_sym, col)
+    end
+
+  end
 end
 
 class Game

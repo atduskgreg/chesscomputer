@@ -88,9 +88,6 @@ else
 	$logger.info "*Losses do not differ significantly in length from the average game*"
 end
 
-	
-
-
 $logger.info "=Wins="
 $logger.info "t-stat: #{win_stats["t"]}"
 $logger.info "p-value: #{win_stats["p"]}"
