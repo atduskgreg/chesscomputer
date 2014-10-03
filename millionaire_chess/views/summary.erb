@@ -1,0 +1,20 @@
+<h2>Summary for <%= @event %></h2>
+
+<div id="sacrifices">
+	<h3>Sacrifice Victories (<%= @sacrifice_games.length %>)</h3>
+<% @sacrifice_games.each do |game| %>
+	<div class="sacrifice game">
+		<p style="width:150px"><%= game.html_description %></p>
+		<%= html_board(game.pgn.positions.last) %>
+		<p><%= game.result == Game::WHITE_VICTORY ? "white victory" : "black victory" %> </p>
+		<p>Final material margin: <%= game.final_material[:margin_of_victory].abs %></p>
+
+		<div class="missingPieces">
+		<p>
+			Sacrifice: <%= game.sacrificed_pieces.collect{|p| piece_hash[p]}.join(" ") %>
+		</p>
+		
+	</div>
+	</div>
+<% end %>
+</div>

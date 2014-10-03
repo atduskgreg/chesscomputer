@@ -39,3 +39,13 @@ table {
 	background-color: #000;
 	color:#fff;
 }
+
+
+.playerName {
+  font-weight: bold;
+}
+
+.missingPieces p {
+	color: #000;
+	text-align: left;
+}

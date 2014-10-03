@@ -34,6 +34,10 @@ class Game
   		end
   	end
 
+  	def result
+  		pgn.result
+  	end
+
   	def check_sacrifice!
   		position = pgn.positions.last
   		score = Game.score_for_pgn_position(position)
@@ -49,10 +53,85 @@ class Game
 			end
 		end
 
+		score[:margin_of_victory] = margin_of_victory
 		self.is_sacrifice = sacrifice
 		self.final_material = score
 		self.save
   	end
+
+  	def sacrificed_pieces
+  		missing = {"P" => 8, "N" => 2, "R" => 2, "B" => 2, "K" => 1, "Q" => 1,
+  				   "p" => 8, "n" => 2, "r" => 2, "b" => 2, "k" => 1, "q" => 1}
+
+  		
+  		pgn.positions.last.board.squares.flatten.compact.each do |piece|
+  			missing[piece] = missing[piece] - 1
+  		end
+
+  		sacrificed_pieces = []
+  		if result == Game::WHITE_VICTORY
+  			["P", "N", "R", "B", "Q"].each do |p|
+  				diff = missing[p] - missing[p.downcase]
+  				if diff > 0
+  					diff.times{ sacrificed_pieces << p}
+  				end
+  			end
+  		else
+  			["p", "n", "r", "b", "q"].each do |p|
+  				diff = missing[p] - missing[p.upcase]
+  				if diff > 0
+  					diff.times{ sacrificed_pieces << p}
+  				end
+  			end
+  		end
+  		sacrificed_pieces
+  	end
+
+ #  	def find_sacrifice_moves game
+	# 	npos = game.pgn.positions.length - 1 
+	# 	final_score = Game.score_for_pgn_position(game.pgn.positions.last)
+	# 	gap = (final_score[:white] - final_score[:black]).abs
+	
+	# 	num_checked = 0
+	
+	# 	moves = []
+	
+	# 	move_num = game.pgn.moves.length - 1
+	
+	# 	found = false
+	
+	# 	while !found && num_checked < 20
+	# 		moves << game.pgn.moves[move_num]
+	
+	# 		score = Game.score_for_pgn_position(game.pgn.positions[npos])
+	# 		gap = (score[:white] - score[:black]).abs
+	
+	# 		if gap < 3 && num_checked > 6 # enforce a minimum number of moves
+	# 			found = true
+	# 		end
+	
+	# 		move_num = move_num - 1
+	# 		npos = npos - 1
+	# 		num_checked = num_checked + 1
+	# 	end
+	
+	# 	return moves.reverse
+	# end
+
+	def html_description(options={})
+		result = "<span class='playerName'>#{pgn.tags["White"]}</span> (White) v. <span class='playerName'>#{pgn.tags["Black"]}</span> (Black)"
+		if options[:event]
+			result << "at <span class='gameEvent'>#{pgn.tags["Event"]}</span>"
+		end
+		if options[:site]
+			result << " at <span class='gameSite'>#{pgn.tags["Site"]}</span>"
+		end
+		if options[:date]
+			result << " on <span class='gameDate'>#{pgn.tags["Date"]}</span>"
+		end
+
+		result
+	end
 
 
 	def description
@@ -70,10 +149,9 @@ class Game
 	
   	      if square == square.downcase # black in FEN
   	        result[:black] = result[:black] + piece_value
-  	        result[:black_missing] << square
+
   	      else # white
   	        result[:white] = result[:white] + piece_value
-  	        result[:white_missing] << square
   	      end
   	    end
   	  end

@@ -19,6 +19,21 @@ helpers do
 		result 
 	end
 
+	def piece_hash
+	  {'k' => "\u{265A}",
+       'q' => "\u{265B}",
+       'r' => "\u{265C}",
+       'b' => "\u{265D}",
+       'n' => "\u{265E}",
+       'p' => "\u{265F}",
+       'K' => "\u{2654}",
+       'Q' => "\u{2655}",
+       'R' => "\u{2656}",
+       'B' => "\u{2657}",
+       'N' => "\u{2658}",
+       'P' => "\u{2659}"}
+	end
+
 end
 
 # get "/" do
@@ -39,6 +54,13 @@ post "/current_score" do
 	r = Stockfish.analyze(games[0].positions.last.to_fen.to_s)
 	r["boardId"] = params[:boardId]
 	r.to_json
+end
+
+get "/summary/:event" do
+	@event = params[:event]
+	@sacrifice_games = Game.all :is_sacrifice => true, :event => params[:event]
+	@sacrifice_games.sort!{|g| g.final_material[:margin_of_victory].abs}
+	erb :summary
 end
 
 post "/pgn_email" do
