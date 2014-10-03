@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
-# gem "dm-core"
-# gem "dm-migrations"
-# gem "dm-timestamps"
+gem "dm-core"
+gem "dm-migrations"
+gem "dm-timestamps"
 gem "sinatra"
 gem "pgn", :git => "https://github.com/gauleng/pgn.git", :branch => "pgn-annotations"
 
