@@ -1,7 +1,53 @@
 <script src="/assets/elo_odds.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
 <script>
 function ready(){
+
+
 	$("#oddsDescription").html(eloString(parseInt($("#pl1Elo").html()), parseInt($("#pl2Elo").html()), ["<%= @player1.player_name %>", "<%= @player2.player_name %>"]));
+
+	<% [@player1, @player2].each_with_index do |player,i| %>
+
+		 args = {
+    	    labels :['Mobility',
+    	            'Space',
+    	            'Passed pawns',
+    	            'King safety',
+    	            'Threats'],
+    	    type : 'column',
+    	    data : [<%= player.mobility %>, <%= player.space %>, <%= player.passed_pawns %>,<%= player.king_safety %>, <%= player.threats %>],
+    	    seriesName : "<%= player.player_name %>",
+    	    title : ["Player Characteristics"]
+    	}
+
+		showGraph($("#container<%= i %>"), args)
+	<% end %>
+
+
+
+<% compare_data = @player1.compare_to(@player2) %>
+
+labels = ['<%= compare_data.collect{|k,v| "#{k.to_s.split("_").join(" ")}"}.join("\',\'") %>'];
+
+data1 = [<%= compare_data.collect{|k,v| if (v > 0); v; else; "null"; end  }.join(",") %>]
+data2 = [<%= compare_data.collect{|k,v| if (v < 0); v; else; "null"; end  }.join(",")%>];
+
+	 args = {
+    	    labels :labels,
+    	    type: 'bar',
+    	    title: "<%= @player2.player_name %> vs. <%= @player1.player_name %>",
+    	    series : [
+    	    {name: "<%= @player2.player_name %>",
+    	    	data :data2},
+    	    	{name : "<%= @player1.player_name %>",
+    	    	data:data1}
+    	    	
+    	    ]
+    	}
+
+		showGraph($("#matchupGraph"), args)
 }
 document.addEventListener("DOMContentLoaded", ready, false);
 </script>
@@ -10,18 +56,14 @@ document.addEventListener("DOMContentLoaded", ready, false);
 
 <p id="oddsDescription"></p>
 
-<ul>
-<% @player1.compare_to(@player2).each do |k,v| %>
-	<li><b><%= k.to_s.split("_").join(" ") %>:</b> <%= v %></li>
+<div id="matchupGraph"></div>
 
-<% end %>
-</ul>
 
-<% [@player1, @player2].each do |player| %>
+<% [@player1, @player2].each_with_index do |player,i| %>
 <div class="playerCompare" >
 <h2><%= player.player_name %></h2>
 
-<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<div id="container<%= i %>" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 <ul>
 	<li><b>Elo Score</b> <%= player.elo %></li>

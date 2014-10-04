@@ -100,9 +100,9 @@ table {
 
 
 .playerCompare {
-	width: 400px;
+	width: 48%;
 	float: left;
 	/*font-size: ;*/
 	border-right: 1px solid #ccc;
-	margin-left: 20px;
+	/*margin-left: 20px;*/
 }
