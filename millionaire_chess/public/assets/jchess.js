@@ -161,7 +161,7 @@ jQuery.eachWithContext = function(context, object, callback) {
 
         $('#' + this.getDomPieceId(id)).animate({
           'top' : '+=' + top + 'px', 'left' : '+=' + left + 'px'
-        }, 'fast');
+        }, 0);
       },
 
       removeDomPiece : function(id) {
