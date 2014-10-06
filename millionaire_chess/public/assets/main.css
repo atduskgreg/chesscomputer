@@ -106,3 +106,12 @@ table {
 	border-right: 1px solid #ccc;
 	/*margin-left: 20px;*/
 }
+
+.game {
+	height: 225px;
+}
+
+
+.live-score {
+	height: 30px;
+}

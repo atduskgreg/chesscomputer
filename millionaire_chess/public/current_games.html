@@ -11,13 +11,13 @@
 	<script>
 	
 	function positionOddsToString(odds){
-		result = "Position odds: ";
+		result = "";
 		n = Math.round(odds*100);
 		if(n > 50){
-			result += n + "% of white victory";
+			result += n + "% white victory";
 		}
 		if(n < 50){
-			result += (100-n) + "% of black victory";
+			result += (100-n) + "% black victory";
 		}
 
 		if(n == 50){
@@ -38,7 +38,6 @@
 		    type: 'GET',
 		    success: function(res) {
 		    	console.log(res);
-		    // }});
 		    	$("#boards").empty();
 		    
 		    	pgn = res
@@ -57,11 +56,15 @@
 		    		console.log(chess);
 		    		chess.transitionTo(chess.game.moves.length-1);
 		    		console.log(chess.game.moves);
-		   //  		console.log("chess:" + chess);
 		    		h = chess.game.header;
 
-					$("#" +boardId).append("<p class='score'>Calculating...</p><p class='matchup'><span class='whiteElo'>"+h.WhiteElo+"</span> <a class='white' href='/player/ashley'>"+h.White+"</a> v. <a class='black' href='/player/carlsen'>"+h.Black+"</a> <span class='blackElo'>"+h.BlackElo+"</span></p>\
+
+
+					$("#" +boardId).append("<div class='live-score'><p class='score'>Calculating...</p><p class='best-move'></p></div><p class='matchup'><span class='whiteElo'>"+h.WhiteElo+"</span> <a class='white' href='/player/ashley'>"+h.White+"</a><br /><a class='black' href='/player/carlsen'>"+h.Black+"</a> <span class='blackElo'>"+h.BlackElo+"</span></p>\
 					    <p class='odds'>"+eloString(parseInt(h.WhiteElo), parseInt(h.BlackElo))+"</p>");
+
+
+
 
 		    		currGame++;
 		    		console.log(boardId);
@@ -74,6 +77,10 @@
 					  success:function(data){
 					  	console.log(data);
 					  	console.log(data.boardId);
+
+
+					  	$("#"+data.boardId + " .best-move").html((data.current_move == "w" ? "White's" : "Black's ") + " move: "+ data.best_move);
+
 					  	$("#"+data.boardId + " .score").html(positionOddsToString(data.white_victory_odds));
 					  }
 					});
