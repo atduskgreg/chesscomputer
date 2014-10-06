@@ -4,6 +4,7 @@ require 'sinatra'
 require 'pgn'
 require './models'
 require 'json'
+require 'open-uri'
 
 helpers do
 	def html_board(position)
@@ -43,6 +44,11 @@ end
 # 	# @games = fens.collect{|fen| Game.new(fen)}
 # 	erb :index
 # end
+
+get "/pgn_proxy" do
+	content_type :json
+	{"pgn" => open("http://gregborenstein.com/assets/chess/games.pgn").read}.to_json
+end
 
 get "/players" do
 	@players = Player.all

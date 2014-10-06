@@ -9,35 +9,7 @@
  	<link rel="stylesheet" href="/assets/main.css" type="text/css" />
 
 	<script>
-	// function getFen( boardData ) {
-	// 	var fen = "";
-	// 	for(var row=0; row< 8; row++){
-	// 		for(var col = 0; col < 8; col++){
-	// 			entry = boardData[row][col];
-	// 			if(entry == "-" ){
-	// 				fen = fen.concat("1");
-	// 			} else{
-	// 				fen = fen.concat(entry.piece);
-	// 			}
-	// 		}
-	// 		if(row < 7){
-	// 			fen = fen.concat("/")
-	// 		}
-	// 	}
-
-	// 	fen = fen.replace(/11111111/g, "8")
-	// 			 .replace(/1111111/g, "7")
-	// 			 .replace(/111111/g, "6")
-	// 			 .replace(/11111/g, "5")
-	// 			 .replace(/1111/g, "4")
-	// 			 .replace(/111/g, "3")
-	// 			 .replace(/11/g, "2");
-
-	// 	return fen;
-	// }
-
 	
-
 	function positionOddsToString(odds){
 		result = "Position odds: ";
 		n = Math.round(odds*100);
@@ -56,23 +28,36 @@
 		return result;
 	}
 
-	function ready(){
+	function checkLiveGames() {
+		
 		pgn = ""
+
 		$.ajax({
+   			url: "/pgn_proxy",
    			url: "http://gregborenstein.com/assets/chess/games.pgn",
 		    type: 'GET',
 		    success: function(res) {
+		    	console.log(res);
+		    // }});
+		    	$("#boards").empty();
+		    
+		    	pgn = res
 		    	pgn = $($(res.responseText)[5]).text();
-
 		    	parts = pgn.split(/\[Event/);
-		    	currGame = 0;
+
+		    	console.log(parts);
+		    	 currGame = 0;
 		    	for(var i = 1; i < parts.length; i+=2){
 		    		gameString = "[Event" + parts[i];
 		    		boardId = "game"+currGame;
+		    		console.log(boardId);
 		    		$("#boards").append("<div class='game' id='"+boardId+"'></div>");
+		    		console.log(gameString);
 		    		chess = $("#"+boardId).chess({pgn:gameString, square_size: 21.5});
-		    		chess.transitionTo(chess.game.moves.length);
 		    		console.log(chess);
+		    		chess.transitionTo(chess.game.moves.length-1);
+		    		console.log(chess.game.moves);
+		   //  		console.log("chess:" + chess);
 		    		h = chess.game.header;
 
 					$("#" +boardId).append("<p class='score'>Calculating...</p><p class='matchup'><span class='whiteElo'>"+h.WhiteElo+"</span> <a class='white' href='/player/ashley'>"+h.White+"</a> v. <a class='black' href='/player/carlsen'>"+h.Black+"</a> <span class='blackElo'>"+h.BlackElo+"</span></p>\
@@ -92,16 +77,16 @@
 					  	$("#"+data.boardId + " .score").html(positionOddsToString(data.white_victory_odds));
 					  }
 					});
-
-
 		    	}
-
-
 		    }
 		});
+		    
 
+	}
 
-
+	function ready(){
+		checkLiveGames();
+		setInterval(checkLiveGames, 5000);
 	}
 	document.addEventListener("DOMContentLoaded", ready, false);
 	
@@ -116,6 +101,7 @@
 </head>
 
 <body>
+	<h1>Live Games</h1>
 	<div id="boards"></div>
 </body>
 </html>
