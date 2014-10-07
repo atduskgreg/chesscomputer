@@ -9,6 +9,8 @@
  	<link rel="stylesheet" href="/assets/main.css" type="text/css" />
 
 	<script>
+
+	var liveGames = {};
 	
 	function positionOddsToString(odds){
 		result = "";
@@ -28,62 +30,66 @@
 		return result;
 	}
 
+	function keyForGame(chessGame){
+		return chessGame.header.White + "/" + chessGame.header.Black + "/" + (chess.game.moves.length-1).toString();
+	}
+
+	function updateScore(data){
+		$("#"+data.boardId + " .best-move").html((data.current_move == "w" ? "White's" : "Black's ") + " move: "+ data.best_move);
+
+		$("#"+data.boardId + " .score").html(positionOddsToString(data.white_victory_odds));
+	}
+
 	function checkLiveGames() {
 		
 		pgn = ""
-
 		$.ajax({
    			url: "/pgn_proxy",
    			url: "http://gregborenstein.com/assets/chess/games.pgn",
 		    type: 'GET',
 		    success: function(res) {
-		    	console.log(res);
 		    	$("#boards").empty();
 		    
 		    	pgn = res
 		    	pgn = $($(res.responseText)[5]).text();
-		    	parts = pgn.split(/\[Event/);
+		    	parts = pgn.split(/\[Event\s/);
 
 		    	console.log(parts);
-		    	 currGame = 0;
-		    	for(var i = 1; i < parts.length; i+=2){
+
+		    	currGame = 0;
+		    	for(var i = 1; i < parts.length; i++){
 		    		gameString = "[Event" + parts[i];
 		    		boardId = "game"+currGame;
-		    		console.log(boardId);
 		    		$("#boards").append("<div class='game' id='"+boardId+"'></div>");
-		    		console.log(gameString);
 		    		chess = $("#"+boardId).chess({pgn:gameString, square_size: 21.5});
-		    		console.log(chess);
 		    		chess.transitionTo(chess.game.moves.length-1);
-		    		console.log(chess.game.moves);
 		    		h = chess.game.header;
-
 
 
 					$("#" +boardId).append("<div class='live-score'><p class='score'>Calculating...</p><p class='best-move'></p></div><p class='matchup'><span class='whiteElo'>"+h.WhiteElo+"</span> <a class='white' href='/player/ashley'>"+h.White+"</a><br /><a class='black' href='/player/carlsen'>"+h.Black+"</a> <span class='blackElo'>"+h.BlackElo+"</span></p>\
 					    <p class='odds'>"+eloString(parseInt(h.WhiteElo), parseInt(h.BlackElo))+"</p>");
 
-
-
-
 		    		currGame++;
-		    		console.log(boardId);
-		    		console.log(gameString)
-		    		$.ajax({
-					  type: 'POST',
-					  url: "/current_score",
-					  data: {pgn:gameString, boardId: boardId},
-					  dataType: 'json',
-					  success:function(data){
-					  	console.log(data);
-					  	console.log(data.boardId);
+		    		//console.log(liveGames);
 
+		    		if(keyForGame(chess.game) in liveGames){
+		    			console.log("known pos: " + keyForGame(chess.game) );
+		    			updateScore(liveGames[keyForGame(chess.game)].scoreData);
+		    		} else {
+		    			$.ajax({
+						  type: 'POST',
+						  url: "/current_score",
+						  data: {pgn:gameString, boardId: boardId, positionKey: keyForGame(chess.game)},
+						  dataType: 'json',
+						  success:function(data){
+						  	console.log("new pos: " + data.positionKey);
+						  	liveGames[data.positionKey] = {pgn : gameString, scoreData : data};
+						  	updateScore(data);
+						  }
+						});
+		    		}
 
-					  	$("#"+data.boardId + " .best-move").html((data.current_move == "w" ? "White's" : "Black's ") + " move: "+ data.best_move);
-
-					  	$("#"+data.boardId + " .score").html(positionOddsToString(data.white_victory_odds));
-					  }
-					});
+		    		
 		    	}
 		    }
 		});

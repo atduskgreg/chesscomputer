@@ -76,6 +76,7 @@ post "/current_score" do
 	games = PGN.parse(params[:pgn])
 	r = Stockfish.analyze(games[0].positions.last.to_fen.to_s)
 	r["boardId"] = params[:boardId]
+	r["positionKey"] = params[:positionKey]
 	r.to_json
 end
 
