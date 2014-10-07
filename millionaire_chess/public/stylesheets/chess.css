@@ -33,16 +33,15 @@
 .chess-board .bk { background: transparent url(../images/chess-sets/acmaster.gif) -226px -46px; }
 */
 
-.chess-board .wP { background: transparent url(../images/chess-sets/small.gif) -1px   -1px; }
-.chess-board .wN { background: transparent url(../images/chess-sets/small.gif) -23px  -1px; }
-.chess-board .wB { background: transparent url(../images/chess-sets/small.gif) -46px  -1px; }
-.chess-board .wR { background: transparent url(../images/chess-sets/small.gif) -69px  -1px; }
-.chess-board .wQ { background: transparent url(../images/chess-sets/small.gif) -91px  -1px; }
-.chess-board .wK { background: transparent url(../images/chess-sets/small.gif) -114px -1px; }
-
-.chess-board .bp { background: transparent url(../images/chess-sets/small.gif) -1px   -23px; }
-.chess-board .bn { background: transparent url(../images/chess-sets/small.gif) -23px  -23px; }
-.chess-board .bb { background: transparent url(../images/chess-sets/small.gif) -46px  -23px; }
-.chess-board .br { background: transparent url(../images/chess-sets/small.gif) -69px  -23px; }
-.chess-board .bq { background: transparent url(../images/chess-sets/small.gif) -91px  -23px; }
-.chess-board .bk { background: transparent url(../images/chess-sets/small.gif) -114px -23px; }
+.chess-board .wP { background: transparent url(../images/chess-sets/small_2.gif) -1px   -1px; }
+.chess-board .wN { background: transparent url(../images/chess-sets/small_2.gif) -23px  -1px; }
+.chess-board .wB { background: transparent url(../images/chess-sets/small_2.gif) -46px  -1px; }
+.chess-board .wR { background: transparent url(../images/chess-sets/small_2.gif) -69px  -1px; }
+.chess-board .wQ { background: transparent url(../images/chess-sets/small_2.gif) -91px  -1px; }
+.chess-board .wK { background: transparent url(../images/chess-sets/small_2.gif) -114px -1px; }
+.chess-board .bp { background: transparent url(../images/chess-sets/small_2.gif) -1px   -23px; }
+.chess-board .bn { background: transparent url(../images/chess-sets/small_2.gif) -23px  -23px; }
+.chess-board .bb { background: transparent url(../images/chess-sets/small_2.gif) -46px  -23px; }
+.chess-board .br { background: transparent url(../images/chess-sets/small_2.gif) -69px  -23px; }
+.chess-board .bq { background: transparent url(../images/chess-sets/small_2.gif) -91px  -23px; }
+.chess-board .bk { background: transparent url(../images/chess-sets/small_2.gif) -114px -23px; }
