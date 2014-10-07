@@ -113,6 +113,31 @@
             margin-bottom: 0;
         }
 
+        #research p.img{
+            text-align: center;
+        }
+
+        #research .summary {
+            font-style: italic;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        #research .summary-slug {
+            background-color: #666;
+            color: #fff;
+            padding: 2px;
+            margin-left: -85px;
+            padding-left: 5px;
+            padding-right: 5px;
+            margin-top:-3px;
+            font-size: 12px;
+        }
+
+        #research .first {
+            font-size: 14px;
+        }
+
 
     </style>
 	<body>
@@ -158,6 +183,8 @@
                         <li><a href="#player_character">Are some players particularly good or bad in the late phase of the game?</a></li>
                         <li><a href="#elo_score_odds">How likely is a player with a higher ranking to actually beat a lower player?</a></li>
                         <li><a href="#position_score">Can we reduce a chess position to a single meaningful score that would be easily understood?</a></li>
+                        <li><a href="#sacrifice_detection">Can we detect the most interesting games going on in a tournament with hundreds of players?</a></li>
+
                     </ul>
                     <p>In addition to making chess more accessible to novice viewers, we believe that providing access to these kinds of statistics will change how expert players play chess, allowing them to prepare differently for specific opponents and to detect limitations or quirks in their own play.</p>
 
@@ -168,19 +195,66 @@
 				<div class="span-16" id="research">
 
 					<a name="player_character"><h3 class="span-18"><span class="slug span-6">Player Character</span><span class="span-10">Computing Player Personalities by Analyzing Move Choices</span></h3></a>
-					<a href="https://www.flickr.com/photos/unavoidablegrain/15322388275" title="Eugene Perelshteyn by Greg Borenstein, on Flickr"><img  src="https://farm4.staticflickr.com/3882/15322388275_090458c9fd_o.png" alt="Eugene Perelshteyn"></a>
+					  
+                    <p class="summary"><span class="summary-slug pull-1" style="height:200px">SUMMARY</span> One of the key components of drama is character. In chess, a player's character is seen in the types of moves they favor. Do they make moves that create new threats and attack the other player? Or do they wait patiently, creating space and setting up passed pawns to dominate the late game?
+
+                    </p>
+                    <p class="summary">We built tools that analyze a player's past games and look at every move they've made in order to determine the details of their particular play style. We also detect patterns in which games they win and lose to see if they have any specific strengths or weaknesses. Are they more likely to win a short aggressive game than a long drawn-out one? How do they do in the endgame after a queen trade?</p> 
+
+                    <p class="summary">Together, these statistics paint a portrait of each player that helps new viewers understand what to watch for as they play. And, in each match, we can juxtapose the qualities of the two opposing players to help viewers undestand how they match up against each other.</p>
+
+
+                    <p class="img"><img src="/images/player_profile.jpg" /></p>
+
+                    <p></p>
+
+                    <p class="img"><img src="/images/matchup.jpg" /></p>
+                    <p class="img"><img src="/images/match_length.jpg" /></p>
+                    <p class="img"><img src="/images/queen_trade.jpg" /></p>
+
 
 
 					<a name="elo_score_odds"><h3 class="span-18"><span class="slug span-6">Elo Oddsmaking</span> <span class="span-10">Determining Odds of Victory Between Two Players</span></h3></a>
-					<a href="https://www.flickr.com/photos/unavoidablegrain/14534471598" title="Elo difference vs win percentage by Greg Borenstein, on Flickr"><img  src="https://farm4.staticflickr.com/3868/14534471598_0b4fbc96a8_o.png" alt="Elo difference vs win percentage"></a>
+
+                     <p class="summary"><span class="summary-slug pull-1" style="height:200px">SUMMARY</span> At the start of any chess match who's most likely to win and how strong a favorite are they?
+                    </p>
+                    <p class="summary">
+                    Chess uses the <a href="http://en.wikipedia.org/wiki/Elo_rating_system">Elo rating system</a> to keep track of competitive players rankings. Players' Elo scores improve when they beat higher-rated players and decline when they lose to lower-rated ones. The Elo system is widely imitated across other games (and even video games) for determing the relative skill of players. However it is not very easy for novice viewers to understand. Is 2700 a good score? How much better is 2800 player than a player at 2775? To answer these questions, we surveyed an archive of more than 300,000 games and looked at how often the player with the higher rating won as the gap in Elo score widened.</p> 
+
+                    <p class="summary">The resulting data lets us predict the odds of any two-player matchup based on the difference in their Elo scores. Seeing otherwise arcane Elo scores translated into straightforward odds helps a novice viewer understand the relative strengths of the players in familiar terms.</p>
+
+
+					<p class="img"><a href="https://www.flickr.com/photos/unavoidablegrain/14534471598" title="Elo difference vs win percentage by Greg Borenstein, on Flickr"><img  src="https://farm4.staticflickr.com/3868/14534471598_0b4fbc96a8_o.png" alt="Elo difference vs win percentage"></a></p>
 
 					<a name="position_score"><h3 class="span-18"><span class="slug span-6">A Score for Chess</span><span class="span-10">Using a Chess Engine and Machine Learning to Predict Victory from a Chess Position</span></h3></a>
-					<a href="https://www.flickr.com/photos/unavoidablegrain/15374620155" title="Stockfish CP score to predict victory probability by Greg Borenstein, on Flickr"><img src="https://farm3.staticflickr.com/2947/15374620155_0fa70d9989_o.png" alt="Stockfish CP score to predict victory probability"></a>
+					
+                    <p class="summary"><span class="summary-slug pull-1" style="height:235px">SUMMARY</span> In the midst of a well-fought chess match can you tell which side is winning? Can you boil down the complex analysis of a subtle chess position into a single score that indicates who's winning a by how much?</p> 
+
+                    <p class="summary">It can be very difficult for a novice viewer to judge the current state of a chess match just by looking at the position of the pieces on the board. This is particularly true in games between grandmasters where players tend to resign games as unwinnable after losing even a few pieces. To overcome this problem we used a chess engine to build up data about likely results of chess positions of different strengths. We analyzed hundreds of thousands of positions to find the correlation between the chess engine's judgment of a position and the eventual out come of the game.</p>
+
+                    <p class="summary">By combining a chess engine's judgment and the staistical outcomes of a large number of matches we can predict the odds of victory for each side given any arrangement of pieces on the board. This simple probabilty reduces a complex match down to a single comprehensible "score" and acts the starting point for a commentator to explain the current state of the game.</p>
+
+
+                    <p class="img"><a href="https://www.flickr.com/photos/unavoidablegrain/15374620155" title="Stockfish CP score to predict victory probability by Greg Borenstein, on Flickr"><img src="https://farm3.staticflickr.com/2947/15374620155_0fa70d9989_o.png" alt="Stockfish CP score to predict victory probability"></a></p>
 	
 					<a name="sacrifice_detection"><h3  class="span-18"><span class="slug span-6">Brilliances and Blunders</span> <span class="span-10">Detecting Tournament Highlights and Statistics</span></h3></a>
-					<a href="https://www.flickr.com/photos/unavoidablegrain/14715061797" title="detecting victory by sacrifice by Greg Borenstein, on Flickr"><img src="https://farm6.staticflickr.com/5573/14715061797_2ae4aa65fb_o.png"  alt="detecting victory by sacrifice"></a>
+
+
+                    <p class="summary"><span class="summary-slug pull-1" style="height:225px">SUMMARY</span>In a large chess tournament hundreds of games might be played each day. How do you find the most interesting of these? Is it possible to detect particularly brilliant or terrible moves amongst all these games?</p> 
+
+                    <p class="summary">We created a series of algorithms that analyze the moves of each game in a tournament in order to detect intreresting games. One of the most impressive things a player can do in chess is to win a game by sacrificing a set of their players. So we built an algorithm to detect the largest sacrifice victory in any set of games. One of the most embarassing things a player can do is to make a move that's significantly worse than would be expected for their <a href="#elo_score_odds">Elo ranking</a>. We built another algorithm that compares each players' moves to the best moves found by a computer chess engine. We then grade on a curve based on their Elo ranking to detect the biggest blunders: the best players making the worst moves.</p>
+
+                    <p class="summary">Detecting interesting games helps commentators filter a complex simultaneous tournament into a single narrative for viewers.</p>
+
+                    <p class="img"><img src="/images/detected_sacrifices.png" />
+
 
 					<a name="online_version"><h3  class="span-18"><span class="slug span-6">Open Source</span> <span class="span-10">DeepView Will Soon Be Available Online for You to Try</span></h3></a>
+                    <p class="summary"><span class="summary-slug pull-1" style="height:225px">SUMMARY</span>DeepView was originally created for the first <a href="http://millionairechess.com"></a>Millionaire Chess Open in Las Vegas in October, 2014. We're currently working to make it available to the public. We're working to create a public web service that can be used by anyone to analyze individual chess players as well as process live data from a tournament to provide a toolkit to aid commentators.</p>
+
+                    <p class="summary">DeepView's code base contains of a series of Ruby and Python scripts that can process an archive of games to produce data about a single player. It also includes a web application that can integrate with the <a href="http://www.digitalgametechnology.com/site/products/electronic-boards/serial-tournament/285-dgt-livechess-software13">LiveChess</a> software that is typically used to stream chess tournaments that employs electronic <a href="https://chessprogramming.wikispaces.com/DGT+Board">DGT boards</a> to track player moves.</p>
+
+                    <p class="summary">All of DeepView's code will also be released as open source software as soon as possible.</p>
 					
 			</div>
              <div class="span-16  last summary citations">
