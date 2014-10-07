@@ -58,6 +58,22 @@ document.addEventListener("DOMContentLoaded", ready, false);
 
 <div id="matchupGraph"></div>
 
+<ul>
+    <% compare_data.each do |attr, val| %>
+    <li><b><%= attr %>:</b> 
+        <%= val  %> 
+        <% if val > 0 %>
+        (favors white)
+        <% elsif val < 0 %>
+        (favors black)
+        <% else %>
+        (dead even)
+        <% end %>
+    </li>
+    <% end %>
+</ul>
+
+
 
 <% [@player1, @player2].each_with_index do |player,i| %>
 <div class="playerCompare" >
