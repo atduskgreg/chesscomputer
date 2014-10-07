@@ -7,6 +7,8 @@ class Stockfish
 	WHITES_TURN = "w"
 
 	def self.analyze(fen)
+		puts fen
+
 		result = `#{STOCKFISH_PATH} position #{fen} go depth #{SEARCH_DEPTH}`
 		parts = result.split(/\n/).last.split(" ")
 		bestmove = parts[1]
