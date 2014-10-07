@@ -107,8 +107,8 @@ table {
 	/*margin-left: 20px;*/
 }
 
-.game {
-	height: 225px;
+#boards .game {
+	height: 235px;
 }
 
 
