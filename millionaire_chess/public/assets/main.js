@@ -13,8 +13,8 @@ function showGraph(domElement,args ){
             categories: args.labels
         },
         yAxis: {
-            min: -0.003,
-            max: 0.003,
+            min: -100,
+            max: 100,
             title: {
                 text: ''
             }

@@ -9,7 +9,7 @@ require 'csv'
 require 'ferret'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "postgres://localhost/millionaire_chess")
-
+DataMapper::Model.raise_on_save_failure = true
 class Player
   include DataMapper::Resource
   
@@ -58,10 +58,17 @@ class Player
     end
   end
 
-  def load_from_csv path_to_csv
+  def self.load_batch_from_csv path_to_csv
     csv = CSV.parse(open(path_to_csv).read)
-    stats = csv[1].collect do |c|
-      #TODO: this screwws up with a value like "56.0000000000001%"
+    (1..csv.length-1).each do |row|
+      p = Player.new
+      p.load_from_csv(csv, row)
+      puts p.save
+    end
+  end
+
+  def load_from_csv csv, row=1
+    stats = csv[row].collect do |c|
         c.gsub!(/\.\d+%/, "")
         if c == "yes"
           c = true
@@ -76,6 +83,9 @@ class Player
      end
 
     stats.each_with_index do |col, i|
+      if(["Mobility", "King safety", "Threats", "Passed pawns", "Space"].include?(csv[0][i]))
+        col = col.to_f
+      end
       self.send("#{csv[0][i].gsub(" ", "_").downcase}=".to_sym, col)
     end
   end

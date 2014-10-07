@@ -1,23 +1,23 @@
 queen trade frequency,queen trades significant,queen trade win rate,non queen trade win rate,loss stats significant,win stats significant,average loss length,average loss diff,average game length,average win length,average win diff,player name,Mobility,Mobility signficant,King safety,King safety signficant,Threats,Threats signficant,Passed pawns,Passed pawns signficant,Space,Space signficant
-48.0%,true,66.0%,71.0%,true,false,92,13,79,83,4,Varuzhan Akobian,17,yes,-0.0009272032611975355,no,-0.001174200893652862,yes,12,yes,3,no
-45.0%,true,74.0%,64.0%,false,false,90,10,80,84,4,Sergei Azarov,33,yes,-0.0030447334710946797,no,0.0003649550908728077,no,-1,no,8,yes
-45.0%,true,68.0%,62.0%,false,false,83,-2,85,89,4,Sabino Brunello,-3,no,-0.001072435058662391,no,0.0003951312187619408,no,15,no,1,no
-45.0%,true,62.0%,63.0%,false,false,85,-1,86,84,-2,Ioan-Cristian Chirila,-6,no,0.012501415376450801,yes,0.0009422676035202027,no,16,no,0,no
-52.0%,true,69.0%,70.0%,false,false,92,13,79,88,9,Alexey Dreev,16,yes,-0.002965749364198746,yes,0.0004055376001769386,no,7,yes,3,yes
-53.0%,false,56.00000000000001%,63.0%,false,false,86,3,83,82,-1,Ruben Felgaer,7,no,0.001956585503400915,no,1.882177203383663e-05,no,-2,no,1,no
-46.0%,true,47.0%,60.0%,false,false,86,8,78,80,2,Alexander Ivanov,39,yes,-0.0009982283539125107,no,0.000539330364011428,no,-16,yes,6,yes
-45.0%,true,77.0%,65.0%,false,false,82,5,77,83,6,Giorgi Kacheishvili,26,yes,-0.002448869923616318,no,-0.00043653668308259,no,4,no,3,no
-43.0%,true,63.0%,64.0%,true,true,89,14,75,77,2,Kaido Kulaots,49,yes,0.004226947456383882,no,-0.0010020436399627124,yes,-6,no,5,yes
-60.0%,true,65.0%,70.0%,true,false,98,6,92,86,-6,Aleksandr Lenderman,-35,yes,-0.0022809605846392557,no,0.0005092802540921596,no,24,yes,-6,yes
-56.99999999999999%,false,68.0%,70.0%,true,true,103,10,93,91,-2,Le Quang Liem,-40,yes,0.0001579525806728807,no,0.0010047434655086514,yes,8,no,-5,yes
-52.0%,true,56.99999999999999%,66.0%,false,false,88,8,80,83,3,Ehsan Ghaem Maghami,22,yes,-0.004654122024348726,yes,0.0010564220669666818,yes,0,no,2,no
-42.0%,true,56.99999999999999%,83.0%,false,false,90,7,83,81,-2,Daniel Naroditsky,16,no,-0.0058876842658708226,no,0.0013563724336562635,no,-4,no,0,no
-54.0%,true,61.0%,71.0%,true,true,96,12,84,79,-5,Parimarjan Negi,8,no,0.0018496209962228748,no,0.0009202727912383975,yes,13,yes,0,no
-60.0%,true,55.00000000000001%,66.0%,true,true,100,13,87,83,-4,Eugene Perelshteyn,-9,no,-0.005943707416112642,no,-0.0002641908293822062,no,3,no,-1,no
-50.0%,true,54.0%,66.0%,false,false,93,11,82,83,1,Alejandro Ramirez-Alvarez,16,no,-0.0026168562412908925,no,0.0006006137231252644,no,-1,no,4,no
-56.99999999999999%,false,64.0%,62.0%,false,false,94,5,89,85,-4,Ray Robson,-12,no,-0.0037618437361584475,no,0.0011185203628626631,yes,13,no,2,no
-50.0%,true,52.0%,69.0%,false,false,85,2,83,76,-7,Julio Catalino Sadorra,13,no,0.01725398692848515,yes,0.0011141404231321452,no,46,yes,3,no
-54.0%,false,68.0%,63.0%,false,false,86,3,83,88,5,Samuel Shankland,9,no,0.006794299398360593,no,8.307467961167665e-05,no,20,yes,0,no
-56.00000000000001%,false,78.0%,78.0%,false,false,85,5,80,82,2,Wesley So,24,yes,0.0017652121500624871,no,0.0013496918022448904,yes,-2,no,1,no
-57.99999999999999%,true,70.0%,74.0%,false,false,99,10,89,91,2,Bu Xiangzhi,-23,yes,-0.0025401700298490516,no,0.0010083304104422063,yes,-2,no,-3,no
-56.00000000000001%,false,70.0%,71.0%,true,false,104,13,91,88,-3,Yangyi Yu,-28,yes,0.0073980109143341344,yes,0.0005491858522711553,no,14,yes,-5,yes
+48.0%,true,66.0%,71.0%,true,false,92,13,79,83,4,Varuzhan Akobian,17,yes,-8,no,-10,yes,12,yes,3,no
+45.0%,true,74.0%,64.0%,false,false,90,10,80,84,4,Sergei Azarov,33,yes,-25,no,3,no,-1,no,8,yes
+45.0%,true,68.0%,62.0%,false,false,83,-2,85,89,4,Sabino Brunello,-3,no,-9,no,3,no,15,no,1,no
+45.0%,true,62.0%,63.0%,false,false,85,-1,86,84,-2,Ioan-Cristian Chirila,-6,no,104,yes,8,no,16,no,0,no
+52.0%,true,69.0%,70.0%,false,false,92,13,79,88,9,Alexey Dreev,16,yes,-25,yes,3,no,7,yes,3,yes
+53.0%,false,56.00000000000001%,63.0%,false,false,86,3,83,82,-1,Ruben Felgaer,7,no,16,no,0,no,-2,no,1,no
+46.0%,true,47.0%,60.0%,false,false,86,8,78,80,2,Alexander Ivanov,39,yes,-8,no,4,no,-16,yes,6,yes
+45.0%,true,77.0%,65.0%,false,false,82,5,77,83,6,Giorgi Kacheishvili,26,yes,-20,no,-4,no,4,no,3,no
+43.0%,true,63.0%,64.0%,true,true,89,14,75,77,2,Kaido Kulaots,49,yes,35,no,-8,yes,-6,no,5,yes
+60.0%,true,65.0%,70.0%,true,false,98,6,92,86,-6,Aleksandr Lenderman,-35,yes,-19,no,4,no,24,yes,-6,yes
+56.99999999999999%,false,68.0%,70.0%,true,true,103,10,93,91,-2,Le Quang Liem,-40,yes,1,no,8,yes,8,no,-5,yes
+52.0%,true,56.99999999999999%,66.0%,false,false,88,8,80,83,3,Ehsan Ghaem Maghami,22,yes,-39,yes,9,yes,0,no,2,no
+42.0%,true,56.99999999999999%,83.0%,false,false,90,7,83,81,-2,Daniel Naroditsky,16,no,-49,no,11,no,-4,no,0,no
+54.0%,true,61.0%,71.0%,true,true,96,12,84,79,-5,Parimarjan Negi,8,no,15,no,8,yes,13,yes,0,no
+60.0%,true,55.00000000000001%,66.0%,true,true,100,13,87,83,-4,Eugene Perelshteyn,-9,no,-50,no,-2,no,3,no,-1,no
+50.0%,true,54.0%,66.0%,false,false,93,11,82,83,1,Alejandro Ramirez-Alvarez,16,no,-22,no,5,no,-1,no,4,no
+56.99999999999999%,false,64.0%,62.0%,false,false,94,5,89,85,-4,Ray Robson,-12,no,-31,no,9,yes,13,no,2,no
+50.0%,true,52.0%,69.0%,false,false,85,2,83,76,-7,Julio Catalino Sadorra,13,no,144,yes,9,no,46,yes,3,no
+54.0%,false,68.0%,63.0%,false,false,86,3,83,88,5,Samuel Shankland,9,no,57,no,1,no,20,yes,0,no
+56.00000000000001%,false,78.0%,78.0%,false,false,85,5,80,82,2,Wesley So,24,yes,15,no,11,yes,-2,no,1,no
+57.99999999999999%,true,70.0%,74.0%,false,false,99,10,89,91,2,Bu Xiangzhi,-23,yes,-21,no,8,yes,-2,no,-3,no
+56.00000000000001%,false,70.0%,71.0%,true,false,104,13,91,88,-3,Yangyi Yu,-28,yes,62,yes,5,no,14,yes,-5,yes

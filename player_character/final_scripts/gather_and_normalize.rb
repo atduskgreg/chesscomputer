@@ -37,7 +37,7 @@ biggest = 0.006
 puts
 puts "seting bounds to #{smallest} to #{biggest}"
 
-CSV.open("player_results_merged.csv", "a") do |output|
+CSV.open("player_results_merged.csv", "w") do |output|
 	ARGV.each_with_index do |f,i|
 		input = CSV.parse(open(f).read)
 		if i == 0
@@ -46,7 +46,7 @@ CSV.open("player_results_merged.csv", "a") do |output|
 
 		row = []
 		input[1].each_with_index do |col,i|
-			if ["Mobility", "King safety" "Threats", "Passed pawns", "Space"].include?(input[0][i])
+			if ["Mobility", "King safety", "Threats", "Passed pawns", "Space"].include?(input[0][i])
 				puts col.to_f
 				row << normalize_player_stat(col.to_f, {:max => biggest, :min => smallest})
 			else

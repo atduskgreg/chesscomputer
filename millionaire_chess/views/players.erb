@@ -1,6 +1,40 @@
+<script>
+function ready(){
+	$("#matchup-select").submit(function(e){
+		e.preventDefault();
+		window.location.href = "/matchup/" + $("#player1").val() +"/v/"+$("#player2").val();
+		return false;
+
+	});
+}
+document.addEventListener("DOMContentLoaded", ready, false);
+
+</script>
+
 <h2>All Players</h2>
+<div>
 <ul>
 	<% @players.each do |p| %>
 	<li><a href="/player/<%= p.player_name.split(" ").join("%20") %>"><%= p.player_name %></a></li>
 	<% end %>
 </ul>
+</div>
+<div id="matchup-interface">
+	<h3>View Matchup</h3>
+	<form id="matchup-select">
+		<label>Player 1</label>
+		<select id="player1">
+			<% @players.each do |p| %>
+				<option value="<%= p.player_name.split(" ").join("%20") %>"><%= p.player_name %></option>
+			<% end %>
+		</select>
+				<label>Player 2</label>
+
+		<select id="player2">
+			<% @players.each do |p| %>
+				<option value="<%= p.player_name.split(" ").join("%20") %>"><%= p.player_name %></option>
+			<% end %>
+		</select>
+		<input type="submit" value="go"/>
+	</form>
+</div>
