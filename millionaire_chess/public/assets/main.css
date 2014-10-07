@@ -115,3 +115,21 @@ table {
 .live-score {
 	height: 30px;
 }
+
+#nav a {
+	text-decoration: none;
+	background: #666;
+	color: #fff;
+	padding: 2px;
+	font-size: 10px;
+	margin: 0;
+}
+
+#nav a:hover {
+	background: #ccc;
+
+}
+
+#nav {
+	margin-top: -22px;
+}

@@ -1,0 +1,7 @@
+<h2>All Summaries</h2>
+
+<ul>
+	<% @summaries.each do |summary| %>
+	<li><a href="/summary/<%= summary %>"><%= summary %></a></li>
+	<% end %>
+</ul>

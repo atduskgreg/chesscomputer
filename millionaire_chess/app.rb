@@ -80,6 +80,11 @@ post "/current_score" do
 	r.to_json
 end
 
+get "/summary" do
+	@summaries = Game.all_events
+	erb :summaries
+end
+
 get "/summary/:event" do
 	@event = params[:event]
 	@sacrifice_games = Game.all :is_sacrifice => true, :event => params[:event]

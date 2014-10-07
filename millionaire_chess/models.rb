@@ -115,6 +115,10 @@ class Game
   	property :is_sacrifice, Boolean
   	timestamps :at
   	
+    def self.all_events
+      Game.all(:fields => [:event], :unique => true, :order => [:event]).collect(&:event)
+    end
+
   	# TODO: store the actual PGN file somewhere in case something goes wrong
   	# or just have them email it to me
   	def self.load_batch options={}
