@@ -39,6 +39,20 @@
 		$("#"+data.boardId + " .best-move").html((data.current_move == "w" ? "White's" : "Black's ") + " move: "+ data.best_move);
 
 		$("#"+data.boardId + " .score").html(positionOddsToString(data.white_victory_odds));
+
+		eloOdds = parseInt($("#"+data.boardId + " .eloOddsPercent").html());
+		// upset in-progress
+		if(eloOdds > 50 && data.white_victory_odds*100 < 50){
+			$("#"+data.boardId).addClass("upset");
+			$("#"+data.boardId).prepend("<span class='upset-indicator'>black upset</span>")
+
+		}
+		if(eloOdds < 50 && data.white_victory_odds*100 > 50){
+			$("#"+data.boardId).addClass("upset");
+			$("#"+data.boardId).prepend("<span class='upset-indicator'>white upset</span>")
+		}
+
+
 	}
 
 
@@ -157,7 +171,14 @@
 </head>
 
 <body>
-	<h1>Live Games</h1>
+	<div id="nav">
+		<p><a href="/current_games.html">Live Games</a>
+				<a href="/players">Players</a>
+				<a href="/summary">Summary</a></p>
+
+	</div>
+
+	<h2>Live Games</h2>
 	<div id="boards"></div>
 </body>
 </html>

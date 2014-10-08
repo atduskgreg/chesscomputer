@@ -8,6 +8,9 @@ function eloString(whiteElo, blackElo, names){
 	odds = reduceFraction(roundedPercent,100);
 
 	var winnerString = "";
+
+	objectiveElo = percent;
+
 	if(whiteElo > blackElo){
 		winnerString = "white";
 
@@ -16,12 +19,13 @@ function eloString(whiteElo, blackElo, names){
 		} 
 	} else {
 		winnerString = "black";
+		objectiveElo = objectiveElo * -1;
 		if(names){
 			winnerString = names[1];
 		} 
 	}
 
-	return "<p><b>Favorite: " +winnerString + "<br/>"+percent+"% ("+odds[0]+"/"+odds[1]+")</b></p>";
+	return "<p><b>Favorite: " +winnerString + "<br/><span class='eloOddsPercent' style='display:none'>"+ objectiveElo +"</span>"+percent+"% ("+odds[0]+"/"+odds[1]+")</b></p>";
 
 }
 

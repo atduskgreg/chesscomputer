@@ -108,7 +108,7 @@ table {
 }
 
 #boards .game {
-	height: 235px;
+	height: 265px;
 }
 
 
@@ -132,4 +132,26 @@ table {
 
 #nav {
 	margin-top: -22px;
+}
+
+.upset {
+/*	margin-top: 15px;
+	padding-top: 5px;*/
+}
+
+.upset .chess-board{
+	margin-top: 0;
+	/*border: 2px solid #0f0;*/
+	/*border-bottom:none;*/
+		/*margin-top: -5px;*/
+		/*margin-top: -5px;*/
+
+}
+
+.upset-indicator {
+	background: #c00;
+	color: #fff;
+	padding: 2px;
+	/*margin:0;*/
+	margin-left: 10px;
 }
