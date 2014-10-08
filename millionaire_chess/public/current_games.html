@@ -35,7 +35,7 @@
 		return chessGame.header.White + "/" + chessGame.header.Black + "/" + (chess.game.moves.length-1).toString();
 	}
 
-	function updateScore(data){
+	function updateScore(data, newMove){
 		$("#"+data.boardId + " .best-move").html((data.current_move == "w" ? "White's" : "Black's ") + " move: "+ data.best_move);
 
 		$("#"+data.boardId + " .score").html(positionOddsToString(data.white_victory_odds));
@@ -50,6 +50,11 @@
 		if(eloOdds < 50 && data.white_victory_odds*100 > 50){
 			$("#"+data.boardId).addClass("upset");
 			$("#"+data.boardId).prepend("<span class='upset-indicator'>white upset</span>")
+		}
+
+		if(newMove){
+			$("#"+data.boardId).css("background-color", "#FFFF9C")
+    		.animate({ backgroundColor: "#FFFFFF"}, 1500)
 		}
 
 
@@ -93,7 +98,7 @@
 	
 		    		if(keyForGame(chess.game) in liveGames){
 		    			// console.log("known pos: " + keyForGame(chess.game) );
-		    			updateScore(liveGames[keyForGame(chess.game)].scoreData);
+		    			updateScore(liveGames[keyForGame(chess.game)].scoreData, false);
 		    		} else {
 						  	console.log(hasStockfish);
 
@@ -106,7 +111,7 @@
 							  success:function(data){
 							  	// console.log("new pos: " + data.positionKey);
 							  	liveGames[data.positionKey] = {pgn : gameString, scoreData : data};
-							  	updateScore(data);
+							  	updateScore(data, true);
 							  	console.log(data);
 							  	$.ajax({
 							  		type: 'POST',
@@ -134,7 +139,7 @@
 							  	if(data.found){
 							  		console.log("new pos: " + data.positionKey);
 							  		liveGames[data.positionKey] = {pgn : gameString, scoreData : data};
-							  		updateScore(data);
+							  		updateScore(data, true);
 							  	}else{
 							  		console.log("pos not ready yet");
 							  	}
