@@ -81,6 +81,10 @@ get "/matchup/:player1/v/:player2" do
 	@player1 = Player.search params[:player1]
 	@player2 = Player.search params[:player2]
 
+	unless @player1 && @player2
+		redirect "/players"
+	end
+
 	erb :matchup
 end
 

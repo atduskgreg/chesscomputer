@@ -68,9 +68,10 @@
 		    		chess = $("#"+boardId).chess({pgn:gameString, square_size: 21.5});
 		    		chess.transitionTo(chess.game.moves.length-1);
 		    		h = chess.game.header;
+					
+					matchupUrl = "/matchup/" + encodeURIComponent(h.White) + "/v/" + encodeURIComponent(h.Black);
 	
-	
-					$("#" +boardId).append("<div class='live-score'><p class='score'>Calculating...</p><p class='best-move'></p>	</div><p class='matchup'><span class='whiteElo'>"+h.WhiteElo+"</span> <a class='white' 	href='/player/ashley'>"+h.White+"</a><br /><a class='black' href='/player/carlsen'>"+h.Black+"</a> <span class='blackElo'>"+h.BlackElo+"</span></p>\
+					$("#" +boardId).append("<div class='live-score'><p class='score'>Calculating...</p><p class='best-move'></p>	</div><p class='matchup'><span class='whiteElo'>"+h.WhiteElo+"</span> <a class='white' 	href='"+matchupUrl+"'>"+h.White+"</a><br /><a class='black' href='"+matchupUrl+"'>"+h.Black+"</a> <span class='blackElo'>"+h.BlackElo+"</span></p>\
 					    <p class='odds'>"+eloString(parseInt(h.WhiteElo), parseInt(h.BlackElo))+"</p>");
 	
 		    		currGame++;
