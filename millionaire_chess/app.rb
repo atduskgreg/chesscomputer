@@ -11,7 +11,7 @@ require 'rack/cors'
 use Rack::Cors do |config|
   config.allow do |allow|
     allow.origins '*'
-    allow.resource '/position_result', :headers => :any
+    allow.resource '/position_result', :headers => :any, :methods => [:post]
     # allow.resource '/file/at/*',
     #     :methods =&gt; [:get, :post, :put, :delete],
     #     :headers =&gt; :any,
