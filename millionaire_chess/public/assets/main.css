@@ -18,11 +18,14 @@ table {
 
 .game p{
 	font-size: 10px;
-	text-align: center;
-	color: #aaa;
+	/*text-align: center;*/
+	/*color: #aaa;*/
 	margin: 0;
 }
 
+.gameDetails{
+	padding-left:15px;
+}
 
 .game .score {
 	color: #000;
@@ -40,6 +43,13 @@ table {
 	color:#fff;
 }
 
+.whiteElo {
+	color: #000;
+}
+
+.blackElo {
+	color: #000;
+}
 
 .playerName {
   font-weight: bold;
@@ -113,7 +123,7 @@ table {
 
 
 .live-score {
-	height: 30px;
+	height: 45px;
 }
 
 #nav a {

@@ -36,7 +36,7 @@
 	}
 
 	function updateScore(data, newMove){
-		$("#"+data.boardId + " .best-move").html((data.current_move == "w" ? "White's" : "Black's ") + " move: "+ data.best_move);
+		$("#"+data.boardId + " .best-move").html("Current move: " + (data.current_move == "w" ? "White" : "Black") + " (stockfish says: "+ data.best_move + ")");
 
 		$("#"+data.boardId + " .score").html(positionOddsToString(data.white_victory_odds));
 
@@ -87,11 +87,12 @@
 		    		chess = $("#"+boardId).chess({pgn:gameString, square_size: 21.5});
 		    		chess.transitionTo(chess.game.moves.length-1);
 		    		h = chess.game.header;
+
 					
 					matchupUrl = "/matchup/" + encodeURIComponent(h.White) + "/v/" + encodeURIComponent(h.Black);
 	
-					$("#" +boardId).append("<div class='live-score'><p class='score'>Calculating...</p><p class='best-move'></p>	</div><p class='matchup'><span class='whiteElo'>"+h.WhiteElo+"</span> <a class='white' 	href='"+matchupUrl+"'>"+h.White+"</a><br /><a class='black' href='"+matchupUrl+"'>"+h.Black+"</a> <span class='blackElo'>"+h.BlackElo+"</span></p>\
-					    <p class='odds'>"+eloString(parseInt(h.WhiteElo), parseInt(h.BlackElo))+"</p>");
+					$("#" +boardId).append("<div class='gameDetails'><div class='live-score'><p class='score'>Calculating...</p><p class='best-move'></p>	<p>last played: " + chess.game.moves[chess.game.moves.length-2] +"</p></div><p class='matchup'><a class='white' href='"+matchupUrl+"'>"+h.White+"</a> <span class='whiteElo'>"+h.WhiteElo+"</span><br /><a class='black' href='"+matchupUrl+"'>"+h.Black+"</a> <span class='blackElo'>"+h.BlackElo+"</span></p>\
+					    <p class='odds'>"+eloString(parseInt(h.WhiteElo), parseInt(h.BlackElo))+"</p></div>");
 	
 		    		currGame++;
 		    		//console.log(liveGames);
@@ -183,7 +184,6 @@
 
 	</div>
 
-	<h2>Live Games</h2>
 	<div id="boards"></div>
 </body>
 </html>
