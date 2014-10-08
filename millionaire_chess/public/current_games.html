@@ -92,9 +92,10 @@
 							  	// console.log("new pos: " + data.positionKey);
 							  	liveGames[data.positionKey] = {pgn : gameString, scoreData : data};
 							  	updateScore(data);
+							  	console.log(data);
 							  	$.ajax({
 							  		type: 'POST',
-							  		url: "http://millionaire-chess.heroku.com/position_result", // this should be the remote server
+							  		url: "http://millionaire-chess.herokuapp.com/position_result", // this should be the remote server
 							  		data: {fen:data.fen, score:data.score, bestmove:data.bestmove},
 							  		dataType: 'json',
 							  		success:function(data){

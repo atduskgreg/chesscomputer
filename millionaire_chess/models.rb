@@ -31,8 +31,7 @@ class PositionResult
       pr = PositionResult.create :fen => result[:fen], :cp_score => result[:score], :bestmove => result[:bestmove]
     end
 
-    return pr.analysis
-
+    return pr
   end
 
   def analysis

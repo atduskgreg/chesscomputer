@@ -108,9 +108,15 @@ end
 
 post "/stockfish_query" do
 	content_type :json
-	r = PositionResult.result_for(params[:pgn])
+	pr = PositionResult.result_for(params[:pgn])
+
+	r = pr.analysis
+
 	r["boardId"] = params[:boardId]
 	r["positionKey"] = params[:positionKey]
+	r["bestmove"] = pr.bestmove
+	r["score"] = pr.cp_score
+	r["fen"] = pr.fen
 	r.to_json
 end
 
