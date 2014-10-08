@@ -5,6 +5,7 @@ gem "dm-timestamps"
 gem "sinatra"
 gem "pgn", :git => "https://github.com/gauleng/pgn.git", :branch => "pgn-annotations"
 gem "ferret"
+gem "sinatra-cross_origin", "~> 0.3.1"
 
 # group :production do
 	gem "dm-postgres-adapter"

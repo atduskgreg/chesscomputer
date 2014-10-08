@@ -8,8 +8,40 @@ require 'pgn'
 require 'csv'
 require 'ferret'
 
+
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "postgres://localhost/millionaire_chess")
 DataMapper::Model.raise_on_save_failure = true
+
+class PositionResult
+  include DataMapper::Resource
+  
+  property :id, Serial
+  property :fen, Text
+  property :cp_score, Integer
+  property :bestmove, String
+
+  def self.result_for(pgn_string)
+    games = PGN.parse(pgn_string)
+    fen = games[0].positions.last.to_fen.to_s
+
+    pr = PositionResult.first :fen => fen
+
+    if !pr
+      result = Stockfish.analyze(fen)
+      pr = PositionResult.create :fen => result[:fen], :cp_score => result[:score], :bestmove => result[:bestmove]
+    end
+
+    return pr.analysis
+
+  end
+
+  def analysis
+    return Stockfish.result_for({:score => cp_score, :bestmove => bestmove, :fen => fen})
+
+  end
+
+end
+
 class Player
   include DataMapper::Resource
   

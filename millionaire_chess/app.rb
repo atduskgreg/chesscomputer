@@ -5,6 +5,7 @@ require 'pgn'
 require './models'
 require 'json'
 require 'open-uri'
+require 'sinatra/cross_origin'
 
 helpers do
 	def html_board(position)
@@ -71,12 +72,43 @@ get "/matchup/:player1/v/:player2" do
 	erb :matchup
 end
 
-post "/current_score" do
+get "/current_score" do
 	content_type :json
+
 	games = PGN.parse(params[:pgn])
-	r = Stockfish.analyze(games[0].positions.last.to_fen.to_s)
+    fen = games[0].positions.last.to_fen.to_s
+    pr = PositionResult.first :fen => fen
+
+    r = {}
+    if pr 
+    	r = pr.analysis
+    	r["found"] = true 
+    else
+    	r["found"] = false
+    end
+
+    r["boardId"] = params[:boardId]
+	r["positionKey"] = params[:positionKey]
+
+    r.to_json
+
+end
+
+post "/stockfish_query" do
+	content_type :json
+	r = PositionResult.result_for(params[:pgn])
 	r["boardId"] = params[:boardId]
 	r["positionKey"] = params[:positionKey]
+	r.to_json
+end
+
+post "/position_result" do
+	cross_origin
+
+	content_type :json
+	r = PositionResult.first_or_create :fen => params[:fen], :cp_score => params[:score], :bestmove => params[:bestmove]
+	# r["boardId"] = params[:boardId]
+	# r["positionKey"] = params[:positionKey]
 	r.to_json
 end
 

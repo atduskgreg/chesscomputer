@@ -11,6 +11,7 @@
 	<script>
 
 	var liveGames = {};
+	var hasStockfish = false;
 	
 	function positionOddsToString(odds){
 		result = "";
@@ -40,6 +41,8 @@
 		$("#"+data.boardId + " .score").html(positionOddsToString(data.white_victory_odds));
 	}
 
+
+
 	function checkLiveGames() {
 		
 		pgn = ""
@@ -58,9 +61,7 @@
 
 		    	currGame = 0;
 
-	
-
-		    	for(var i = 1; i < 2; i++){
+		    	for(var i = 1; i < parts.length; i++){
 		    		gameString = "[Event" + parts[i];
 		    		boardId = "game"+currGame;
 		    		$("#boards").append("<div class='game' id='"+boardId+"'></div>");
@@ -69,27 +70,62 @@
 		    		h = chess.game.header;
 	
 	
-					$("#" +boardId).append("<div class='live-score'><p class='score'>Calculating...</p><p class='best-move'></p>	</div><p class='matchup'><span class='whiteElo'>"+h.WhiteElo+"</span> <a class='white' 	href='/player/ashley'>"+h.White+"</a><br /><a class='black' href='/player/carlsen'>"+h.Black+"</a> <	span class='blackElo'>"+h.BlackElo+"</span></p>\
+					$("#" +boardId).append("<div class='live-score'><p class='score'>Calculating...</p><p class='best-move'></p>	</div><p class='matchup'><span class='whiteElo'>"+h.WhiteElo+"</span> <a class='white' 	href='/player/ashley'>"+h.White+"</a><br /><a class='black' href='/player/carlsen'>"+h.Black+"</a> <span class='blackElo'>"+h.BlackElo+"</span></p>\
 					    <p class='odds'>"+eloString(parseInt(h.WhiteElo), parseInt(h.BlackElo))+"</p>");
 	
 		    		currGame++;
 		    		//console.log(liveGames);
 	
 		    		if(keyForGame(chess.game) in liveGames){
-		    			console.log("known pos: " + keyForGame(chess.game) );
+		    			// console.log("known pos: " + keyForGame(chess.game) );
 		    			updateScore(liveGames[keyForGame(chess.game)].scoreData);
 		    		} else {
-		    			$.ajax({
-						  type: 'POST',
-						  url: "/current_score",
-						  data: {pgn:gameString, boardId: boardId, positionKey: keyForGame(chess.game)},
-						  dataType: 'json',
-						  success:function(data){
-						  	console.log("new pos: " + data.positionKey);
-						  	liveGames[data.positionKey] = {pgn : gameString, scoreData : data};
-						  	updateScore(data);
-						  }
-						});
+						  	console.log(hasStockfish);
+
+						if(hasStockfish){
+		    				$.ajax({
+							  type: 'POST',
+							  url: "/stockfish_query",
+							  data: {pgn:gameString, boardId: boardId, positionKey: keyForGame(chess.game)},
+							  dataType: 'json',
+							  success:function(data){
+							  	// console.log("new pos: " + data.positionKey);
+							  	liveGames[data.positionKey] = {pgn : gameString, scoreData : data};
+							  	updateScore(data);
+							  	$.ajax({
+							  		type: 'POST',
+							  		url: "http://millionaire-chess.heroku.com/position_result", // this should be the remote server
+							  		data: {fen:data.fen, score:data.score, bestmove:data.bestmove},
+							  		dataType: 'json',
+							  		success:function(data){
+							  			console.log("saved to remove server");
+							  			// console.log("new pos: " + data.positionKey);
+							  			// liveGames[data.positionKey] = {pgn : gameString, scoreData : data};
+							  			// updateScore(data);
+							  			
+							  		}
+	
+							  	});
+							  }
+							});
+		    			} else {
+							$.ajax({
+							  type: 'GET',
+							  url: "/current_score",
+							  data: {pgn:gameString, boardId: boardId, positionKey: keyForGame(chess.game)},
+							  dataType: 'json',
+							  success:function(data){
+							  	if(data.found){
+							  		console.log("new pos: " + data.positionKey);
+							  		liveGames[data.positionKey] = {pgn : gameString, scoreData : data};
+							  		updateScore(data);
+							  	}else{
+							  		console.log("pos not ready yet");
+							  	}
+
+							  }
+							});
+		    			}
 		    		}
 		    	}
 		    }
@@ -99,6 +135,10 @@
 	}
 
 	function ready(){
+		if(window.location.search.split("=")[0] == "?stockfish" && window.location.search.split("=")[1] == "1"){
+			hasStockfish = true;
+		}
+
 		checkLiveGames();
 		setInterval(checkLiveGames, 5000);
 	}

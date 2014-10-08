@@ -19,14 +19,25 @@ class Stockfish
 			score = score * -1
 		end
 	
-		white_victory_odds = predict(score)
+		# white_victory_odds = predict(score)
 
-		{:white_victory_odds => white_victory_odds,
-		 :best_move => bestmove, 
-		 :best_move_cp_score => score,
-		 :current_move => turn(fen)}
+		# {:white_victory_odds => white_victory_odds,
+		#  :best_move => bestmove, 
+		#  :best_move_cp_score => score,
+		#  :current_move => turn(fen)}
+
+		{:score => score, :bestmove => bestmove, :fen => fen}
 	end
 
+
+	def self.result_for(options={})
+		white_victory_odds = predict(options[:score])
+
+		{:white_victory_odds => white_victory_odds,
+		 :best_move => options[:bestmove], 
+		 :best_move_cp_score => options[:score],
+		 :current_move => turn(options[:fen])}
+	end
 	
 	def self.sigmoid(x, x0, k)
 		1.0 / (1 + Math.exp(-k*(x-x0)))
