@@ -57,21 +57,24 @@
 		    	console.log(parts);
 
 		    	currGame = 0;
-		    	for(var i = 1; i < parts.length; i++){
+
+	
+
+		    	for(var i = 1; i < 2; i++){
 		    		gameString = "[Event" + parts[i];
 		    		boardId = "game"+currGame;
 		    		$("#boards").append("<div class='game' id='"+boardId+"'></div>");
 		    		chess = $("#"+boardId).chess({pgn:gameString, square_size: 21.5});
 		    		chess.transitionTo(chess.game.moves.length-1);
 		    		h = chess.game.header;
-
-
-					$("#" +boardId).append("<div class='live-score'><p class='score'>Calculating...</p><p class='best-move'></p></div><p class='matchup'><span class='whiteElo'>"+h.WhiteElo+"</span> <a class='white' href='/player/ashley'>"+h.White+"</a><br /><a class='black' href='/player/carlsen'>"+h.Black+"</a> <span class='blackElo'>"+h.BlackElo+"</span></p>\
+	
+	
+					$("#" +boardId).append("<div class='live-score'><p class='score'>Calculating...</p><p class='best-move'></p>	</div><p class='matchup'><span class='whiteElo'>"+h.WhiteElo+"</span> <a class='white' 	href='/player/ashley'>"+h.White+"</a><br /><a class='black' href='/player/carlsen'>"+h.Black+"</a> <	span class='blackElo'>"+h.BlackElo+"</span></p>\
 					    <p class='odds'>"+eloString(parseInt(h.WhiteElo), parseInt(h.BlackElo))+"</p>");
-
+	
 		    		currGame++;
 		    		//console.log(liveGames);
-
+	
 		    		if(keyForGame(chess.game) in liveGames){
 		    			console.log("known pos: " + keyForGame(chess.game) );
 		    			updateScore(liveGames[keyForGame(chess.game)].scoreData);
@@ -88,8 +91,6 @@
 						  }
 						});
 		    		}
-
-		    		
 		    	}
 		    }
 		});
