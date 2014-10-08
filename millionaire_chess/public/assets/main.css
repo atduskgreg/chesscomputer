@@ -155,3 +155,7 @@ table {
 	/*margin:0;*/
 	margin-left: 10px;
 }
+
+.significant {
+	background: #ff3;
+}

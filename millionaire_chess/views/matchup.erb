@@ -86,15 +86,15 @@ document.addEventListener("DOMContentLoaded", ready, false);
 
 </ul>
 <ul>
-	<li><b>Queen Trade Frequency</b> <%= player.queen_trade_frequency %>%</li>
-	<li><b>Win Rate After Queen Trade</b>  
+	<li><b <% if player.queen_trades_significant %>class="significant"<% end %>>Queen Trade Frequency</b> <%= player.queen_trade_frequency %>%</li>
+	<li><b <% if player.queen_trades_significant %>class="significant"<% end %>>Win Rate After Queen Trade</b>  
         <% if player.queen_trade_win_rate > player.non_queen_trade_win_rate %>
             <span style="color:green">+
         <% else %>
             <span style="color:red">
         <% end %>
         <%= player.queen_trade_win_rate - player.non_queen_trade_win_rate %>%</span> (<%= player.queen_trade_win_rate %>% vs <%= player.non_queen_trade_win_rate %>%)</li>
-	<li><b>Average Win Length</b> 
+	<li><b <% if player.win_stats_significant %>class="significant"<% end %>>Average Win Length</b> 
         <% if player.average_win_length < player.average_game_length %>
             <span style="color:red">
         <% else %>
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", ready, false);
         <% end %>
 
         <%= (player.average_win_length - player.average_game_length)/2.0 %> moves</span> (<%= player.average_win_length/2.0 %> vs <%= player.average_game_length/2.0 %>)</li>
-	<li><b>Average Loss Length</b> 
+	<li><b <% if player.loss_stats_significant %>class="significant"<% end %>>Average Loss Length</b> 
         <% if player.average_loss_length < player.average_game_length %>
             <span style="color:red">
         <% else %>
