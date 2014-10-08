@@ -5,7 +5,19 @@ require 'pgn'
 require './models'
 require 'json'
 require 'open-uri'
-require 'sinatra/cross_origin'
+# require 'sinatra/cross_origin'
+require 'rack/cors'
+
+use Rack::Cors do |config|
+  config.allow do |allow|
+    allow.origins '*'
+    allow.resource '/position_result', :headers => :any
+    # allow.resource '/file/at/*',
+    #     :methods =&gt; [:get, :post, :put, :delete],
+    #     :headers =&gt; :any,
+    #     :max_age =&gt; 0
+  end
+end
 
 helpers do
 	def html_board(position)
@@ -103,7 +115,8 @@ post "/stockfish_query" do
 end
 
 post "/position_result" do
-	cross_origin
+	# cross_origin
+	# headers 'Access-Control-Allow-Origin'  => 'https://your.site.com'
 
 	content_type :json
 	r = PositionResult.first_or_create :fen => params[:fen], :cp_score => params[:score], :bestmove => params[:bestmove]
