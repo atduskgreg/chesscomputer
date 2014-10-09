@@ -37,7 +37,7 @@ biggest = 0.006
 puts
 puts "seting bounds to #{smallest} to #{biggest}"
 
-CSV.open("player_results_merged.csv", "w") do |output|
+CSV.open("player_results_merged_add1.csv", "w") do |output|
 	ARGV.each_with_index do |f,i|
 		input = CSV.parse(open(f).read)
 		if i == 0
