@@ -67,7 +67,7 @@
 		pgn = ""
 		$.ajax({
    			url: "/pgn_proxy",
-   			url: "http://gregborenstein.com/assets/chess/games.pgn",
+   			url: "http://54.194.223.217/millionairechess2014/open/01/games.pgn",
 		    type: 'GET',
 		    success: function(res) {
 		    	$("#boards").empty();
@@ -114,20 +114,20 @@
 							  	liveGames[data.positionKey] = {pgn : gameString, scoreData : data};
 							  	updateScore(data, true);
 							  	console.log(data);
-							  	$.ajax({
-							  		type: 'POST',
-							  		url: "http://millionaire-chess.herokuapp.com/position_result", // this should be the remote server
-							  		data: {fen:data.fen, score:data.score, bestmove:data.bestmove},
-							  		dataType: 'json',
-							  		success:function(data){
-							  			console.log("saved to remove server");
-							  			// console.log("new pos: " + data.positionKey);
-							  			// liveGames[data.positionKey] = {pgn : gameString, scoreData : data};
-							  			// updateScore(data);
-							  			
-							  		}
-	
-							  	});
+								  	$.ajax({
+								  		type: 'POST',
+								  		url: "http://millionaire-chess.herokuapp.com/position_result", // this should be the remote server
+								  		data: {fen:data.fen, score:data.score, bestmove:data.bestmove},
+								  		dataType: 'json',
+								  		success:function(data){
+								  			console.log("saved to remove server");
+								  			// console.log("new pos: " + data.positionKey);
+								  			// liveGames[data.positionKey] = {pgn : gameString, scoreData : data};
+								  			// updateScore(data);
+								  			
+								  		}
+		
+								  	});
 							  }
 							});
 		    			} else {
