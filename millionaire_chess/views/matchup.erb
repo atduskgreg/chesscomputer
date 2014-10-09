@@ -11,13 +11,9 @@ function ready(){
 	<% [@player1, @player2].each_with_index do |player,i| %>
 
 		 args = {
-    	    labels :['Mobility',
-    	            'Space',
-    	            'Passed pawns',
-    	            'King safety',
-    	            'Threats'],
+    	   labels :['Passed pawns', 'King safety', 'Threats', 'Space','Mobility'],
     	    type : 'column',
-    	    data : [<%= player.mobility %>, <%= player.space %>, <%= player.passed_pawns %>,<%= player.king_safety %>, <%= player.threats %>],
+    	    data : [<%= player.passed_pawns %>, <%= player.king_safety %>, <%= player.threats %>, <%= player.space %>, <%= player.mobility %>],
     	    seriesName : "<%= player.player_name %>",
     	    title : ["Player Characteristics"]
     	}
