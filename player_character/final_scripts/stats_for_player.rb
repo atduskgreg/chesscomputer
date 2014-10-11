@@ -17,8 +17,8 @@ end
 
 header = []
 data = []
-
-["queen_trades.rb", "game_length.rb", "position_choice.rb"].each do |script|
+#"position_choice.rb"
+["queen_trades.rb", "game_length.rb"].each do |script|
 	puts "running #{script}"
 	script_header, script_data = parse_script_result(`ruby #{script} #{ARGV[0]}`)
 	header << script_header

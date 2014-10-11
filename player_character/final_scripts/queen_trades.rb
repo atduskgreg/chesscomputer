@@ -31,7 +31,7 @@ end
 
 player_regex = make_player_regex(ARGV[0])
 
-games = PGN.parse(open(ARGV[0]).read)
+games = PGN.parse(to_utf8(open(ARGV[0]).read))
 
 TRADE_MIN_PLY = 4
 

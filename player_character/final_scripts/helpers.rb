@@ -9,6 +9,13 @@ $logger.formatter = proc do |severity, time, progname, msg|
 	"#{severity} [#{time.strftime('%Y-%m-%d %H:%M')}] #{progname}: #{msg}\n"
 end
 
+def to_utf8(str)
+  str = str.force_encoding("UTF-8")
+  return str if str.valid_encoding?
+  str = str.force_encoding("BINARY")
+  str.encode("UTF-8", invalid: :replace, undef: :replace)
+end
+
 def to_csv_row h
 	result = h.keys.collect(&:to_s).join(",")
 	result << "\n" << h.values.join(",")
