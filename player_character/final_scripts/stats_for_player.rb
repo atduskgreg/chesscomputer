@@ -25,7 +25,7 @@ data = []
 	data << script_data
 end
 
-CSV.open("with_non_significant/" + player_name(ARGV[0]) +".csv", "wb") do |csv|
+CSV.open("lennart/" + player_name(ARGV[0]) +".csv", "wb") do |csv|
 	csv << header.flatten
 	csv << data.flatten
 end
