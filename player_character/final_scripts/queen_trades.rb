@@ -31,7 +31,12 @@ end
 
 player_regex = make_player_regex(ARGV[0])
 
-games = PGN.parse(to_utf8(open(ARGV[0]).read))
+text_without_bom = nil
+File.open(ARGV[0], "r:bom|utf-8"){|file|
+  text_without_bom = file.read
+}
+
+games = PGN.parse(text_without_bom)
 
 TRADE_MIN_PLY = 4
 
