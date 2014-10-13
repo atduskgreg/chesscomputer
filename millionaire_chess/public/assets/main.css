@@ -171,5 +171,27 @@ table {
 }
 
 .gameDraw {
-	background: #cec;
+	background: #eec;
+}
+
+.gameDraw {
+	background: #eec;
+}
+
+.whiteVictory {
+	color: #000;
+	border: 1px solid #000;
+	background: #fff;
+}
+
+.blackVictory{
+	color: #fff;
+	background: #000;
+}
+
+.gameResult {
+	/*margin-top: -50px;*/
+	margin-left: 10px;
+	padding:2px;
+	text-align:right;
 }

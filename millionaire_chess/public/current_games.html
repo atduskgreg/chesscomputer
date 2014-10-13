@@ -67,7 +67,7 @@
 		pgn = ""
 		$.ajax({
    			url: "/pgn_proxy",
-   			url: "http://54.194.223.217/millionairechess2014/open/07/games.pgn",
+   			url: "http://54.194.223.217/millionairechess2014/qualification/01/games.pgn",
 		    type: 'GET',
 		    success: function(res) {
 		    	$("#boards").empty();
@@ -88,32 +88,37 @@
 		    		chess.transitionTo(chess.game.moves.length-1);
 		    		h = chess.game.header;
 
-					
 					matchupUrl = "/matchup/" + encodeURIComponent(h.White) + "/v/" + encodeURIComponent(h.Black);
 					
 					// this doesn't work yet
-					gameResult = "ongoing";
-					// console.log(chess.game.moves[chess.game.moves.length-1]);
-					// if(chess.game.moves[chess.game.moves.length-1] == "1-0"){
-					// 	gameResult = "whiteVictory";
-					// }
+					gameResultClass = "ongoing";
+					gameResult = ""
+					if(h.Result == "1-0"){
+						gameResultClass = "whiteVictory";
+						gameResult = "WHITE WIN";
+					}
 
-					// if(chess.game.moves[chess.game.moves.length-1] == "0-1"){
-					// 	gameResult = "blackVictory";
+					if(h.Result == "0-1"){
+						gameResultClass = "blackVictory";
+						gameResult = "BLACK WIN";
+					}
+					if(h.Result == "1/2-1/2"){
+						gameResultClass = "gameDraw";
+						gameResult = "DRAW";
 
-					// }
-					// if(chess.game.moves[chess.game.moves.length-1] == "1/2-1/2"){
-					// 	gameResult = "gameDraw";
+					}
 
-					// }
-
-					$("#" +boardId).append("<div class='gameDetails "+gameResult+"'><div class='live-score'><p class='score'>Calculating...</p><p class='best-move'></p>	<p>last played: " + chess.game.moves[chess.game.moves.length-2] +"</p></div><p class='matchup'><a class='white' href='"+matchupUrl+"'>"+h.White+"</a> <span class='whiteElo'>"+h.WhiteElo+"</span><br /><a class='black' href='"+matchupUrl+"'>"+h.Black+"</a> <span class='blackElo'>"+h.BlackElo+"</span></p>\
+					$("#" +boardId).append("<div class='gameDetails'><div class='live-score'><p class='score'>Calculating...</p><p class='best-move'></p>	<p>last played: " + chess.game.moves[chess.game.moves.length-2] +"</p></div><p class='matchup'><a class='white' href='"+matchupUrl+"'>"+h.White+"</a> <span class='whiteElo'>"+h.WhiteElo+"</span><br /><a class='black' href='"+matchupUrl+"'>"+h.Black+"</a> <span class='blackElo'>"+h.BlackElo+"</span></p>\
 					    <p class='odds'>"+eloString(parseInt(h.WhiteElo), parseInt(h.BlackElo))+"</p></div>");
 
+
+
 					// console.log(gameResult);
-					// if(gameResult != "ongoing"){
-					// 	$("#" +boardId + " .gameDetails").append("<span class='gameResult'>"+gameResult+"</span>");
-					// }
+
+
+					if(gameResult != ""){
+					 	$("#" +boardId).prepend("<span class='gameResult "+gameResultClass+"'>"+gameResult+"</span>");
+					}
 	
 		    		currGame++;
 		    		//console.log(liveGames);
