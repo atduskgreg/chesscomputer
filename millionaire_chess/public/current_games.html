@@ -63,11 +63,16 @@
 
 
 	function checkLiveGames() {
-		
+		section = "open"
+		if(window.location.search.split(/=|&/)[0] == "?stockfish" && window.location.search.split(/=|&/)[2] == "section"){
+			section = window.location.search.split(/=|&/)[3];
+			$("#section").html(section);
+		}
+
 		pgn = ""
 		$.ajax({
-   			url: "/pgn_proxy",
-   			url: "http://54.194.223.217/millionairechess2014/qualification/01/games.pgn",
+   			url: "/pgn_proxy", 
+   			url: "http://54.194.223.217/millionairechess2014/ko/"+section+"/final/02/games.pgn",//open/final/01
 		    type: 'GET',
 		    success: function(res) {
 		    	$("#boards").empty();
@@ -77,16 +82,32 @@
 		    	parts = pgn.split(/\[Event\s/);
 
 		    	console.log(parts);
+		    	//console.log(parts.length);
 
 		    	currGame = 0;
+
+		    	// parts[2] = parts[2].replace("{} *", "*");
 
 		    	for(var i = 1; i < parts.length; i++){
 		    		gameString = "[Event" + parts[i];
 		    		boardId = "game"+currGame;
+
+
+		    		
+		    		// console.log(gameString[gameString.length-2])
+
+
+		    		// console.log("gs: " +gameString[gameString.length - 1]);
+
 		    		$("#boards").append("<div class='game' id='"+boardId+"'></div>");
-		    		chess = $("#"+boardId).chess({pgn:gameString, square_size: 21.5});
-		    		chess.transitionTo(chess.game.moves.length-1);
-		    		h = chess.game.header;
+		    		
+		    		try { 
+		    			chess = $("#"+boardId).chess({pgn:gameString, square_size: 21.5});
+
+		    			chess.transitionTo(chess.game.moves.length-1);
+		    			h = chess.game.header;
+		    		
+		    			
 
 					matchupUrl = "/matchup/" + encodeURIComponent(h.White) + "/v/" + encodeURIComponent(h.Black);
 					
@@ -175,6 +196,11 @@
 							});
 		    			}
 		    		}
+
+		    		} catch(error){
+		    			console.log("error caught: " + 	error);
+		    			$("#"+boardId).append("<span class='noMoves'>no moves</span>");
+		    		}
 		    	}
 		    }
 		});
@@ -183,12 +209,15 @@
 	}
 
 	function ready(){
-		if(window.location.search.split("=")[0] == "?stockfish" && window.location.search.split("=")[1] == "1"){
+		if(window.location.search.split(/=|&/)[0] == "?stockfish" && window.location.search.split(/=|&/)[1] == "1"){
 			hasStockfish = true;
 		}
 
+		console.log(window.location.search.split(/=|&/));
+
+
 		checkLiveGames();
-		setInterval(checkLiveGames, 5000);
+		setInterval(checkLiveGames, 2000);
 	}
 	document.addEventListener("DOMContentLoaded", ready, false);
 	
@@ -209,7 +238,7 @@
 				<a href="/summary">Summary</a></p>
 
 	</div>
-
+	<h2 id="section"></h2>
 	<div id="boards"></div>
 </body>
 </html>

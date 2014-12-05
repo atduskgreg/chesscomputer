@@ -195,3 +195,10 @@ table {
 	padding:2px;
 	text-align:right;
 }
+
+.noMoves {
+	font-style: italic;
+	padding: 10px;
+	font-size: 8px;
+	color: #ccc;
+}
