@@ -1,0 +1,26 @@
+GIT
+  remote: https://github.com/gauleng/pgn.git
+  revision: 9e99a5f14be588e94290cd92492283fe24a09c70
+  branch: pgn-annotations
+  specs:
+    pgn (0.0.6)
+      whittle
+
+GEM
+  specs:
+    rack (1.5.2)
+    rack-protection (1.5.3)
+      rack
+    sinatra (1.4.5)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
+    tilt (1.4.1)
+    whittle (0.0.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  pgn!
+  sinatra

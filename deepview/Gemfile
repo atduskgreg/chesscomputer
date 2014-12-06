@@ -1,0 +1,3 @@
+# source 'https://rubygems.org'
+gem "sinatra"
+gem "pgn", :git => "https://github.com/gauleng/pgn.git", :branch => "pgn-annotations"
